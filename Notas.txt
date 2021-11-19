@@ -1,0 +1,23 @@
+git init
+git add .
+git commit -m ""
+git pull origin main
+git push origin main
+
+php artisan migrate:fresh --seed
+php artisan db:seed
+
+//Ejecutar Migracion paises
+php artisan world:init
+____________________________________
+
+
+php artisan make:livewire dashboardView
+php artisan make:model dashboard -m
+
+
+php artisan make:livewire ecommerceView
+php artisan make:model ecommerce -m
+
+
+php artisan make:livewire user/listUser
