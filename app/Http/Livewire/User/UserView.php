@@ -5,6 +5,7 @@ namespace App\Http\Livewire\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
+
 use Illuminate\Support\Facades\Hash;
 use Darbaoui\Avatar\Facades\Avatar;
 
@@ -15,7 +16,8 @@ class UserView extends Component
     protected $paginationTheme = 'bootstrap';
 
     //Declaramos variables publicas
-    public $search, $search1, $city, $identification , $password, $password_confirmation;
+    public $perPage = 25;
+    public $search, $search1, $city, $identification, $password, $password_confirmation;
     public $user, $user_id, $name,  $first_name, $last_name, $email, $phone, $address, $status = 0;
 
     //Actualizamos la vista
@@ -26,7 +28,15 @@ class UserView extends Component
         //declarmos una variables y tramos los datos de la tabla
         $users =  User::query()
             // ->where('name', 'like', "%{$this->search}%")
-            ->paginate(100);
+            ->when($this->search, function ($query) {
+                return $query->where(function ($query) {
+                    $query->where('first_name', 'like', "%{$this->search}%")
+                        ->orWhere('last_name', 'like', "%{$this->search}%")
+                        ->orWhere('email', 'like', "%{$this->search}%")
+                        ->orWhere('identification', 'like', "%{$this->search}%");
+                });
+            })
+            ->paginate($this->perPage);
 
         //Retornamos la vista y volcamos los datos
         return view('livewire.user.user-view', compact('users'));
@@ -110,13 +120,14 @@ class UserView extends Component
         $this->validate([
             'first_name' => 'required|min:3|max:256',
             'last_name' => 'required|min:3|max:256',
-            'identification' => 'required|min:7|max:10|unique:App\Models\User,identification,'. optional($this->user)->id,
-            'email' => 'required|min:3|max:50|email|unique:App\Models\User,email,'. optional($this->user)->id,
+            'identification' => 'required|min:7|max:10|unique:App\Models\User,identification,' . optional($this->user)->id,
+            'email' => 'required|min:3|max:50|email|unique:App\Models\User,email,' . optional($this->user)->id,
             'phone' => 'required|min:3|max:11',
             'city' => 'required|min:3|max:256',
             'address' => 'required',
             'password_confirmation' => 'same:password',
         ]);
+
         //Guardamos los registros
         if ($update = User::where('id', $this->user->id)->first()) {
             $update->first_name = $this->first_name;

@@ -47,16 +47,14 @@ class ProfileView extends Component
         function rules()
         {
             return [
-                'first_name' => '',
-                'last_name' => '',
-                'identification' => '',
-                'email' => '',
-                'phone' => '',
-                'city' => '',
-                'address' => '',
-                'status' => '',
-                'password' => '',
-                'password_confirmation' => '',
+                'first_name' => 'required|min:3|max:256',
+                'last_name' => 'required|min:3|max:256',
+                'identification' => 'required|min:7|max:10|unique:App\Models\User,identification,'. optional($this->user)->id,
+                'email' => 'required|min:3|max:50|email|unique:App\Models\User,email,'. optional($this->user)->id,
+                'phone' => 'required|min:3|max:11',
+                'city' => 'required|min:3|max:256',
+                'address' => 'required',
+                'password_confirmation' => 'same:password',
             ];
         }
 
@@ -66,20 +64,16 @@ class ProfileView extends Component
 
         }
 
+        public function updated($propertyName)
+        {
+            $this->validateOnly($propertyName);
+        }
+
         //Actualizamos formulario de edicion
         public function update()
         {
             //Validamos los campos
-            $this->validate([
-                'first_name' => 'required|min:3|max:256',
-                'last_name' => 'required|min:3|max:256',
-                'identification' => 'required|min:7|max:10|unique:App\Models\User,identification,'. optional($this->user)->id,
-                'email' => 'required|min:3|max:50|email|unique:App\Models\User,email,'. optional($this->user)->id,
-                'phone' => 'required|min:3|max:11',
-                'city' => 'required|min:3|max:256',
-                'address' => 'required',
-                'password_confirmation' => 'same:password',
-            ]);
+            $this->validate();
             //Guardamos los registros
             if ($update = User::where('id', auth()->user()->id)->first()) {
                 $update->first_name = $this->first_name;

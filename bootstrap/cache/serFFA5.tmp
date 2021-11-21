@@ -42,6 +42,7 @@
     38 => 'App\\Providers\\EventServiceProvider',
     39 => 'App\\Providers\\RouteServiceProvider',
     40 => 'Laraveles\\Spanish\\SpanishServiceProvider',
+    41 => 'Laravolt\\Avatar\\ServiceProvider',
   ),
   'eager' => 
   array (
@@ -72,6 +73,7 @@
     24 => 'App\\Providers\\EventServiceProvider',
     25 => 'App\\Providers\\RouteServiceProvider',
     26 => 'Laraveles\\Spanish\\SpanishServiceProvider',
+    27 => 'Laravolt\\Avatar\\ServiceProvider',
   ),
   'deferred' => 
   array (

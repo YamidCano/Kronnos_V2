@@ -15,25 +15,40 @@
             </div>
         </div>
     </div>
+    {{-- {!! Avatar::create(Auth::user()->name)->setFontSize(20)->setDimension(40)->toSvg(); !!} --}}
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-
-                    <div class="d-flex bd-highlight m-3">
-                        <div class="p-2 bd-highlight">
-                            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                data-bs-target="#Store">
-                                Crear Usuario
-                            </button>
-                        </div>
-                        <div class="ml-auto p-2 bd-highlight">
-                            <input class="form-control mr-sm-2  mb-2" type="search" wire:model="search"
-                                placeholder="Buscar por nombre" aria-label="Search">
-                        </div>
-                    </div>
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="mb-5">
+                                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                        data-bs-target="#Store">
+                                        Crear Usuario
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-5">
+                                <div class="mb-3">
+                                    <input class="form-control" type="search" wire:model="search"
+                                        placeholder="Buscar por nombre" aria-label="Search">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-2">
+                                <div class="mb-3">
+                                    <select class="form-select digits" wire:model="perPage">
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="250">250</option>
+                                        <option value="500">500</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover card-table table-vcenter text-nowrap">
                                 <thead>
@@ -71,7 +86,8 @@
                                             <td>
                                                 <div class="">
                                                     @if (Auth::user()->id == $item->id)
-                                                        <a type="button" class="btn btn-info" href="{{ url('perfil') }}">
+                                                        <a type="button" class="btn btn-info"
+                                                            href="{{ url('perfil') }}">
                                                             <i class="icofont icofont-open-eye"></i>
                                                         </a>
                                                     @else
@@ -100,7 +116,8 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $apprentices->links() }}
+                            <br>
+                            {{ $users->links() }}
                         </div>
                     </div>
                 </div>

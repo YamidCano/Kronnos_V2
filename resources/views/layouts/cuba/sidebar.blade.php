@@ -18,9 +18,12 @@
                                 aria-hidden="true"></i></div>
                     </li>
                     <li class="sidebar-main-title">
-                        <div>
-                            <h6 class="lan-1">General</h6>
-                            <p class="lan-2">Dashboards,widgets & layout.</p>
+                        <div class="text-center">
+                            <img class="img-70 rounded-circle" alt="" src="https://ui-avatars.com/api/?name={{Auth::user()->first_name}}.'&color=FFFFFF&background=e74c3c">
+                            <div>
+                                <h5 class="mb-1 text-danger">{{Auth::user()->first_name}}</h5>
+                                   <p>Administrador</p>
+                            </div>
                         </div>
                     </li>
                     <li class="sidebar-list">
@@ -29,7 +32,7 @@
                                 data-feather="home"></i><span class="lan-6">Dashboard </span></a>
                     </li>
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
-                                data-feather="users"></i><span class="lan-6">Widgets</span></a>
+                                data-feather="users"></i><span class="lan-6">Usuarios</span></a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ url('usuarios') }}">Listado de Usuarios</a></li>
                             <li><a href="chart-widget.html">Roles y Permisos</a></li>
