@@ -9,6 +9,15 @@ php artisan db:seed
 
 //Ejecutar Migracion paises
 php artisan world:init
+
+php artisan cache:clear
+php artisan view:clear
+php artisan route:cache
+php artisan config:cache
+php artisan optimize
+
+
+php artisan vendor:publish --tag=laravel-errors
 ____________________________________
 
 
@@ -19,5 +28,7 @@ php artisan make:model dashboard -m
 php artisan make:livewire ecommerceView
 php artisan make:model ecommerce -m
 
+php artisan make:livewire user/userView
 
-php artisan make:livewire user/listUser
+php artisan make:livewire user/profileView
+php artisan make:model profile -m

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4dcc87c36f41be1f1ec1a79343ccc8eb",
+    "content-hash": "13d45825d0c2dc47e8c33c71c9d87e19",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -61,6 +61,56 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.0.3"
             },
             "time": "2021-03-11T06:42:03+00:00"
+        },
+        {
+            "name": "bastinald/laravel-livewire-modals",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bastinald/laravel-livewire-modals.git",
+                "reference": "fd53779095ff15d201a2adabdfbde4d101b13d59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bastinald/laravel-livewire-modals/zipball/fd53779095ff15d201a2adabdfbde4d101b13d59",
+                "reference": "fd53779095ff15d201a2adabdfbde4d101b13d59",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0",
+                "livewire/livewire": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bastinald\\LaravelLivewireModals\\Providers\\LaravelLivewireModalsProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bastinald\\LaravelLivewireModals\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Dion",
+                    "email": "bastinald@icloud.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Dynamic Laravel Livewire Bootstrap modals.",
+            "homepage": "https://github.com/bastinald/laravel-livewire-modals",
+            "support": {
+                "issues": "https://github.com/bastinald/laravel-livewire-modals/issues",
+                "source": "https://github.com/bastinald/laravel-livewire-modals/tree/3.0.0"
+            },
+            "time": "2021-09-10T00:08:07+00:00"
         },
         {
             "name": "brick/math",
@@ -1432,6 +1482,72 @@
                 "source": "https://github.com/laravel/ui/tree/v3.3.2"
             },
             "time": "2021-11-05T08:25:44+00:00"
+        },
+        {
+            "name": "laraveles/spanish",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Laraveles/spanish.git",
+                "reference": "2224e3db7ec399952523b0769a7677de0b6afd8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Laraveles/spanish/zipball/2224e3db7ec399952523b0769a7677de0b6afd8b",
+                "reference": "2224e3db7ec399952523b0769a7677de0b6afd8b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": ">=5.4.0",
+                "illuminate/support": ">=5.4.0",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.4|^4.0",
+                "phpunit/phpunit": "^5.6|^6.3|^7.0|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laraveles\\Spanish\\SpanishServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laraveles\\Spanish\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Israel Ortuño",
+                    "email": "ai.ortuno@gmail.com"
+                },
+                {
+                    "name": "Cesar Garcia",
+                    "email": "cesargb@gmail.com",
+                    "homepage": "https://github.com/cesargb",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Conjunto de traducciones en español para Laravel",
+            "homepage": "https://github.com/Laraveles/spanish",
+            "keywords": [
+                "laravel",
+                "laraveles",
+                "spanish",
+                "traduccion"
+            ],
+            "support": {
+                "issues": "https://github.com/Laraveles/spanish/issues",
+                "source": "https://github.com/Laraveles/spanish/tree/master"
+            },
+            "time": "2020-06-30T06:01:43+00:00"
         },
         {
             "name": "league/commonmark",

@@ -11,17 +11,18 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 
     @include('layouts.cuba.head')
     <livewire:styles />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body onload="startTime()">
@@ -65,7 +66,28 @@
     </div>
 
     <livewire:scripts />
+    <livewire:modals/>
     @include('layouts.cuba.plugins')
+
+    @stack('js')
+
+    <script>
+        Livewire.on('alert', function(message) {
+            Swal.fire(
+                '¡Buen trabajo!',
+                message,
+                'success'
+            )
+        });
+
+        window.livewire.on('Store', () => {
+                $('#Store').modal('hide');
+            });
+
+            window.livewire.on('update', () => {
+                $('#update').modal('hide');
+            });
+    </script>
 </body>
 
 </html>
