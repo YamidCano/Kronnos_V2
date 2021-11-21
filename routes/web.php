@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 //Rutas Controladores
 use App\Http\Livewire\User\UserView;
@@ -46,5 +47,7 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
     Route::get('/home', DashboardView::class)->name('home');
     Route::get('/usuarios', UserView::class)->name('usuarios');
     Route::get('/perfil', ProfileView::class)->name('perfil');
-    Route::get('/rolesPermisos', RoleView::class)->name('rolesPermisos');
+
+    Route::get('/rolesPermisos', RoleView::class)->name('rolesPermisos')
+    ->middleware('can_view:Administrador - Tabla');
 });

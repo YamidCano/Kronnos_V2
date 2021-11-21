@@ -5,7 +5,8 @@ namespace App\Http\Livewire\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Darbaoui\Avatar\Facades\Avatar;
 
@@ -17,7 +18,7 @@ class UserView extends Component
 
     //Declaramos variables publicas
     public $perPage = 25;
-    public $search, $search1, $city, $identification, $password, $password_confirmation;
+    public $search, $search1, $city, $identification, $password, $password_confirmation, $selecRole;
     public $user, $user_id, $name,  $first_name, $last_name, $email, $phone, $address, $status = 0;
 
     //Actualizamos la vista
@@ -33,6 +34,7 @@ class UserView extends Component
                     $query->where('first_name', 'like', "%{$this->search}%")
                         ->orWhere('last_name', 'like', "%{$this->search}%")
                         ->orWhere('email', 'like', "%{$this->search}%")
+                        ->orWhere('phone', 'like', "%{$this->search}%")
                         ->orWhere('identification', 'like', "%{$this->search}%");
                 });
             })
@@ -54,9 +56,15 @@ class UserView extends Component
             'city' => '',
             'address' => '',
             'status' => '',
+            'selecRole' => '',
             'password' => '',
             'password_confirmation' => '',
         ];
+    }
+    //Traer Informacion al cargar  la vista
+    public function mount()
+    {
+        $this->roles = Role::orderBy('name')->get();
     }
 
     //Creamos el registro
@@ -72,11 +80,13 @@ class UserView extends Component
             'city' => 'required|min:3|max:256',
             'address' => 'required',
             'status' => 'required',
+            'selecRole' => 'required',
             'password' => 'required|min:6',
             'password_confirmation' => 'same:password',
         ]);
 
-        User::create([ //Guardamos los registros
+        //Guardamos los registros
+        $users = User::create([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'identification' => $this->identification,
@@ -86,14 +96,18 @@ class UserView extends Component
             'address' => $this->address,
             'status' => $this->status,
             'password' => bcrypt($this->password),
+            'id_roles' => $this->selecRole,
         ]);
+
+        //Asignamos al usuario el rol selecionado
+        $users->assignRole([$this->selecRole]);
         //Cerramos la ventana modal
         $this->emit('Store');
         //Limpiamos validaciones
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['last_name', 'first_name', 'email', 'phone', 'city', 'address', 'identification']);
+        $this->reset(['last_name', 'first_name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'selecRole']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -110,6 +124,7 @@ class UserView extends Component
         $this->phone = $user->phone;
         $this->address = $user->address;
         $this->status = $user->status;
+        $this->selecRole = $user->id_roles;
         $this->city = $user->city;
     }
 
@@ -125,6 +140,7 @@ class UserView extends Component
             'phone' => 'required|min:3|max:11',
             'city' => 'required|min:3|max:256',
             'address' => 'required',
+            'selecRole' => 'required',
             'password_confirmation' => 'same:password',
         ]);
 
@@ -137,12 +153,13 @@ class UserView extends Component
             $update->phone = $this->phone;
             $update->address = $this->address;
             $update->city = $this->city;
+            $update->id_roles = $this->selecRole;
 
             if (!is_null($this->password)) {
                 $update->password = Hash::make($this->password);
             }
-
-            // $update->syncRoles([$this->user->id_roles]);
+            //Asignamos al usuario el rol selecionado
+            $update->syncRoles([$this->selecRole]);
 
             $update->save();
         }

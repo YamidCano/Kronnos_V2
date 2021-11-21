@@ -168,6 +168,13 @@
                                     class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Selecione Rol *</label>
+                                <select class="form-control" wire:model="selecRole">
+                                    <option value="">{{ __('Selecione Rol') }} *</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <br>
@@ -274,6 +281,13 @@
                                     class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Selecione Rol *</label>
+                                <select class="form-control" wire:model="selecRole">
+                                    <option value="">{{ __('Selecione Rol') }} *</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <br>
