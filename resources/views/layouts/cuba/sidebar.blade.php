@@ -35,7 +35,7 @@
                                 data-feather="users"></i><span class="lan-6">Usuarios</span></a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ url('usuarios') }}">Listado de Usuarios</a></li>
-                            <li><a href="chart-widget.html">Roles y Permisos</a></li>
+                            <li><a href="{{ url('rolesPermisos') }}">Roles y Permisos</a></li>
                         </ul>
                     </li>
 

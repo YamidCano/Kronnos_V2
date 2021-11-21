@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 //Rutas Controladores
 use App\Http\Livewire\User\UserView;
 use App\Http\Livewire\User\ProfileView;
+use App\Http\Livewire\User\RoleView;
 use App\Http\Livewire\DashboardView;
 use App\Http\Livewire\EcommerceView;
 
@@ -43,6 +44,7 @@ Route::get('/', EcommerceView::class)->name('ecommerce');
 Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
 
     Route::get('/home', DashboardView::class)->name('home');
-    Route::get('/usuarios', UserView::class)->name('users');
-    Route::get('/perfil', ProfileView::class)->name('profile');
+    Route::get('/usuarios', UserView::class)->name('usuarios');
+    Route::get('/perfil', ProfileView::class)->name('perfil');
+    Route::get('/rolesPermisos', RoleView::class)->name('rolesPermisos');
 });

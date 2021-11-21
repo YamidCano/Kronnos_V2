@@ -32,3 +32,6 @@ php artisan make:livewire user/userView
 
 php artisan make:livewire user/profileView
 php artisan make:model profile -m
+
+php artisan make:livewire user/roleView
+php artisan make:model role -m
