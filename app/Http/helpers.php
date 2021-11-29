@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use App\Http\Middleware\CanView;
 
 function canView(string $permission): bool
 {

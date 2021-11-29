@@ -8,7 +8,6 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
-use Darbaoui\Avatar\Facades\Avatar;
 
 class UserView extends Component
 {
@@ -19,10 +18,12 @@ class UserView extends Component
     //Declaramos variables publicas
     public $perPage = 25;
     public $search, $search1, $city, $identification, $password, $password_confirmation, $selecRole;
-    public $user, $user_id, $name,  $first_name, $last_name, $email, $phone, $address, $status = 0;
+    public $user, $user_id, $name, $last_name, $email, $phone, $address, $status = 0;
+    public $Role, $Role_id, $role;
+    public $permission_check = [];
 
     //Actualizamos la vista
-    protected $listeners = ['statusActivate', 'statusDeactivate'];
+    protected $listeners = ['statusActivate', 'statusDeactivate', 'addPermission'];
 
     public function render()
     {
@@ -31,7 +32,7 @@ class UserView extends Component
             // ->where('name', 'like', "%{$this->search}%")
             ->when($this->search, function ($query) {
                 return $query->where(function ($query) {
-                    $query->where('first_name', 'like', "%{$this->search}%")
+                    $query->where('name', 'like', "%{$this->search}%")
                         ->orWhere('last_name', 'like', "%{$this->search}%")
                         ->orWhere('email', 'like', "%{$this->search}%")
                         ->orWhere('phone', 'like', "%{$this->search}%")
@@ -48,7 +49,7 @@ class UserView extends Component
     function rules()
     {
         return [
-            'first_name' => '',
+            'name' => '',
             'last_name' => '',
             'identification' => '',
             'email' => '',
@@ -61,6 +62,12 @@ class UserView extends Component
             'password_confirmation' => '',
         ];
     }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
     //Traer Informacion al cargar  la vista
     public function mount()
     {
@@ -72,7 +79,7 @@ class UserView extends Component
     {
         //Validamos los campos
         $this->validate([
-            'first_name' => 'required|min:3|max:256',
+            'name' => 'required|min:3|max:256',
             'last_name' => 'required|min:3|max:256',
             'identification' => 'required|min:7|max:10|unique:App\Models\User,identification',
             'email' => 'required|min:3|max:50|email|unique:App\Models\User,email',
@@ -87,7 +94,7 @@ class UserView extends Component
 
         //Guardamos los registros
         $users = User::create([
-            'first_name' => $this->first_name,
+            'name' => $this->name,
             'last_name' => $this->last_name,
             'identification' => $this->identification,
             'email' => $this->email,
@@ -107,7 +114,7 @@ class UserView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['last_name', 'first_name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'selecRole']);
+        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'selecRole']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -117,7 +124,7 @@ class UserView extends Component
     {
         $this->user = $user;
         $this->user_id = $user->id;
-        $this->first_name = $user->first_name;
+        $this->name = $user->name;
         $this->last_name = $user->last_name;
         $this->identification = $user->identification;
         $this->email = $user->email;
@@ -133,7 +140,7 @@ class UserView extends Component
     {
         //Validamos los campos
         $this->validate([
-            'first_name' => 'required|min:3|max:256',
+            'name' => 'required|min:3|max:256',
             'last_name' => 'required|min:3|max:256',
             'identification' => 'required|min:7|max:10|unique:App\Models\User,identification,' . optional($this->user)->id,
             'email' => 'required|min:3|max:50|email|unique:App\Models\User,email,' . optional($this->user)->id,
@@ -146,7 +153,7 @@ class UserView extends Component
 
         //Guardamos los registros
         if ($update = User::where('id', $this->user->id)->first()) {
-            $update->first_name = $this->first_name;
+            $update->name = $this->name;
             $update->last_name = $this->last_name;
             $update->identification = $this->identification;
             $update->email = $this->email;
@@ -169,7 +176,7 @@ class UserView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['last_name', 'first_name', 'email', 'phone', 'city', 'address', 'identification']);
+        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro Actualizada sastifactoriamente');
     }
@@ -181,7 +188,7 @@ class UserView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['last_name', 'first_name', 'email', 'phone', 'city', 'address', 'identification']);
+        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification']);
     }
 
     //Activar Usuario
@@ -206,9 +213,29 @@ class UserView extends Component
         }
     }
 
-    //
-    // protected function defaultProfilePhotoUrl()
-    // {
-    //     return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=FFFFFF&background=02555d';
-    // }
+    public function addPermission(User $puser)
+    {
+        $permissions = Permission::orderBy('name')->get();
+        $this->puser = $puser;
+
+        $havePermission = $puser->getPermissionsViaRoles();
+
+        foreach($permissions as $p){
+            if($puser->hasPermissionTo($p)){
+                $this->permission_check[$p->name]['check'] = true;
+            }else {
+                $this->permission_check[$p->name]['check'] = false;
+            }
+            $this->permission_check[$p->name]['id'] = $p->id;
+        }
+    }
+
+    public function addPermissionKey($permission)
+    {
+        if(!$this->puser->hasPermissionTo($permission)){
+            $this->puser->givePermissionTo($permission);
+        } else {
+            $this->puser->revokePermissionTo($permission);
+        }
+    }
 }

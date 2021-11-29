@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Darbaoui\Avatar\Facades\Avatar;
+use Spatie\Permission\Models\Role;
 
 class ProfileView extends Component
 {
@@ -15,8 +15,8 @@ class ProfileView extends Component
     protected $paginationTheme = 'bootstrap';
 
     //Declaramos variables publicas
-    public $search, $search1, $city, $identification , $password, $password_confirmation;
-    public $user, $user_id, $name,  $first_name, $last_name, $email, $phone, $address, $status = 0;
+    public $search, $search1, $city, $identification, $password, $password_confirmation, $selecRole;
+    public $user, $user_id, $name, $last_name, $email, $phone, $address, $status = 0;
 
     //Actualizamos la vista
     protected $listeners = ['statusActivate', 'statusDeactivate'];
@@ -27,92 +27,97 @@ class ProfileView extends Component
         return view('livewire.user.profile-view');
     }
 
+    //Traer Informacion al cargar  la vista
     public function mount()
     {
 
         $this->user_id = auth()->user()->id;
-        $this->first_name = auth()->user()->first_name;
+        $this->name = auth()->user()->name;
         $this->last_name = auth()->user()->last_name;
         $this->identification = auth()->user()->identification;
-        $this->email =auth()->user()->email;
+        $this->email = auth()->user()->email;
         $this->phone = auth()->user()->phone;
         $this->address = auth()->user()->address;
         $this->city = auth()->user()->city;
+        $this->selecRole = auth()->user()->id_roles;
 
         $user = User::find($this->user_id);
         $this->user = $user;
+
+        $this->roles = Role::orderBy('name')->get();
     }
 
-        //Decleramos campos sin validar
-        function rules()
-        {
-            return [
-                'first_name' => 'required|min:3|max:256',
-                'last_name' => 'required|min:3|max:256',
-                'identification' => 'required|min:7|max:10|unique:App\Models\User,identification,'. optional($this->user)->id,
-                'email' => 'required|min:3|max:50|email|unique:App\Models\User,email,'. optional($this->user)->id,
-                'phone' => 'required|min:3|max:11',
-                'city' => 'required|min:3|max:256',
-                'address' => 'required',
-                'password_confirmation' => 'same:password',
-            ];
-        }
+    //Decleramos campos sin validar
+    function rules()
+    {
+        return [
+            'name' => 'required|min:3|max:256',
+            'last_name' => 'required|min:3|max:256',
+            'identification' => 'required|min:7|max:10|unique:App\Models\User,identification,' . optional($this->user)->id,
+            'email' => 'required|min:3|max:50|email|unique:App\Models\User,email,' . optional($this->user)->id,
+            'phone' => 'required|min:3|max:11',
+            'city' => 'required|min:3|max:256',
+            'address' => 'required',
+            'selecRole' => 'required',
+            'password_confirmation' => 'same:password',
+        ];
+    }
 
-        //Tramos los datos al editar y lo volcamos en variables
-        public function edit(User $user)
-        {
+    //Tramos los datos al editar y lo volcamos en variables
+    public function edit(User $user)
+    {
+    }
 
-        }
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
-        public function updated($propertyName)
-        {
-            $this->validateOnly($propertyName);
-        }
+    //Actualizamos formulario de edicion
+    public function update()
+    {
+        //Validamos los campos
+        $this->validate();
+        //Guardamos los registros
+        if ($update = User::where('id', auth()->user()->id)->first()) {
+            $update->name = $this->name;
+            $update->last_name = $this->last_name;
+            $update->identification = $this->identification;
+            $update->email = $this->email;
+            $update->phone = $this->phone;
+            $update->address = $this->address;
+            $update->city = $this->city;
+            $update->id_roles = $this->selecRole;
 
-        //Actualizamos formulario de edicion
-        public function update()
-        {
-            //Validamos los campos
-            $this->validate();
-            //Guardamos los registros
-            if ($update = User::where('id', auth()->user()->id)->first()) {
-                $update->first_name = $this->first_name;
-                $update->last_name = $this->last_name;
-                $update->identification = $this->identification;
-                $update->email = $this->email;
-                $update->phone = $this->phone;
-                $update->address = $this->address;
-                $update->city = $this->city;
-
-                if (!is_null($this->password)) {
-                    $update->password = Hash::make($this->password);
-                }
-
-                // $update->syncRoles([$this->user->id_roles]);
-
-                $update->save();
+            if (!is_null($this->password)) {
+                $update->password = Hash::make($this->password);
             }
-            //Cerramos la ventana modal
-            $this->emit('update');
-            //Limpiamos validaciones
-            $this->resetErrorBag();
-            $this->resetValidation();
-            //Limpiamos Campos
-            $this->reset(['last_name', 'first_name', 'email', 'phone', 'city', 'address', 'identification']);
-            //Enviamos el mensaje de confirmacion
-            $this->emit('alert', 'Registro Actualizada sastifactoriamente');
-            //Redireccionar a la pagina home
-            return redirect()->to('/home');
-        }
+            //Asignamos al usuario el rol selecionado
+            $update->syncRoles([$this->selecRole]);
 
-        //Cerrar una ventana modal
-        public function close()
-        {
-            //Limpiamos validaciones
-            $this->resetErrorBag();
-            $this->resetValidation();
-            //Limpiamos Campos
-            $this->reset(['last_name', 'first_name', 'email', 'phone', 'city', 'address', 'identification']);
-        }
 
+            $update->save();
+        }
+        //Cerramos la ventana modal
+        $this->emit('update');
+        //Limpiamos validaciones
+        $this->resetErrorBag();
+        $this->resetValidation();
+        //Limpiamos Campos
+        $this->reset(['name', 'last_name', 'email', 'phone', 'city', 'address', 'identification']);
+        //Enviamos el mensaje de confirmacion
+        $this->emit('alert', 'Registro Actualizada sastifactoriamente');
+        //Redireccionar a la pagina home
+        return redirect()->to('/home');
+    }
+
+    //Cerrar una ventana modal
+    public function close()
+    {
+        //Limpiamos validaciones
+        $this->resetErrorBag();
+        $this->resetValidation();
+        //Limpiamos Campos
+        $this->reset(['name', 'last_name', 'email', 'phone', 'city', 'address', 'identification']);
+    }
 }

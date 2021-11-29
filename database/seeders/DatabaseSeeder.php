@@ -20,13 +20,19 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $Administrador = User::factory()->create([
-            'first_name' => 'Kronnos',
-            'email' => 'admin@gmail.com',
+            'name' => 'Kronnos',
+            'last_name' => 'Business',
+            'identification' => '9005213556',
+            'email' => 'admin@kronnos.com',
+            'phone' => '3215555555',
+            'address' => 'Bogota',
+            'city' => 'Bogota DC',
             'password' => Hash::make('123456'),
         ]);
 
         $admin = Role::create(['name' => 'Administrador']);
         $usuarios = Role::create(['name' => 'Usuario']);
+        $RoleyPermisos = Role::create(['name' => 'Role y Permisos']);
 
         //crud de usuarios
         $permission = [
@@ -48,6 +54,7 @@ class DatabaseSeeder extends Seeder
 
         $admin->syncPermissions(Permission::all());
         $usuarios->syncPermissions(Permission::where('name', 'like', "%Usuario%")->get());
+        $RoleyPermisos->syncPermissions(Permission::where('name', 'like', "%Role y Permisos%")->get());
 
         $Administrador->assignRole('Administrador');
     }

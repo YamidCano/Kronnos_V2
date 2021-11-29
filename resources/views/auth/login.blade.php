@@ -96,8 +96,10 @@
                                 <div class="form-group">
                                     <label class="col-form-label">Email Address</label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
-
+                                        name="email" value="admin@kronnos.com{{ old('email') }}" required autocomplete="off" autofocus>
+                                        <span>
+                                            <strong>admin@kronnos.com</strong>
+                                        </span>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -107,10 +109,12 @@
                                 <div class="form-group">
                                     <label class="col-form-label">Password</label>
                                     <div class="form-input position-relative">
-                                        <input id="password" type="password"
+                                        <input id="password" type="password" value="123456"
                                             class="form-control @error('password') is-invalid @enderror" name="password"
                                             required autocomplete="current-password">
-
+                                            <span>
+                                                <strong>123456</strong>
+                                            </span>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
