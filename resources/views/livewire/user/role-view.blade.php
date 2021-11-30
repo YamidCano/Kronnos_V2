@@ -29,7 +29,7 @@
                                 </button>
                             </div>
                         @endcan
-                        <h4 class="m-2">Roles</h4>
+                        <h4 class="m-2">{{ trans('lang.Role') }}</h4>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>

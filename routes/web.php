@@ -30,7 +30,8 @@ Route::get('/', EcommerceView::class)->name('ecommerce');
 Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
 
     Route::get('/home', DashboardView::class)->name('home');
-    Route::get('/usuarios', UserView::class)->name('usuarios');
+    Route::get('/usuarios', UserView::class)->name('usuarios')
+    ->middleware('can_view:Usuario - Tabla');
     Route::get('/perfil', ProfileView::class)->name('perfil');
 
     Route::get('/rolesPermisos', RoleView::class)->name('rolesPermisos')

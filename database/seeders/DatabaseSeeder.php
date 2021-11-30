@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $admin = Role::create(['name' => 'Administrador']);
         $usuarios = Role::create(['name' => 'Usuario']);
         $RoleyPermisos = Role::create(['name' => 'Role y Permisos']);
+        $RoleyPermisos = Role::create(['name' => 'Ventas']);
 
         //crud de usuarios
         $permission = [
@@ -55,6 +56,7 @@ class DatabaseSeeder extends Seeder
         $admin->syncPermissions(Permission::all());
         $usuarios->syncPermissions(Permission::where('name', 'like', "%Usuario%")->get());
         $RoleyPermisos->syncPermissions(Permission::where('name', 'like', "%Role y Permisos%")->get());
+        $RoleyPermisos->syncPermissions(Permission::where('name', 'like', "%Ventas%")->get());
 
         $Administrador->assignRole('Administrador');
     }
