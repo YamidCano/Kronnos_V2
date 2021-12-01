@@ -59,8 +59,8 @@
                                         <th>identification</th>
                                         <th>Correo</th>
                                         <th>Telefono</th>
-                                        <th>Address</th>
-                                        <th>City</th>
+                                        <th>Direccio</th>
+                                        <th>Estado</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -81,10 +81,21 @@
                                             </td>
                                             <td>
                                                 {{ $item->address }}
-                                            </td>
-                                            <td>
+                                                <br>
                                                 {{ $item->city }}
                                             </td>
+                                            <th>
+                                                @if ($item->status == 0)
+                                                    <div class="text-success">
+                                                        Activo
+                                                    </div>
+                                                @else
+                                                    <div class="text-danger">
+                                                        Desactivado
+                                                    </div>
+                                                @endif
+
+                                            </th>
                                             <td>
                                                 <div class="">
                                                     @if (Auth::user()->id == $item->id)

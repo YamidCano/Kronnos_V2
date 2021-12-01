@@ -114,7 +114,7 @@ class UserView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'selecRole']);
+        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'password_confirmation', 'selecRole']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -176,7 +176,7 @@ class UserView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification']);
+        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'password_confirmation', 'selecRole']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro Actualizada sastifactoriamente');
     }
@@ -188,7 +188,7 @@ class UserView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification']);
+        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'password_confirmation', 'selecRole']);
     }
 
     //Activar Usuario

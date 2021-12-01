@@ -50,7 +50,7 @@
                                         class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="col-lg mg-t-10 mg-lg-t-0">
-                                    <label for="Name">Selecione Rol *</label>
+                                    {{-- <label for="Name">Selecione Rol *</label>
                                     <select  wire:model="selecRole" class="form-control @error('selecRole') is-invalid @enderror">
                                         <option value="">{{ __('Selecione Rol') }} *</option>
                                         @foreach ($roles as $role)
@@ -58,7 +58,7 @@
                                         @endforeach
                                     </select>
                                     @error('selecRole') <span
-                                    class="text-danger error">{{ $message }}</span>@enderror
+                                    class="text-danger error">{{ $message }}</span>@enderror --}}
                                 </div>
                             </div>
                             <br>

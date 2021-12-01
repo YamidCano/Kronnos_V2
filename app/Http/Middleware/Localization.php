@@ -21,10 +21,10 @@ class Localization
         $this->app = $app;
         $this->request = $request;
     }
-    
+
     public function handle(Request $request, Closure $next)
     {
-        $this->app->setLocale(session()->get('locale') ?? 'en');
+        $this->app->setLocale(session()->get('locale') ?? 'es');
         return $next($request);
     }
 }

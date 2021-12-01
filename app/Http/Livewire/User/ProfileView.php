@@ -39,7 +39,7 @@ class ProfileView extends Component
         $this->phone = auth()->user()->phone;
         $this->address = auth()->user()->address;
         $this->city = auth()->user()->city;
-        $this->selecRole = auth()->user()->id_roles;
+        // $this->selecRole = auth()->user()->id_roles;
 
         $user = User::find($this->user_id);
         $this->user = $user;
@@ -58,7 +58,7 @@ class ProfileView extends Component
             'phone' => 'required|min:3|max:11',
             'city' => 'required|min:3|max:256',
             'address' => 'required',
-            'selecRole' => 'required',
+            // 'selecRole' => 'required',
             'password_confirmation' => 'same:password',
         ];
     }
@@ -87,13 +87,13 @@ class ProfileView extends Component
             $update->phone = $this->phone;
             $update->address = $this->address;
             $update->city = $this->city;
-            $update->id_roles = $this->selecRole;
+            // $update->id_roles = $this->selecRole;
 
             if (!is_null($this->password)) {
                 $update->password = Hash::make($this->password);
             }
             //Asignamos al usuario el rol selecionado
-            $update->syncRoles([$this->selecRole]);
+            // $update->syncRoles([$this->selecRole]);
 
 
             $update->save();
@@ -104,11 +104,11 @@ class ProfileView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'last_name', 'email', 'phone', 'city', 'address', 'identification']);
+        // $this->reset(['name', 'last_name', 'email', 'phone', 'city', 'address', 'identification']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro Actualizada sastifactoriamente');
         //Redireccionar a la pagina home
-        return redirect()->to('/home');
+        // return redirect()->to('/home');
     }
 
     //Cerrar una ventana modal
