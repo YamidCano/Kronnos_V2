@@ -32,3 +32,40 @@ php artisan make:livewire user/userView
 
 php artisan make:livewire user/profileView
 php artisan make:model profile -m
+
+
+PAYROLL_HISTORIES
+php artisan make:livewire payroll_historiesView
+php artisan make:model payroll_histories -m
+
+CREDIT_HISTORIES
+php artisan make:livewire credit_historiesView
+php artisan make:model credit_histories -m
+
+PAYMENT_TYPES
+php artisan make:livewire payment_typesView
+php artisan make:model payment_types -m
+
+PRODUCT_TYPES
+php artisan make:livewire product_typesView
+php artisan make:model product_types -m
+
+PROVIDERS
+php artisan make:livewire providersView
+php artisan make:model providers -m
+
+PRODUCTS
+php artisan make:livewire productsView
+php artisan make:model products -m
+
+INVENTORIES
+php artisan make:livewire inventoriesView
+php artisan make:model inventories -m
+
+BILL_DETAILS
+php artisan make:livewire bill_detailsView
+php artisan make:model bill_details -m
+
+BILLS
+php artisan make:livewire billsView
+php artisan make:model bills -m
