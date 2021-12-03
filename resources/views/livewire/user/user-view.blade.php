@@ -24,17 +24,19 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-5">
-                                <div class="mb-5">
-                                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                        data-bs-target="#Store">
-                                        Crear Usuario
-                                    </button>
-                                </div>
+                                @can('Usuario - Crear')
+                                    <div class="mb-3">
+                                        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                            data-bs-target="#Store">
+                                            Crear Usuario
+                                        </button>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="col-sm-6 col-md-5">
                                 <div class="mb-3">
-                                    <input class="form-control" type="search" wire:model="search"
-                                        placeholder="Buscar por nombre" aria-label="Search">
+                                    <input class="form-control" type="search" wire:model="search" placeholder="Buscar"
+                                        aria-label="Search">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-2">
@@ -57,8 +59,8 @@
                                         <th>identification</th>
                                         <th>Correo</th>
                                         <th>Telefono</th>
-                                        <th>Address</th>
-                                        <th>City</th>
+                                        <th>Direccio</th>
+                                        <th>Estado</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -66,7 +68,7 @@
                                     @foreach ($users as $item)
                                         <tr>
                                             <td>
-                                                {{ $item->first_name }} {{ $item->last_name }}
+                                                {{ $item->name }} {{ $item->last_name }}
                                             </td>
                                             <td>
                                                 {{ $item->identification }}
@@ -79,10 +81,21 @@
                                             </td>
                                             <td>
                                                 {{ $item->address }}
-                                            </td>
-                                            <td>
+                                                <br>
                                                 {{ $item->city }}
                                             </td>
+                                            <th>
+                                                @if ($item->status == 0)
+                                                    <div class="text-success">
+                                                        Activo
+                                                    </div>
+                                                @else
+                                                    <div class="text-danger">
+                                                        Desactivado
+                                                    </div>
+                                                @endif
+
+                                            </th>
                                             <td>
                                                 <div class="">
                                                     @if (Auth::user()->id == $item->id)
@@ -91,25 +104,36 @@
                                                             <i class="icofont icofont-open-eye"></i>
                                                         </a>
                                                     @else
-                                                        <button type="button" class="btn btn-info"
-                                                            wire:click="edit({{ $item->id }})" wire:target="edit"
-                                                            data-bs-toggle="modal" data-bs-target="#update">
-                                                            <i class="icofont icofont-ui-edit"></i>
-                                                        </button>
-                                                        @if ($item->status == 1)
-                                                            <button type="button" class="btn btn-success"
-                                                                wire:click="$emit('ActivateUser', {{ $item->id }})"
-                                                                wire:target="ActivateUser">
-                                                                <i class="icofont icofont-ui-check"></i>
+                                                        @can('Usuario - Editar')
+                                                            <button type="button" class="btn btn-info"
+                                                                wire:click="edit({{ $item->id }})" wire:target="edit"
+                                                                data-bs-toggle="modal" data-bs-target="#update">
+                                                                <i class="icofont icofont-ui-edit"></i>
                                                             </button>
-                                                        @else
-                                                            <button type="button" class="btn btn-danger"
-                                                                wire:click="$emit('DeactivateUser', {{ $item->id }})"
-                                                                wire:target="DeactivateUser">
-                                                                <i class="icofont icofont-ui-close"></i>
-                                                            </button>
-                                                        @endif
+                                                        @endcan
+                                                        @can('Usuario - Desativar')
+                                                            @if ($item->status == 1)
+                                                                <button type="button" class="btn btn-success"
+                                                                    wire:click="$emit('ActivateUser', {{ $item->id }})"
+                                                                    wire:target="ActivateUser">
+                                                                    <i class="icofont icofont-ui-unlock"></i>
+                                                                </button>
+                                                            @else
+                                                                <button type="button" class="btn btn-danger"
+                                                                    wire:click="$emit('DeactivateUser', {{ $item->id }})"
+                                                                    wire:target="DeactivateUser">
+                                                                    <i class="icofont icofont-ui-lock"></i>
+                                                                </button>
+                                                            @endif
+                                                        @endcan
                                                     @endif
+                                                    @can('Usuario - Permisos')
+                                                        <button type="button" class="btn btn-success"
+                                                            wire:click="$emit('addPermission', {{ $item->id }})"
+                                                            data-bs-toggle="modal" data-bs-target="#permissionModal">
+                                                            <i class="icofont icofont-paper"></i>
+                                                        </button>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>
@@ -145,10 +169,8 @@
                             <div class="col-lg">
                                 <label for="Name">Nombres *</label>
                                 <input type="text" placeholder="Nombres"
-                                    class="form-control @error('first_name') is-invalid @enderror"
-                                    wire:model="first_name" />
-                                @error('first_name') <span
-                                    class="text-danger error">{{ $message }}</span>@enderror
+                                    class="form-control @error('name') is-invalid @enderror" wire:model="name" />
+                                @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Apellidos *</label>
@@ -168,6 +190,15 @@
                                     class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Selecione Rol *</label>
+                                <select wire:model="selecRole"
+                                    class="form-control @error('selecRole') is-invalid @enderror">
+                                    <option value="">{{ __('Selecione Rol') }} *</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('selecRole') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                         </div>
                         <br>
@@ -251,10 +282,8 @@
                             <div class="col-lg">
                                 <label for="Name">Nombres *</label>
                                 <input type="text" placeholder="Nombres"
-                                    class="form-control @error('first_name') is-invalid @enderror"
-                                    wire:model="first_name" />
-                                @error('first_name') <span
-                                    class="text-danger error">{{ $message }}</span>@enderror
+                                    class="form-control @error('name') is-invalid @enderror" wire:model="name" />
+                                @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Apellidos *</label>
@@ -274,6 +303,16 @@
                                     class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Selecione Rol *</label>
+                                <select wire:model="selecRole"
+                                    class="form-control @error('selecRole') is-invalid @enderror">
+                                    <option value="">{{ __('Selecione Rol') }} *</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('selecRole') <span
+                                    class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                         </div>
                         <br>
@@ -334,6 +373,74 @@
                     <button type="button" class="btn btn-secondary" wire:click="close"
                         data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" wire:click="update">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Permission -->
+    <div wire:ignore.self class="modal fade" id="permissionModal" data-bs-backdrop="static"
+        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        {{ __('Permisos') }}
+                    </h5>
+                    <button type="button" class="btn-close" wire:click="close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+
+                    <div wire:loading wire:target="addPermissionKey"
+                        class="spinner-border spinner-border-sm text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="container">
+                            <div class="table-responsive" id="caja">
+                                <table class="table card-table table-vcenter text-nowrap">
+                                    <tbody>
+                                        @foreach ($permission_check as $key => $p)
+                                            <tr>
+                                                <td class="btn-group">
+                                                    <div>
+                                                        @if ($p['check'])
+                                                            <span class="mr-2 ml-1 text-primary fa fa-check"></span>
+                                                        @else
+                                                            <span class="mr-3 ml-1 text-danger fa fa-times"></span>
+                                                        @endif
+                                                    </div>
+                                                    <div>
+                                                        <label class="form-check-label h6" for="{{ $key }}">
+                                                            {{ $key }}
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-lg mg-t-10 mg-lg-t-0">
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="{{ $key }}"
+                                                                wire:model="permission_check.{{ $key }}.check"
+                                                                wire:click="addPermissionKey('{{ $key }}')"
+                                                                wire:loading.attr="disabled"
+                                                                class="dasabled:opacity-25">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" wire:click="close"
+                        data-bs-dismiss="modal">Close</button>
+
                 </div>
             </div>
         </div>

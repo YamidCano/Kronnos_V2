@@ -19,10 +19,11 @@
                     </li>
                     <li class="sidebar-main-title">
                         <div class="text-center">
-                            <img class="img-70 rounded-circle" alt="" src="https://ui-avatars.com/api/?name={{Auth::user()->first_name}}.'&color=FFFFFF&background=e74c3c">
+                            <img class="img-70 rounded-circle" alt=""
+                                src="https://ui-avatars.com/api/?name={{ Auth::user()->name }} {{ Auth::user()->last_name }}.'&color=FFFFFF&background=e74c3c">
                             <div>
-                                <h5 class="mb-1 text-danger">{{Auth::user()->first_name}}</h5>
-                                   <p>Administrador</p>
+                                <h5 class="mb-1 text-danger">{{ Auth::user()->name }}</h5>
+                                <p>{{ Auth::user()->last_name }}</p>
                             </div>
                         </div>
                     </li>
@@ -31,14 +32,19 @@
                         <a class="sidebar-link sidebar-title" href="{{ url('home') }}"><i
                                 data-feather="home"></i><span class="lan-6">Dashboard </span></a>
                     </li>
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
-                                data-feather="users"></i><span class="lan-6">Usuarios</span></a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ url('usuarios') }}">Listado de Usuarios</a></li>
-                            <li><a href="chart-widget.html">Roles y Permisos</a></li>
-                        </ul>
-                    </li>
-
+                    @if (canView('Usuario - Tabla') or canView('Role y Permisos - Tabla'))
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
+                                    data-feather="users"></i><span class="lan-6">Usuarios</span></a>
+                            <ul class="sidebar-submenu">
+                                @if (canView('Usuario - Tabla'))
+                                    <li><a href="{{ url('usuarios') }}">Listado de Usuarios</a></li>
+                                @endif
+                                @if (canView('Role y Permisos - Tabla'))
+                                    <li><a href="{{ url('rolesPermisos') }}">Roles y Permisos</a></li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

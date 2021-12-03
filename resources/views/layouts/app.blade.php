@@ -50,7 +50,7 @@
             <!-- Page Sidebar Start-->
             @include('layouts.cuba.sidebar')
             <!-- Page Sidebar Ends-->
-            <div class="page-body">
+            <div class="page-body mb-5">
                 @hasSection('content')
                     <main>
                         @yield('content')

@@ -69,3 +69,5 @@ php artisan make:model bill_details -m
 BILLS
 php artisan make:livewire billsView
 php artisan make:model bills -m
+php artisan make:livewire user/roleView
+php artisan make:model role -m

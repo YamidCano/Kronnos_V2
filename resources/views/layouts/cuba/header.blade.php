@@ -152,30 +152,30 @@
         </div>
         <div class="nav-right col-8 pull-right right-header p-0">
             <ul class="nav-menus">
-                {{-- <li class="language-nav">
+                <li class="language-nav">
                     <div class="translate_wrapper">
                         <div class="current_lang">
-                            <div class="lang"><i class="flag-icon flag-icon-us"></i><span
-                                    class="lang-txt">EN </span></div>
+                            <div class="lang"><i
+                                    class="flag-icon flag-icon-{{ App::getLocale() == 'en' ? 'us' : App::getLocale() }}"></i><span
+                                    class="lang-txt">{{ App::getLocale() }} </span></div>
                         </div>
                         <div class="more_lang">
-                            <div class="lang selected" data-value="en"><i class="flag-icon flag-icon-us"></i><span
-                                    class="lang-txt">English<span> (US)</span></span></div>
-                            <div class="lang" data-value="de"><i class="flag-icon flag-icon-de"></i><span
-                                    class="lang-txt">Deutsch</span></div>
-                            <div class="lang" data-value="es"><i class="flag-icon flag-icon-es"></i><span
-                                    class="lang-txt">Español</span></div>
-                            <div class="lang" data-value="fr"><i class="flag-icon flag-icon-fr"></i><span
-                                    class="lang-txt">Français</span></div>
-                            <div class="lang" data-value="pt"><i class="flag-icon flag-icon-pt"></i><span
-                                    class="lang-txt">Português<span> (BR)</span></span></div>
-                            <div class="lang" data-value="cn"><i class="flag-icon flag-icon-cn"></i><span
-                                    class="lang-txt">简体中文</span></div>
-                            <div class="lang" data-value="ae"><i class="flag-icon flag-icon-ae"></i><span
-                                    class="lang-txt">لعربية <span> (ae)</span></span></div>
+                            <a href="{{ route('lang', 'es') }}"
+                                class="{{ App::getLocale() == 'en' ? 'active' : '' }}">
+                                <div class="lang {{ App::getLocale() == 'es' ? 'selected' : '' }}" data-value="es">
+                                    <i class="flag-icon flag-icon-es"></i> <span class="lang-txt">Español</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('lang', 'en') }}"
+                                class="{{ App::getLocale() == 'en' ? 'active' : '' }}">
+                                <div class="lang {{ App::getLocale() == 'en' ? 'selected' : '' }}" data-value="en">
+                                    <i class="flag-icon flag-icon-us"></i> <span
+                                        class="lang-txt">English</span><span> (US)</span>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                </li> --}}
+                </li>
                 {{-- <li> <span class="header-search"><i data-feather="search"></i></span></li> --}}
                 {{-- <li class="onhover-dropdown">
                     <div class="notification-box"><i data-feather="bell"> </i><span
@@ -347,20 +347,24 @@
                         onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
                 <li class="profile-nav onhover-dropdown p-0 me-0">
                     <div class="media profile-media">
-                        <img height="40" class="b-r-10" src="https://ui-avatars.com/api/?name={{Auth::user()->first_name}}.'&color=FFFFFF&background=e74c3c" alt="">
-                        <div class="media-body"><span>{{Auth::user()->first_name}}</span>
-                            <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
+                        <img height="40" class="b-r-10"
+                            src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}  {{ Auth::user()->last_name }}.'&color=FFFFFF&background=e74c3c"
+                            alt="">
+                        <div class="media-body"><span>{{ Auth::user()->name }}</span>
+                            <p class="mb-0 font-roboto">{{ Auth::user()->last_name }}<i
+                                    class="middle fa fa-angle-down"></i></p>
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="{{ url('perfil') }}"><i data-feather="user"></i><span>Perfil </span></a></li>
+                        <li><a href="{{ url('perfil') }}"><i data-feather="user"></i><span>{{ trans('lang.Profile') }}</span></a></li>
                         {{-- <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
                         <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li> --}}
-                        <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
+                        <li><a href="#"><i data-feather="settings"></i><span>{{ trans('lang.Settings') }}</span></a>
+                        </li>
                         <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                 <i data-feather="log-in">
-                                </i><span>{{ __('Logout') }}</span></a></li>
+                                </i><span>{{ trans('lang.Logout') }}</span></a></li>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
@@ -371,14 +375,14 @@
         </div>
         <script class="result-template" type="text/x-handlebars-template">
             <div class="ProfileCard u-cf">
-                                                        <div class="ProfileCard-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay m-0"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg></div>
-                                                        <div class="ProfileCard-details">
-                                                        <div class="ProfileCard-realName">name</div>
-                                                        </div>
-                                                        </div>
-                                                      </script>
+                                                                                <div class="ProfileCard-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay m-0"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg></div>
+                                                                                <div class="ProfileCard-details">
+                                                                                <div class="ProfileCard-realName">name</div>
+                                                                                </div>
+                                                                                </div>
+                                                                              </script>
         <script class="empty-template" type="text/x-handlebars-template">
             <div class="EmptyMessage">Your search turned up 0 results. This most likely means the backend is down, yikes!</div>
-                                                </script>
+                                                                        </script>
     </div>
 </div>
