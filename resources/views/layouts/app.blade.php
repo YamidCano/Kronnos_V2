@@ -66,7 +66,7 @@
     </div>
 
     <livewire:scripts />
-    <livewire:modals/>
+    <livewire:modals />
     @include('layouts.cuba.plugins')
 
     @stack('js')
@@ -81,12 +81,12 @@
         });
 
         window.livewire.on('Store', () => {
-                $('#Store').modal('hide');
-            });
+            $('#Store').modal('hide');
+        });
 
-            window.livewire.on('update', () => {
-                $('#update').modal('hide');
-            });
+        window.livewire.on('update', () => {
+            $('#update').modal('hide');
+        });
     </script>
 </body>
 

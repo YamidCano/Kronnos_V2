@@ -3,12 +3,12 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Proveedor</h3>
+                    <h3>Categorías</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('home') }}"> <i data-feather="home"></i></a></li>
-                        <li class="breadcrumb-item">Proveedor</li>
+                        <li class="breadcrumb-item">Categorías</li>
                         {{-- <li class="breadcrumb-item active">Sample Page</li> --}}
                     </ol>
                 </div>
@@ -22,11 +22,11 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-5">
-                                @can('Proveedor - Crear')
+                                @can('Categoria-Producto - Crear')
                                     <div class="mb-3">
                                         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
                                             data-bs-target="#Store">
-                                            Crear Proveedor
+                                            Crear Categoria
                                         </button>
                                     </div>
                                 @endcan
@@ -53,38 +53,30 @@
                             <table class="table table-striped table-hover card-table table-vcenter text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>Nombres Proveedor</th>
-                                        <th>Telefono</th>
-                                        <th>Nit</th>
+                                        <th>Nombres de la Categoría</th>
                                         <th>En Uso (Productos)</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($providers as $item)
+                                    @foreach ($categories as $item)
                                         <tr>
                                             <td>
                                                 {{ $item->name }}
                                             </td>
                                             <td>
-                                                {{ $item->phone }}
-                                            </td>
-                                            <td>
-                                                {{ $item->nit }}
-                                            </td>
-                                            <td>
-                                                {{ $item->count_provider }}
+                                                {{ $item->count_category }}
                                             </td>
                                             <td>
                                                 <div class="">
-                                                    @can('Proveedor - Editar')
+                                                    @can('Categoria-Producto - Editar')
                                                         <button type="button" class="btn btn-info"
                                                             wire:click="edit({{ $item->id }})" wire:target="edit"
                                                             data-bs-toggle="modal" data-bs-target="#update">
                                                             <i class="icofont icofont-ui-edit"></i>
                                                         </button>
                                                     @endcan
-                                                    @can('Proveedor - Eliminar')
+                                                    @can('Categoria-Producto - Eliminar')
                                                         <button type="button" class="btn btn-danger"
                                                             wire:click="$emit('remove', {{ $item->id }})"
                                                             data-bs-toggle="modal" data-bs-target="#permissionModal">
@@ -98,7 +90,7 @@
                                 </tbody>
                             </table>
                             <br>
-                            {{ $providers->links() }}
+                            {{ $categories->links() }}
                         </div>
                     </div>
                 </div>
@@ -110,11 +102,11 @@
     <!-- Modal  Crear-->
     <div wire:ignore.self class="modal fade" id="Store" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">
-                        Crear Proveedor
+                        Crear Categoría
                     </h5>
                     <button type="button" class="btn-close" wire:click="close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -123,28 +115,10 @@
                     <form>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Nombres Proveedor *</label>
-                                <input type="text" placeholder="Nombres Proveedor *"
+                                <label for="Name">Nombres Categoría*</label>
+                                <input type="text" placeholder="Nombres Categoría*"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />
                                 @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Telefono *</label>
-                                <input type="number" placeholder="Telefono *"
-                                    class="form-control @error('phone') is-invalid @enderror" wire:model="phone" />
-                                @error('phone') <span class="text-danger error">{{ $message }}</span>@enderror
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Nit*</label>
-                                <input type="number" placeholder="Nit *"
-                                    class="form-control @error('nit') is-invalid @enderror" wire:model="nit" />
-                                @error('nit') <span class="text-danger error">{{ $message }}</span>@enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-
                             </div>
                         </div>
                     </form>
@@ -161,11 +135,11 @@
     <!-- Modal  Editar-->
     <div wire:ignore.self class="modal fade" id="update" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">
-                        Editar Proveedor
+                        Editar Categoría
                     </h5>
                     <button type="button" class="btn-close" wire:click="close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -174,28 +148,10 @@
                     <form>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Nombres Proveedor *</label>
-                                <input type="text" placeholder="Nombres Proveedor *"
+                                <label for="Name">Nombres Categoría*</label>
+                                <input type="text" placeholder="Nombres Categoría*"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />
                                 @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Telefono *</label>
-                                <input type="number" placeholder="Telefono *"
-                                    class="form-control @error('phone') is-invalid @enderror" wire:model="phone" />
-                                @error('phone') <span class="text-danger error">{{ $message }}</span>@enderror
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Nit*</label>
-                                <input type="number" placeholder="Nit *"
-                                    class="form-control @error('nit') is-invalid @enderror" wire:model="nit" />
-                                @error('nit') <span class="text-danger error">{{ $message }}</span>@enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-
                             </div>
                         </div>
                     </form>
@@ -224,7 +180,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emitTo('providers-view', 'destroy', Id)
+                        Livewire.emitTo('product-category-view', 'destroy', Id)
 
                         Swal.fire(
                             'Eliminar!',

@@ -166,13 +166,13 @@
                                     <i class="flag-icon flag-icon-es"></i> <span class="lang-txt">Español</span>
                                 </div>
                             </a>
-                            <a href="{{ route('lang', 'en') }}"
+                            {{-- <a href="{{ route('lang', 'en') }}"
                                 class="{{ App::getLocale() == 'en' ? 'active' : '' }}">
                                 <div class="lang {{ App::getLocale() == 'en' ? 'selected' : '' }}" data-value="en">
                                     <i class="flag-icon flag-icon-us"></i> <span
                                         class="lang-txt">English</span><span> (US)</span>
                                 </div>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </li>

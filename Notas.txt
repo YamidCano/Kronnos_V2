@@ -18,6 +18,8 @@ php artisan optimize
 
 
 php artisan vendor:publish --tag=laravel-errors
+
+php artisan storage:link
 ____________________________________
 
 
@@ -29,6 +31,7 @@ php artisan make:livewire ecommerceView
 php artisan make:model ecommerce -m
 
 php artisan make:livewire user/userView
+php artisan make:livewire user/RoleView
 
 php artisan make:livewire user/profileView
 php artisan make:model profile -m
@@ -47,8 +50,8 @@ php artisan make:livewire payment_typesView
 php artisan make:model payment_types -m
 
 PRODUCT_TYPES
-php artisan make:livewire product_typesView
-php artisan make:model product_types -m
+php artisan make:livewire product_categoryView
+php artisan make:model product_category -m
 
 PROVIDERS
 php artisan make:livewire providersView

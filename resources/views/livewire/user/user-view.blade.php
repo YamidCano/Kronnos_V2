@@ -447,29 +447,6 @@
     </div>
 
     @push('js')
-        <script type="text/javascript">
-            Livewire.on('remove', ID => {
-                Swal.fire({
-                    title: '¿Estas seguro de eliminar?',
-                    text: "¡No podrás revertir esto!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si lo borra!',
-                    cancelButtonText: 'No, cancelar!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.emitTo('apprentice', 'destroyApprentices', ID)
-                        Swal.fire(
-                            'Eliminar!',
-                            'Su registro ha sido eliminado.',
-                            'success'
-                        )
-                    }
-                })
-            });
-        </script>
         <script>
             Livewire.on('ActivateUser', itemId => {
                 Swal.fire({
@@ -494,8 +471,7 @@
                     }
                 })
             });
-        </script>
-        <script>
+
             Livewire.on('DeactivateUser', itemId => {
                 Swal.fire({
                     title: '¿Está seguro de desactivar el usuario?',

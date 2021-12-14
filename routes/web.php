@@ -9,6 +9,9 @@ use App\Http\Livewire\User\ProfileView;
 use App\Http\Livewire\User\RoleView;
 use App\Http\Livewire\DashboardView;
 use App\Http\Livewire\EcommerceView;
+use App\Http\Livewire\ProductsView;
+use App\Http\Livewire\ProductCategoryView;
+use App\Http\Livewire\ProvidersView;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -37,13 +40,23 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
     Route::get('/rolesPermisos', RoleView::class)->name('rolesPermisos')
     ->middleware('can_view:Role y Permisos - Tabla');
 
+    Route::get('/ProductoCategoria', ProductCategoryView::class)->name('ProductoCategoria')
+    ->middleware('can_view:Categoria-Producto - Tabla');
 
-    Route::get('/clear', function() {
+    Route::get('/proveedor', ProvidersView::class)->name('proveedor')
+    ->middleware('can_view:Proveedor - Tabla');
+
+    Route::get('/productos', ProductsView::class)->name('productos')
+    ->middleware('can_view:Producto - Tabla');
+
+    Route::get('/clear-cache', function() {
         Artisan::call('config:cache');
         Artisan::call('cache:clear');
         Artisan::call('config:clear');
         Artisan::call('view:clear');
         Artisan::call('route:clear');
-        return "home";
-    })->name('clear.cache');
+        Artisan::call('route:cache');
+        Artisan::call('optimize');
+        return "Cache is cleared";
+    });
 });

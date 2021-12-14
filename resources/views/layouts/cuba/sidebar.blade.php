@@ -45,6 +45,22 @@
                             </ul>
                         </li>
                     @endif
+                    @if (canView('Producto - Tabla') or canView('Proveedor - Tabla') or canView('Categoria-Producto - Tabla'))
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
+                                    data-feather="package"></i><span class="lan-6">Productos</span></a>
+                            <ul class="sidebar-submenu">
+                                @if (canView('Categoria-Producto - Tabla'))
+                                    <li><a href="{{ url('ProductoCategoria') }}">Categoria de Producto</a></li>
+                                @endif
+                                @if (canView('Proveedor - Tabla'))
+                                    <li><a href="{{ url('proveedor') }}">Proveedores</a></li>
+                                @endif
+                                @if (canView('Producto - Tabla'))
+                                    <li><a href="{{ url('productos') }}">Productos</a></li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
