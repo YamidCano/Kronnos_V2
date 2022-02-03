@@ -53,10 +53,11 @@
                             <table class="table table-striped table-hover card-table table-vcenter text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>Nombres Proveedor</th>
-                                        <th>Telefono</th>
-                                        <th>Nit</th>
-                                        <th>En Uso (Productos)</th>
+                                        <th>Nombres Producto</th>
+                                        <th>Categoria</th>
+                                        <th>Proveedor</th>
+                                        <th>Descripcion</th>
+                                        <th>Imagen</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -67,10 +68,10 @@
                                                 {{ $item->name }}
                                             </td>
                                             <td>
-                                                {{ $item->phone }}
+                                                {{ $item->proveedor->name }}
                                             </td>
                                             <td>
-                                                {{ $item->nit }}
+                                                {{ $item->categoria->name }}
                                             </td>
                                             <td>
                                                 <img class="img-fluid img-40" src="/storage/{{ $item->photo }}">
@@ -256,7 +257,7 @@
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Nit</label>
-                                <input type="text" class="form-control" value="{{ $providerNit }}" disabled>
+                                <input type="text" class="form-control" value="{{ $providerNit2 }}" disabled>
                             </div>
                         </div>
                         <br>

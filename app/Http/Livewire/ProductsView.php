@@ -19,7 +19,7 @@ class ProductsView extends Component
     //Declaramos variables publicas
     public $perPage = 25;
     public $search, $name, $selectprovider, $selectcategory, $description, $photo, $Updatephotos, $photos;
-    public $providers, $product_category, $providerNit, $idenImg;
+    public $providers, $product_category, $providerNit, $idenImg, $providerNit2;
 
     //Actualizamos la vista
     protected $listeners = ['destroy'];
@@ -37,6 +37,8 @@ class ProductsView extends Component
             ->paginate($this->perPage);
 
         return view('livewire.products-view', compact('products'));
+
+
     }
 
     //Decleramos campos sin validar
@@ -59,8 +61,10 @@ class ProductsView extends Component
         $this->idenImg = rand();
     }
 
-    public function updatedVariableQueCambia()
+    public function updatedselectprovider()
     {
+        $nit = providers::find($this->selectprovider);
+        $this->providerNit = $nit->nit;
     }
 
     public function updated($propertyName)
