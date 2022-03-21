@@ -60,8 +60,8 @@ class ProvidersView extends Component
         //Validamos los campos
         $this->validate([
             'name' => 'required|min:3|max:256',
-            'phone' => 'required|min:7|max:10',
-            'nit' => 'required|min:10|max:11|unique:App\Models\providers,nit,',
+            'phone' => 'required|min:10|max:10',
+            'nit' => 'required|min:9|max:10|unique:App\Models\providers,nit,',
         ]);
 
         //Guardamos los registros
@@ -98,8 +98,8 @@ class ProvidersView extends Component
         //Validamos los campos
         $this->validate([
             'name' => 'required|min:3|max:256',
-            'phone' => 'required|min:7|max:10',
-            'nit' => 'required|min:10|max:11|unique:App\Models\providers,nit,' . optional($this->provider)->id,
+            'phone' => 'required|min:10|max:10',
+            'nit' => 'required|min:9|max:10|unique:App\Models\providers,nit,' . optional($this->provider)->id,
         ]);
 
         $provider = providers::find($this->provider_id);

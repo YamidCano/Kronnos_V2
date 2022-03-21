@@ -29,34 +29,71 @@
                     </li>
                     <li class="sidebar-list">
                         {{-- <label class="badge badge-success">2</label> --}}
-                        <a class="sidebar-link sidebar-title" href="{{ url('home') }}"><i
+                        <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ url('home') }}"><i
                                 data-feather="home"></i><span class="lan-6">Dashboard </span></a>
                     </li>
                     @if (canView('Usuario - Tabla') or canView('Role y Permisos - Tabla'))
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
-                                    data-feather="users"></i><span class="lan-6">Usuarios</span></a>
-                            <ul class="sidebar-submenu">
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'usuarios' or Route::currentRouteName() == 'rolesPermisos') active @endif"
+                                href="#"><i data-feather="users"></i><span class="lan-6">Usuarios</span>
+                                <div class="according-menu"><i
+                                        class="@if (Route::currentRouteName() == 'usuarios' or Route::currentRouteName() == 'rolesPermisos') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
+                                </div>
+                            </a>
+                            <ul class="sidebar-submenu"
+                                style="@if (Route::currentRouteName() == 'usuarios' or Route::currentRouteName() == 'rolesPermisos') display: block; @else  display: none; @endif">
                                 @if (canView('Usuario - Tabla'))
-                                    <li><a href="{{ url('usuarios') }}">Listado de Usuarios</a></li>
+                                    <li>
+                                        <a href="{{ url('usuarios') }}"
+                                            class="{{ Route::currentRouteName() == 'usuarios' ? 'active' : '' }}">
+                                            Listado de Usuarios
+                                        </a>
+                                    </li>
                                 @endif
                                 @if (canView('Role y Permisos - Tabla'))
-                                    <li><a href="{{ url('rolesPermisos') }}">Roles y Permisos</a></li>
+                                    <li>
+                                        <a href="{{ url('rolesPermisos') }}"
+                                            class="{{ Route::currentRouteName() == 'rolesPermisos' ? 'active' : '' }}">
+                                            Roles y Permisos
+                                        </a>
+                                    </li>
                                 @endif
                             </ul>
                         </li>
                     @endif
                     @if (canView('Producto - Tabla') or canView('Proveedor - Tabla') or canView('Categoria-Producto - Tabla'))
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i
-                                    data-feather="package"></i><span class="lan-6">Productos</span></a>
-                            <ul class="sidebar-submenu">
+                        <li class="sidebar-list"><a
+                                class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos') active @endif"
+                                href="#"><i data-feather="package"></i><span class="lan-6">Productos</span>
+                                <div class="according-menu"><i
+                                    class="@if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
+                            </div>
+                            </a>
+                            <ul class="sidebar-submenu"
+                                style=" @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos') display: block; @else  display: none; @endif">
                                 @if (canView('Categoria-Producto - Tabla'))
-                                    <li><a href="{{ url('ProductoCategoria') }}">Categoria de Producto</a></li>
+                                    <li>
+                                        <a href="{{ url('ProductoCategoria') }}"
+                                            class="{{ Route::currentRouteName() == 'ProductoCategoria' ? 'active' : '' }}">
+                                            Categoria de Producto
+                                        </a>
+                                    </li>
                                 @endif
                                 @if (canView('Proveedor - Tabla'))
-                                    <li><a href="{{ url('proveedor') }}">Proveedores</a></li>
+                                    <li>
+                                        <a href="{{ url('proveedor') }}"
+                                            class="{{ Route::currentRouteName() == 'proveedor' ? 'active' : '' }}">
+                                            Proveedores
+                                        </a>
+                                    </li>
                                 @endif
                                 @if (canView('Producto - Tabla'))
-                                    <li><a href="{{ url('productos') }}">Productos</a></li>
+                                    <li>
+                                        <a href="{{ url('productos') }}"
+                                            class="{{ Route::currentRouteName() == 'productos' ? 'active' : '' }}">
+                                            Productos
+                                        </a>
+                                    </li>
                                 @endif
                             </ul>
                         </li>
