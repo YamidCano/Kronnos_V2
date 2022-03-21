@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('home') }}"> <i data-feather="home"></i></a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item">Productos</li>
                         {{-- <li class="breadcrumb-item active">Sample Page</li> --}}
                     </ol>
@@ -113,6 +113,14 @@
     </div>
     <!-- Container-fluid Ends-->
 
+    <style>
+        .img-100 {
+            width: 100%;
+            height: 100%
+        }
+
+    </style>
+
     <!-- Modal photo Character-->
     <div wire:ignore.self class="modal fade" id="PhotoCharacter" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -128,7 +136,7 @@
                 <div class="modal-body">
                     <div class="row row-sm">
                         <div class="col-lg text-center">
-                            <img src="/storage/{{ $modalPhoto }}" class="img-fluid" alt="Responsive image">
+                            <img src="/storage/{{ $modalPhoto }}" class="img-100 img-fluid" alt="Responsive image">
                         </div>
                     </div>
                 </div>
@@ -236,10 +244,12 @@
                                             aria-hidden="true"></span>
                                         <span class="visually-hidden">Loading...</span>
                                     </button>
-                                    <div class="img-container"><img class="img-thumbnail"
-                                            src="{{ $photo->temporaryUrl() }}" alt=""></div>
+                                    <div class="col-lg text-center">
+                                        <img src="{{ $photo->temporaryUrl() }}" class="img-100 img-fluid"
+                                            alt="Responsive image">
+                                    </div>
                                 @else
-                                    <input type="file" id="{{ $idenImg }}" placeholder="Selecione un Imgen *"
+                                    <input type="file" placeholder="Selecione un Imgen *" accept="image/*"
                                         class="form-control @error('photo') is-invalid @enderror" wire:model="photo" />
                                 @endif
                                 @error('photo')
@@ -355,8 +365,9 @@
                                             aria-hidden="true"></span>
                                         <span class="visually-hidden">Loading...</span>
                                     </button>
-                                    <div class="img-container"><img class="img-thumbnail"
-                                            src="/storage/{{ $Updatephotos }}" alt=""></div>
+                                    <div class="img-container"><img class="img-100 img-fluid"
+                                            src="/storage/{{ $Updatephotos }}" alt="">
+                                    </div>
                                 @else
                                     @if ($photos)
                                         <br>
@@ -369,12 +380,14 @@
                                                 aria-hidden="true"></span>
                                             <span class="visually-hidden">Loading...</span>
                                         </button>
-                                        <div class="img-container"><img class="img-thumbnail"
-                                                src="{{ $photos->temporaryUrl() }}" alt=""></div>
+                                        <div class="col-lg text-center">
+                                            <img src="{{ $photos->temporaryUrl() }}" class="img-100 img-fluid"
+                                                alt="Responsive image">
+                                        </div>
                                     @else
                                         <input type="file" id="{{ $idenImg }}" placeholder="Selecione un Imgen *"
                                             class="form-control @error('photos') is-invalid @enderror"
-                                            wire:model="photos" />
+                                            wire:model="photos" accept="image/*" />
                                     @endif
                                 @endif
                             </div>
@@ -384,7 +397,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" wire:click="close"
                         data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" wire:click="update">Actualizar</button>
+                    <button type="button" class="btn btn-primary" updating="true"
+                        wire:click="update">Actualizar</button>
                 </div>
             </div>
         </div>

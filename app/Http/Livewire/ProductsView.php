@@ -41,21 +41,41 @@ class ProductsView extends Component
 
     }
 
+    public $updating;
+
     //Decleramos campos sin validar
-    function rules()
+    public function rules(): array
     {
+        if ($this->updating == true) {
+            return [
+                'name' => 'required|min:3|max:256|unique:App\Models\products,name,' . optional($this->product)->id,
+                'selectcategory' => 'required',
+                'code' => 'required|unique:App\Models\products,code,' . optional($this->product)->id,
+                'selectprovider' => 'required',
+                'photo' => 'required|image|max:2048',
+                // 'description' => 'required',
+                // 'descriptionLong' => 'required',
+                // 'Specifications' => 'required',
+                // 'status' => 'required',
+                // 'slider' => 'required',
+                // 'price' => 'required',
+                // 'slug' => 'required',
+            ];
+        }
+
         return [
-            'name' => 'required|min:3|max:256',
+            'name' => 'required|min:3|max:256|unique:App\Models\products,name,',
             'selectcategory' => 'required',
-            'code' => 'required',
+            'code' => 'required|unique:App\Models\products,code,',
             'selectprovider' => 'required',
             'photo' => 'required|image|max:2048',
-            'description' => 'required',
-            'descriptionLong' => 'required',
-            'Specifications' => 'required',
-            'status' => 'required',
-            'slider' => 'required',
-            'price' => 'required',
+            // 'description' => 'required',
+            // 'descriptionLong' => 'required',
+            // 'Specifications' => 'required',
+            // 'status' => 'required',
+            // 'slider' => 'required',
+            // 'price' => 'required',
+            // 'slug' => 'required',
         ];
     }
 
@@ -113,6 +133,7 @@ class ProductsView extends Component
     //Tramos los datos al editar y lo volcamos en variables
     public function edit(products $product)
     {
+        $this->updating = true;
         $this->product = $product;
         $this->product_id = $product->id;
         $this->name = $product->name;
@@ -137,11 +158,11 @@ class ProductsView extends Component
     public function update()
     {
         //Validamos los campos
-        $this->validate();
+        // $this->validate();
 
         $img = $this->photos->store('imgProduct', 'public');
 
-        $product = products::find($this->provider_id);
+        $product = products::find($this->product_id);
         $product->update([
             'name' => $this->name,
             'code' => $this->code,
@@ -150,16 +171,6 @@ class ProductsView extends Component
             'photo' => $img,
             'description' => $this->description,
         ]);
-
-        //Guardamos los registros
-        if ($update = products::where('id', $this->product->id)->first()) {
-            $update->name = $this->name;
-            $update->code = $this->code;
-            $update->id_provider = $this->selectprovider;
-            $update->id_product_categories = $this->selectcategory;
-            $update->description = $this->description;
-
-        }
 
         $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'photos', 'Updatephotos']);
         $this->idenImg = rand();
