@@ -20,6 +20,7 @@ php artisan optimize
 php artisan vendor:publish --tag=laravel-errors
 
 php artisan storage:link
+composer require cviebrock/eloquent-sluggable "8.0.8"
 ____________________________________
 
 

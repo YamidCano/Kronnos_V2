@@ -27,6 +27,8 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('profile_photo')->nullable();
             $table->integer('status')->nullable();
+            $table->integer('sidebar')->nullable();
+            $table->integer('theme')->nullable();
             $table->rememberToken(); //verificar usuario?
             $table->timestamps(); // para fechas de created y updated at
         });

@@ -8,6 +8,8 @@ use Livewire\WithPagination;
 use App\Models\products;
 use App\Models\product_category;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class ProductsView extends Component
 {
@@ -37,11 +39,14 @@ class ProductsView extends Component
             ->paginate($this->perPage);
 
         return view('livewire.products-view', compact('products'));
-
-
     }
 
     public $updating;
+
+    public function create()
+    {
+
+    }
 
     //Decleramos campos sin validar
     public function rules(): array
@@ -52,7 +57,7 @@ class ProductsView extends Component
                 'selectcategory' => 'required',
                 'code' => 'required|unique:App\Models\products,code,' . optional($this->product)->id,
                 'selectprovider' => 'required',
-                'photo' => 'required|image|max:2048',
+                'photo' => '',
                 // 'description' => 'required',
                 // 'descriptionLong' => 'required',
                 // 'Specifications' => 'required',
@@ -104,8 +109,9 @@ class ProductsView extends Component
         //Validamos los campos
         $this->validate();
 
+        $img = $this->photo->store('imgProduct', 'public');
 
-        $img = $this->photo->store('/../public/img/imgProduct', 'public');
+        $this->createslug();
 
         //Guardamos los registros
         products::create([
@@ -125,7 +131,7 @@ class ProductsView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'idenImg']);
+        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'idenImg', 'updating']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -145,7 +151,6 @@ class ProductsView extends Component
 
         $providers = providers::find($product->id_provider);
         $this->providersNit = $providers->nit;
-
     }
 
     public function modalPhoto(products $product)
@@ -160,19 +165,30 @@ class ProductsView extends Component
         //Validamos los campos
         // $this->validate();
 
-        $img = $this->photos->store('imgProduct', 'public');
+        if ($this->photos == !null) {
+            $img = $this->photos->store('imgProduct', 'public');
+        }
 
-        $product = products::find($this->product_id);
-        $product->update([
-            'name' => $this->name,
-            'code' => $this->code,
-            'id_provider' => $this->selectprovider,
-            'id_product_categories' => $this->selectcategory,
-            'photo' => $img,
-            'description' => $this->description,
-        ]);
+        $this->createslug();
 
-        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'photos', 'Updatephotos']);
+        if ($update = products::where('id', $this->product_id)->first()) {
+            $update->name = $this->name;
+            $update->code = $this->code;
+            $update->id_provider = $this->selectprovider;
+            $update->id_product_categories = $this->selectcategory;
+            $update->description = $this->description;
+
+            if ($this->photos == !null) {
+                $update->photo = $img;
+            } else {
+                $update->photo = $this->Updatephotos;
+            }
+
+            $update->save();
+        }
+
+
+        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'photos', 'Updatephotos', 'updating']);
         $this->idenImg = rand();
         $this->emit('update');
         $this->resetErrorBag();
@@ -192,7 +208,7 @@ class ProductsView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'photos', 'Updatephotos']);
+        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'photos', 'Updatephotos', 'updating']);
         $this->idenImg = rand();
     }
 
@@ -205,5 +221,10 @@ class ProductsView extends Component
         $this->reset(['photo', 'photos', 'Updatephotos']);
 
         $this->idenImg = rand();
+    }
+
+    private function createslug(){
+
+        $this->slug = SlugService::createSlug(products::class, 'slug', $this->name);
     }
 }

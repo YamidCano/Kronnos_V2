@@ -66,7 +66,6 @@
     </div>
 
     <livewire:scripts />
-    <livewire:modals />
     @include('layouts.cuba.plugins')
 
     @stack('js')

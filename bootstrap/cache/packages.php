@@ -1,9 +1,9 @@
 <?php return array (
-  'bastinald/laravel-livewire-modals' => 
+  'cviebrock/eloquent-sluggable' => 
   array (
     'providers' => 
     array (
-      0 => 'Bastinald\\LaravelLivewireModals\\Providers\\LaravelLivewireModalsProvider',
+      0 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
     ),
   ),
   'darbaoui/laravel-ui-avatars' => 
@@ -15,17 +15,6 @@
     'aliases' => 
     array (
       'Avatar' => 'Darbaoui\\Avatar\\Facades\\Avatar',
-    ),
-  ),
-  'facade/ignition' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Facade\\Ignition\\IgnitionServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Flare' => 'Facade\\Ignition\\Facades\\Flare',
     ),
   ),
   'fruitcake/laravel-cors' => 
@@ -92,6 +81,13 @@
       'Avatar' => 'Laravolt\\Avatar\\Facade',
     ),
   ),
+  'livewire-ui/modal' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'LivewireUI\\Modal\\LivewireModalServiceProvider',
+    ),
+  ),
   'livewire/livewire' => 
   array (
     'providers' => 
@@ -115,6 +111,17 @@
     'providers' => 
     array (
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    ),
+  ),
+  'spatie/laravel-ignition' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
     ),
   ),
   'spatie/laravel-permission' => 
