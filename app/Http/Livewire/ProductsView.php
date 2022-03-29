@@ -43,11 +43,6 @@ class ProductsView extends Component
 
     public $updating;
 
-    public function create()
-    {
-
-    }
-
     //Decleramos campos sin validar
     public function rules(): array
     {
@@ -58,13 +53,12 @@ class ProductsView extends Component
                 'code' => 'required|unique:App\Models\products,code,' . optional($this->product)->id,
                 'selectprovider' => 'required',
                 'photo' => '',
-                // 'description' => 'required',
-                // 'descriptionLong' => 'required',
-                // 'Specifications' => 'required',
-                // 'status' => 'required',
-                // 'slider' => 'required',
-                // 'price' => 'required',
-                // 'slug' => 'required',
+                'description' => 'required',
+                'descriptionLong' => 'required',
+                'Specifications' => 'required',
+                'status' => 'required',
+                'slider' => 'required',
+                'price' => 'required',
             ];
         }
 
@@ -74,13 +68,12 @@ class ProductsView extends Component
             'code' => 'required|unique:App\Models\products,code,',
             'selectprovider' => 'required',
             'photo' => 'required|image|max:2048',
-            // 'description' => 'required',
-            // 'descriptionLong' => 'required',
-            // 'Specifications' => 'required',
-            // 'status' => 'required',
-            // 'slider' => 'required',
-            // 'price' => 'required',
-            // 'slug' => 'required',
+            'description' => 'required',
+            'descriptionLong' => 'required',
+            'Specifications' => 'required',
+            'status' => 'required',
+            'slider' => 'required',
+            'price' => 'required',
         ];
     }
 
@@ -121,6 +114,12 @@ class ProductsView extends Component
             'id_product_categories' => $this->selectcategory,
             'photo' => $img,
             'description' => $this->description,
+            'descriptionLong' => $this->descriptionLong,
+            'Specifications' => $this->Specifications,
+            'status' => $this->status,
+            'slider' => $this->slider,
+            'price' => $this->price,
+            'slug' => $this->slug,
         ]);
 
         $this->idenImg = rand();
@@ -131,7 +130,7 @@ class ProductsView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'idenImg', 'updating']);
+        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'descriptionLong', 'Specifications', 'status', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -144,6 +143,11 @@ class ProductsView extends Component
         $this->product_id = $product->id;
         $this->name = $product->name;
         $this->code = $product->code;
+        $this->descriptionLong = $product->descriptionLong;
+        $this->Specifications = $product->Specifications;
+        $this->status = $product->status;
+        $this->slider = $product->slider;
+        $this->price = $product->price;
         $this->selectprovider = $product->id_provider;
         $this->selectcategory = $product->id_product_categories;
         $this->Updatephotos = $product->photo;
@@ -169,6 +173,10 @@ class ProductsView extends Component
             $img = $this->photos->store('imgProduct', 'public');
         }
 
+        if ($this->status == null ) {
+            $this->status = null;
+        }
+
         $this->createslug();
 
         if ($update = products::where('id', $this->product_id)->first()) {
@@ -177,6 +185,12 @@ class ProductsView extends Component
             $update->id_provider = $this->selectprovider;
             $update->id_product_categories = $this->selectcategory;
             $update->description = $this->description;
+            $update->descriptionLong = $this->descriptionLong;
+            $update->Specifications = $this->Specifications;
+            $update->status = $this->status;
+            $update->slider = $this->slider;
+            $update->price = $this->price;
+            $update->slug = $this->slug;
 
             if ($this->photos == !null) {
                 $update->photo = $img;
@@ -188,7 +202,7 @@ class ProductsView extends Component
         }
 
 
-        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'photos', 'Updatephotos', 'updating']);
+        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'descriptionLong', 'Specifications', 'status', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
         $this->idenImg = rand();
         $this->emit('update');
         $this->resetErrorBag();
@@ -196,9 +210,9 @@ class ProductsView extends Component
         $this->emit('alert', 'Registro Actualizada sastifactoriamente');
     }
 
-    public function destroy(products $provider)
+    public function destroy(products $products)
     {
-        $provider->delete();
+        $products->delete();
     }
 
     //Cerrar una ventana modal
@@ -208,7 +222,7 @@ class ProductsView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'photo', 'providerNit', 'photos', 'Updatephotos', 'updating']);
+        $this->reset(['name', 'code', 'selectprovider', 'selectcategory', 'description', 'descriptionLong', 'Specifications', 'status', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
         $this->idenImg = rand();
     }
 
@@ -223,7 +237,8 @@ class ProductsView extends Component
         $this->idenImg = rand();
     }
 
-    private function createslug(){
+    private function createslug()
+    {
 
         $this->slug = SlugService::createSlug(products::class, 'slug', $this->name);
     }

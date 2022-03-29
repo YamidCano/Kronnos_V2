@@ -29,7 +29,7 @@ class CreateProductsTable extends Migration
 
             $table->string('photo')->nullable();
             $table->text('description')->nullable();
-            $table->text('description_long')->nullable();
+            $table->text('descriptionLong')->nullable();
             $table->text('Specifications')->nullable();
             $table->bigInteger('visits')->nullable();
             $table->bigInteger('sales')->nullable();

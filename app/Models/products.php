@@ -13,12 +13,9 @@ class products extends Model
     use HasFactory;
     use Sluggable;
 
-    protected $fillable = [
-        'name',
-        'slug',
-    ];
+    protected $guarded = [];
 
-    public function proveedor()
+    public function provider()
     {
         return $this->belongsTo(providers::class , 'id_provider');
     }

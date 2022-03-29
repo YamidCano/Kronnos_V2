@@ -1,10 +1,11 @@
-<div class="sidebar-wrapper">
+<div @if (auth()->user()->sidebar == 1) class="sidebar-wrapper close_icon"
+    @else class="sidebar-wrapper" @endif>
     <div>
-        <div class="logo-wrapper"><a href="{{ url('home') }}">
+        <div class="logo-wrapper">
                 <img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt="">
-                <img class="img-fluid for-dark" src="../assets/images/logo/logo.png" alt=""></a>
+                <img class="img-fluid for-dark" src="../assets/images/logo/logo.png" alt="">
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
-            <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+            @livewire('components.sidebar')
         </div>
         <div class="logo-icon-wrapper"><a href="{{ url('home') }}"><img class="img-fluid"
                     src="../assets/images/logo/logo-icon.png" alt=""></a></div>

@@ -24,6 +24,10 @@ composer require cviebrock/eloquent-sluggable "8.0.8"
 ____________________________________
 
 
+php artisan make:livewire components/header
+
+php artisan make:livewire components/sidebar
+
 php artisan make:livewire dashboardView
 php artisan make:model dashboard -m
 

@@ -1,4 +1,6 @@
-<div class="page-header">
+<div @if (auth()->user()->sidebar == 1) class="page-header close_icon"
+    @else class="page-header" @endif>
+
     <div class="header-wrapper row m-0">
         <form class="form-inline search-full col" action="#" method="get">
             <div class="form-group w-100">
@@ -49,7 +51,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="mode"><i class="fa fa-moon-o"></i></div>
+                    @livewire('components.header')
                 </li>
                 <li class="maximize d-block"><a class="text-dark " href="#!"
                         onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>

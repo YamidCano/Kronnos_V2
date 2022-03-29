@@ -25,7 +25,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body onload="startTime()">
+<body onload="startTime()" @if (auth()->user()->theme == 1) class="dark-only" @endif>
     <div class="loader-wrapper">
         <div class="loader-index"><span></span></div>
         <svg>

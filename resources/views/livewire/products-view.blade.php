@@ -57,6 +57,7 @@
                                         <th>Categoria</th>
                                         <th>Proveedor</th>
                                         <th>Codigo</th>
+                                        <th>Precio</th>
                                         <th>Imagen</th>
                                         <th></th>
                                     </tr>
@@ -68,13 +69,16 @@
                                                 {{ $item->name }}
                                             </td>
                                             <td>
-                                                {{ $item->proveedor->name }}
-                                            </td>
-                                            <td>
                                                 {{ $item->categoria->name }}
                                             </td>
                                             <td>
+                                                {{ $item->provider->name }}
+                                            </td>
+                                            <td>
                                                 {{ $item->code }}
+                                            </td>
+                                            <td>
+                                                {{ $item->price }}
                                             </td>
                                             <td style="cursor:pointer;" wire:click="modalPhoto({{ $item->id }})"
                                                 data-bs-toggle="modal" wire:target="edit"
@@ -196,6 +200,37 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Precio *</label>
+                                <input type="number" step="0.01" placeholder="Precio *"
+                                    class="form-control @error('Precio') is-invalid @enderror" wire:model="price" />
+                                @error('price')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">{{ __('Desactivar productos?') }} *</label>
+                                <select wire:model="status"
+                                    class="form-control @error('status') is-invalid @enderror">
+                                    <option value="0">NO</option>
+                                    <option value="1">SI</option>
+                                </select>
+                                @error('status')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">{{ __('Productos Slider?') }} *</label>
+                                <select wire:model="slider"
+                                    class="form-control @error('slider') is-invalid @enderror">
+                                    <option value="0">NO</option>
+                                    <option value="1">SI</option>
+                                </select>
+                                @error('slider')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <br>
@@ -221,10 +256,32 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Descripcion *</label>
+                                <label for="Name">Descripción *</label>
                                 <textarea wire:model="description" rows="3" cols="20" class="form-control"
-                                    placeholder="{{ __('Descripcion') }} *"></textarea>
+                                    placeholder="{{ __('Descripción') }} *"></textarea>
                                 @error('description')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Descripción Larga *</label>
+                                <textarea wire:model="descriptionLong" rows="3" cols="20" class="form-control"
+                                    placeholder="{{ __('Descripción Larga') }} *"></textarea>
+                                @error('descriptionLong')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Especificaciones *</label>
+                                <textarea wire:model="Specifications" rows="3" cols="20" class="form-control"
+                                    placeholder="{{ __('Especificaciones') }} *"></textarea>
+                                @error('Specifications')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -262,8 +319,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" wire:click="close"
                         data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" wire:loading.attr="disabled" wire:target="save, photo"
-                        wire:click="save">Crear</button>
+                    <button type="button" class="btn btn-primary" wire:loading.attr="disabled"
+                        wire:target="save, photo" wire:click="save">Crear</button>
                 </div>
             </div>
         </div>
@@ -310,13 +367,44 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Codigo Producto *</label>
-                                <input type="text" placeholder="Codigo Producto *"
+                                <input type="number" placeholder="Codigo Producto *"
                                     class="form-control @error('code') is-invalid @enderror" wire:model="code" />
                                 @error('code')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Precio *</label>
+                                <input type="number" step="0.01" placeholder="Precio *"
+                                    class="form-control @error('Precio') is-invalid @enderror" wire:model="price" />
+                                @error('price')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">{{ __('Desactivar productos?') }} *</label>
+                                <select wire:model="status"
+                                    class="form-control @error('status') is-invalid @enderror">
+                                    <option value="0">NO</option>
+                                    <option value="1">SI</option>
+                                </select>
+                                @error('status')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">{{ __('Productos Slider?') }} *</label>
+                                <select wire:model="slider"
+                                    class="form-control @error('slider') is-invalid @enderror">
+                                    <option value="0">NO</option>
+                                    <option value="1">SI</option>
+                                </select>
+                                @error('slider')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <br>
@@ -336,16 +424,38 @@
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Nit</label>
-                                <input type="text" class="form-control" value="{{ $providersNit }}" disabled>
+                                <input type="text" class="form-control" value="{{ $providerNit }}" disabled>
                             </div>
                         </div>
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Descripcion *</label>
+                                <label for="Name">Descripción *</label>
                                 <textarea wire:model="description" rows="3" cols="20" class="form-control"
-                                    placeholder="{{ __('Descripcion') }} *"></textarea>
+                                    placeholder="{{ __('Descripción') }} *"></textarea>
                                 @error('description')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Descripción Larga *</label>
+                                <textarea wire:model="descriptionLong" rows="3" cols="20" class="form-control"
+                                    placeholder="{{ __('Descripción Larga') }} *"></textarea>
+                                @error('descriptionLong')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Especificaciones *</label>
+                                <textarea wire:model="Specifications" rows="3" cols="20" class="form-control"
+                                    placeholder="{{ __('Especificaciones') }} *"></textarea>
+                                @error('Specifications')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -419,7 +529,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emitTo('providers-view', 'destroy', Id)
+                        Livewire.emitTo('products-view', 'destroy', Id)
 
                         Swal.fire(
                             'Eliminar!',

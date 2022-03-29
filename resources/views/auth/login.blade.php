@@ -94,6 +94,7 @@
                                 <p>Enter your email & password to login</p>
 
                                 <div class="form-group">
+                                    <input type="hidden" name="csrf-token" value="{!! csrf_token() !!}">
                                     <label class="col-form-label">Email Address</label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                         name="email" value="admin@kronnos.com{{ old('email') }}" required autocomplete="off" autofocus>
