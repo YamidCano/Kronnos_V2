@@ -30,8 +30,8 @@
                     </li>
                     <li class="sidebar-list">
                         {{-- <label class="badge badge-success">2</label> --}}
-                        <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ url('home') }}"><i
-                                data-feather="home"></i><span class="lan-6">Dashboard </span></a>
+                        <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ url('home') }}">
+                            <i data-feather="home"></i><span class="lan-6">Dashboard </span></a>
                     </li>
                     @if (canView('Usuario - Tabla') or canView('Role y Permisos - Tabla'))
                         <li class="sidebar-list">

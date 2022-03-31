@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->foreign('id_provider')->references('id')->on('providers');
 
             $table->string('photo')->nullable();
+            $table->string('sliderphoto')->nullable();
             $table->text('description')->nullable();
             $table->text('descriptionLong')->nullable();
             $table->text('Specifications')->nullable();
