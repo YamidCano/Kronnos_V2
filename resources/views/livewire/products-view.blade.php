@@ -140,7 +140,8 @@
                 <div class="modal-body">
                     <div class="row row-sm">
                         <div class="col-lg text-center">
-                            <img src="/storage/{{ $modalPhoto }}" class="img-100 img-fluid" alt="Responsive image">
+                            <img src="{{ Storage::url($modalPhoto) }}" class="img-100 img-fluid"
+                                alt="Responsive image">
                         </div>
                     </div>
                 </div>
@@ -202,7 +203,7 @@
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Precio *</label>
                                 <input type="number" step="0.01" placeholder="Precio *"
-                                    class="form-control @error('Precio') is-invalid @enderror" wire:model="price" />
+                                    class="form-control @error('price') is-invalid @enderror" wire:model="price" />
                                 @error('price')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -211,9 +212,29 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for="Name">Descuento *</label>
+                                <input type="number" placeholder="Codigo Producto *"
+                                    class="form-control @error('sales') is-invalid @enderror" wire:model="sales" />
+                                @error('sales')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Nuevo *</label>
+                                <select wire:model="new" class="form-control @error('new') is-invalid @enderror">
+                                    <option value="0">NO</option>
+                                    <option value="1">SI</option>
+                                </select>
+                                @error('new')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="Name">{{ __('Desactivar productos?') }} *</label>
-                                <select wire:model="status"
-                                    class="form-control @error('status') is-invalid @enderror">
+                                <select wire:model="status" class="form-control @error('status') is-invalid @enderror">
                                     <option value="0">NO</option>
                                     <option value="1">SI</option>
                                 </select>
@@ -223,8 +244,7 @@
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">{{ __('Productos Slider?') }} *</label>
-                                <select wire:model="slider"
-                                    class="form-control @error('slider') is-invalid @enderror">
+                                <select wire:model="slider" class="form-control @error('slider') is-invalid @enderror">
                                     <option value="0">NO</option>
                                     <option value="1">SI</option>
                                 </select>
@@ -234,6 +254,38 @@
                             </div>
                         </div>
                         <br>
+                        @if ($slider == 1)
+                            <div class="row row-sm">
+                                <div class="col-lg">
+                                    <label for="Name">Selecione un Imgen Slaider* - Imagen 1815*710</label>
+                                    @if ($photo2)
+                                        <br>
+                                        <button type="button" class="btn-close" wire:click="cancelimg"
+                                            aria-label="Close"></button>
+
+                                        <button wire:loading wire:target="photo2" class="btn btn-primary" type="button"
+                                            disabled>
+                                            <span class="spinner-border spinner-border-sm" role="status"
+                                                aria-hidden="true"></span>
+                                            <span class="visually-hidden">Loading...</span>
+                                        </button>
+                                        <div class="col-lg text-center">
+                                            <img src="{{ $photo2->temporaryUrl() }}" class="img-100 img-fluid"
+                                                alt="Responsive image">
+                                        </div>
+                                    @else
+                                        <input type="file" placeholder="Selecione un Imgen *" accept="image/*"
+                                            class="form-control @error('photo2') is-invalid @enderror"
+                                            wire:model="photo2" />
+                                    @endif
+                                    @error('photo2')
+                                        <span class="text-danger error">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <br>
+                        @endif
+
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Selecione Proveedor *</label>
@@ -257,7 +309,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Descripción *</label>
-                                <textarea wire:model="description" rows="3" cols="20" class="form-control"
+                                <textarea wire:model="description" rows="3" cols="20" class="form-control @error('description') is-invalid @enderror"
                                     placeholder="{{ __('Descripción') }} *"></textarea>
                                 @error('description')
                                     <span class="text-danger error">{{ $message }}</span>
@@ -268,7 +320,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Descripción Larga *</label>
-                                <textarea wire:model="descriptionLong" rows="3" cols="20" class="form-control"
+                                <textarea wire:model="descriptionLong" rows="3" cols="20"
+                                    class="form-control @error('descriptionLong') is-invalid @enderror"
                                     placeholder="{{ __('Descripción Larga') }} *"></textarea>
                                 @error('descriptionLong')
                                     <span class="text-danger error">{{ $message }}</span>
@@ -279,7 +332,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Especificaciones *</label>
-                                <textarea wire:model="Specifications" rows="3" cols="20" class="form-control"
+                                <textarea wire:model="Specifications" rows="3" cols="20"
+                                    class="form-control @error('Specifications') is-invalid @enderror"
                                     placeholder="{{ __('Especificaciones') }} *"></textarea>
                                 @error('Specifications')
                                     <span class="text-danger error">{{ $message }}</span>
@@ -292,7 +346,7 @@
                                 <label for="Name">Selecione un Imgen *</label>
                                 @if ($photo)
                                     <br>
-                                    <button type="button" class="btn-close" wire:click="cancelimg"
+                                    <button type="button" class="btn-close" wire:click="cancelimg2"
                                         aria-label="Close"></button>
 
                                     <button wire:loading wire:target="photo" class="btn btn-primary" type="button"
@@ -307,7 +361,8 @@
                                     </div>
                                 @else
                                     <input type="file" placeholder="Selecione un Imgen *" accept="image/*"
-                                        class="form-control @error('photo') is-invalid @enderror" wire:model="photo" />
+                                        class="form-control @error('photo') is-invalid @enderror"
+                                        wire:model="photo" />
                                 @endif
                                 @error('photo')
                                     <span class="text-danger error">{{ $message }}</span>
@@ -376,8 +431,29 @@
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Precio *</label>
                                 <input type="number" step="0.01" placeholder="Precio *"
-                                    class="form-control @error('Precio') is-invalid @enderror" wire:model="price" />
+                                    class="form-control @error('price') is-invalid @enderror" wire:model="price" />
                                 @error('price')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Descuento</label>
+                                <input type="number" placeholder="Codigo Producto"
+                                    class="form-control @error('sales') is-invalid @enderror" wire:model="sales" />
+                                @error('sales')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Nuevo *</label>
+                                <select wire:model="new" class="form-control @error('new') is-invalid @enderror">
+                                    <option value="0">NO</option>
+                                    <option value="1">SI</option>
+                                </select>
+                                @error('new')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -408,6 +484,49 @@
                             </div>
                         </div>
                         <br>
+                        @if ($slider == 1)
+                            <div class="col-lg">
+                                <label for="Name">Selecione un Imgen Slaider* - Imagen 1815*710</label>
+                                @if ($Updatephotos2)
+                                    <br>
+                                    <button type="button" class="btn-close" wire:click="cancelimg2"
+                                        aria-label="Close"></button>
+
+                                    <button wire:loading wire:target="Updatephotos2" class="btn btn-primary"
+                                        type="button" disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true"></span>
+                                        <span class="visually-hidden">Loading...</span>
+                                    </button>
+                                    <div class="img-container"><img class="img-100 img-fluid"
+                                            src="/storage/{{ $Updatephotos2 }}" alt="">
+                                    </div>
+                                @else
+                                    @if ($photos2)
+                                        <br>
+                                        <button type="button" class="btn-close" wire:click="cancelimg2"
+                                            aria-label="Close"></button>
+
+                                        <button wire:loading wire:target="photos2" class="btn btn-primary" type="button"
+                                            disabled>
+                                            <span class="spinner-border spinner-border-sm" role="status"
+                                                aria-hidden="true"></span>
+                                            <span class="visually-hidden">Loading...</span>
+                                        </button>
+                                        <div class="col-lg text-center">
+                                            <img src="{{ $photos2->temporaryUrl() }}" class="img-100 img-fluid"
+                                                alt="Responsive image">
+                                        </div>
+                                    @else
+                                        <input type="file" id="{{ $idenImg }}" placeholder="Selecione un Imgen *"
+                                            class="form-control @error('photos2') is-invalid @enderror"
+                                            wire:model="photos2" accept="image/*" />
+                                    @endif
+                                @endif
+                            </div>
+                            <br>
+                        @endif
+
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Selecione Proveedor *</label>
@@ -431,7 +550,7 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Descripción *</label>
-                                <textarea wire:model="description" rows="3" cols="20" class="form-control"
+                                <textarea wire:model="description" rows="3" cols="20" class="form-control @error('description') is-invalid @enderror"
                                     placeholder="{{ __('Descripción') }} *"></textarea>
                                 @error('description')
                                     <span class="text-danger error">{{ $message }}</span>
@@ -442,7 +561,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Descripción Larga *</label>
-                                <textarea wire:model="descriptionLong" rows="3" cols="20" class="form-control"
+                                <textarea wire:model="descriptionLong" rows="3" cols="20"
+                                    class="form-control @error('descriptionLong') is-invalid @enderror"
                                     placeholder="{{ __('Descripción Larga') }} *"></textarea>
                                 @error('descriptionLong')
                                     <span class="text-danger error">{{ $message }}</span>
@@ -453,7 +573,8 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Especificaciones *</label>
-                                <textarea wire:model="Specifications" rows="3" cols="20" class="form-control"
+                                <textarea wire:model="Specifications" rows="3" cols="20"
+                                    class="form-control @error('Specifications') is-invalid @enderror"
                                     placeholder="{{ __('Especificaciones') }} *"></textarea>
                                 @error('Specifications')
                                     <span class="text-danger error">{{ $message }}</span>

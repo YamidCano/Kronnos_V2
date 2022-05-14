@@ -1,4 +1,5 @@
 <div>
+
     <main class="page-main">
         <div class="block fullwidth full-nopad bottom-space">
             <div class="container">
@@ -11,12 +12,12 @@
                             <!-- Slides -->
                             @if ($slider->count())
                                 @foreach ($slider as $item)
-                                    <div class="swiper-slide" data-thumb="{{ Storage::url($item->photo) }}"
-                                        data-href="http://google.com" data-target="_blank">
+                                    <div class="swiper-slide" data-thumb="{{ Storage::url($item->sliderphoto) }}"
+                                        data-href="#" data-target="_blank">
                                         <!-- _blank or _self ( _self is default )-->
                                         <div class="wrapper">
                                             <figure>
-                                                <img src="{{ Storage::url($item->photo) }}" alt="" width="1815"
+                                                <img src="{{ Storage::url($item->sliderphoto) }}" alt="" width="1815"
                                                     height="710">
                                             </figure>
                                             <div class="text2-1 animate" data-animate="flipInY" data-delay="0">
@@ -36,7 +37,7 @@
                             @else
                                 <div class="swiper-slide"
                                     data-thumb="{{ asset('seiko') }}/images/slider/slide-02.jpg"
-                                    data-href="http://google.com" data-target="_blank">
+                                    data-href="#" data-target="_blank">
                                     <!-- _blank or _self ( _self is default )-->
                                     <div class="wrapper">
                                         <figure>
@@ -135,14 +136,22 @@
                                             <!-- Product Photo -->
                                             <div class="product-item-photo">
                                                 <!-- Product Label -->
-                                                <div class="product-item-label label-new"><span>New</span></div>
-                                                <div class="product-item-label label-sale"><span>-50%</span></div>
+                                                @if ($item->new == 1)
+                                                    <div class="product-item-label label-new"><span>New</span></div>
+                                                @endif
+
+                                                @if (!empty($item->sales))
+                                                    <div class="product-item-label label-sale">
+                                                        <span>-{{ $item->sales }}%</span>
+                                                    </div>
+                                                @endif
                                                 <!-- /Product Label -->
                                                 <div class="product-item-gallery">
                                                     <!-- product main photo -->
                                                     <div class="product-item-gallery-main">
                                                         <a href="#"><img class="product-image-photo"
-                                                                src="{{ Storage::url($item->photo) }}" alt="" width="480" height="386"></a>
+                                                                src="{{ Storage::url($item->photo) }}" alt=""
+                                                                width="280" height="380"></a>
                                                         <a href="quick-view.html" title="Quick View"
                                                             class="quick-view-link quick-view-btn"> <i
                                                                 class="icon icon-eye"></i><span>Quick View</span></a>
@@ -150,34 +159,62 @@
                                                     <!-- /product main photo  -->
                                                 </div>
                                                 <!-- Product Actions -->
-                                                <a href="#" title="Add to Wishlist" class="no_wishlist"> <i
-                                                        class="icon icon-heart"></i><span>Add to Wishlist</span> </a>
-                                                <div class="product-item-actions">
+                                                <a href="#" title="Add to Wishlist" class="no_wishlist">
+                                                    {{-- <i class="icon icon-heart"></i> --}}
+                                                    <span>Add to Wishlist</span>
+                                                </a>
+                                                {{-- <div class="product-item-actions">
                                                     <div class="share-button toBottom">
                                                         <span class="toggle"></span>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <!-- /Product Actions -->
                                             </div>
                                             <!-- /Product Photo -->
                                             <!-- Product Details -->
                                             <div class="product-item-details">
-                                                <div class="product-item-name"> <a title="Longline  asymmetric midi skirt"
-                                                        href="product.html" class="product-item-link">Longline asymmetric
-                                                        midi
-                                                        skirt</a>
+                                                <div class="product-item-name"> <a
+                                                        title="Longline  asymmetric midi skirt" href="product.html"
+                                                        class="product-item-link">
+                                                        {{ $item->name }}
+                                                    </a>
                                                 </div>
                                                 <div class="product-item-description">Neque porro quisquam est, qui
                                                     dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
                                                     quia nonkdni numquam eius modi tempora incidunt ut labore</div>
-                                                <div class="price-box"> <span class="price-container"> <span
-                                                            class="price-wrapper"> <span
-                                                                class="old-price">$290.00</span>
-                                                            <span class="special-price">$229.00</span> </span>
-                                                    </span>
-                                                </div>
+                                                @if (!empty($item->sales))
+                                                    <div class="price-box">
+                                                        <span class="price-container">
+                                                            <span class="price-wrapper">
+                                                                <span class="old-price">
+                                                                    $ {{ $item->price }}
+                                                                </span>
+                                                                <span class="special-price">
+                                                                    <?php
+                                                                    $descuento = $item->price - ($item->price * $item->sales) / 100;
+                                                                    ?>
+                                                                    $ {{ $descuento }}.00
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                @else
+                                                    <div class="price-box"> <span class="price-container"> <span
+                                                                class="price-wrapper">
+                                                                <span class="special-price">
+                                                                    ${{ $item->price }}
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                @endif
+
                                                 <button class="btn add-to-cart" data-product="789123"> <i
-                                                        class="icon icon-cart"></i><span>Add to Cart</span> </button>
+                                                        class="icon icon-cart"></i>
+                                                    <span>
+                                                        Add to Cart
+                                                    </span>
+                                                </button>
                                             </div>
                                             <!-- /Product Details -->
                                         </div>
@@ -196,11 +233,11 @@
                                             <!-- /Product Label -->
                                             <div class="product-item-gallery">
                                                 <!-- product main photo -->
-                                                <div class="product-item-gallery-main">
+                                                <div class="product-item-gallery-main box">
                                                     <a href="#"><img class="product-image-photo"
                                                             src="{{ asset('seiko') }}/images/products/product-10.jpg"
                                                             alt=""></a>
-                                                    <a href="quick-view.html" title="Quick View"
+                                                    <a href="#" title="Quick View"
                                                         class="quick-view-link quick-view-btn"> <i
                                                             class="icon icon-eye"></i><span>Quick View</span></a>
                                                 </div>
@@ -209,18 +246,18 @@
                                             <!-- Product Actions -->
                                             <a href="#" title="Add to Wishlist" class="no_wishlist"> <i
                                                     class="icon icon-heart"></i><span>Add to Wishlist</span> </a>
-                                            <div class="product-item-actions">
+                                            {{-- <div class="product-item-actions">
                                                 <div class="share-button toBottom">
                                                     <span class="toggle"></span>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <!-- /Product Actions -->
                                         </div>
                                         <!-- /Product Photo -->
                                         <!-- Product Details -->
                                         <div class="product-item-details">
                                             <div class="product-item-name"> <a title="Longline  asymmetric midi skirt"
-                                                    href="product.html" class="product-item-link">Longline asymmetric
+                                                    href="#" class="product-item-link">Longline asymmetric
                                                     midi
                                                     skirt</a>
                                             </div>
@@ -233,8 +270,10 @@
                                                         <span class="special-price">$229.00</span> </span>
                                                 </span>
                                             </div>
-                                            <button class="btn add-to-cart" data-product="789123"> <i
-                                                    class="icon icon-cart"></i><span>Add to Cart</span> </button>
+                                            <button class="btn add-to-cart" disabled data-product="789123">
+                                                {{-- <i class="icon icon-cart"></i> --}}
+                                                <span>Add to Cart</span>
+                                            </button>
                                         </div>
                                         <!-- /Product Details -->
                                     </div>
