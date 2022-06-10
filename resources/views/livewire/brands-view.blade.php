@@ -130,7 +130,7 @@
                                 <label for="Name">Nombres Marca*</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-cubes"> </i>
+                                        <i class="icofont icofont-book-mark"> </i>
                                     </span>
                                     <input type="text" placeholder="Nombres Marca*"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />
@@ -170,7 +170,7 @@
                                 <label for="Name">Nombres Marca*</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-cubes"> </i>
+                                        <i class="icofont icofont-book-mark"> </i>
                                     </span>
                                     <input type="text" placeholder="Nombres Marca*"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />

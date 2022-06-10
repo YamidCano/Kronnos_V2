@@ -238,7 +238,7 @@
                                 <label for="Name">Selecione Marca *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-fast-delivery"> </i>
+                                        <i class="icofont icofont-book-mark"> </i>
                                     </span>
                                     <select wire:model="selectbrands"
                                         class="form-control @error('selectbrands') is-invalid @enderror">
@@ -529,7 +529,7 @@
                                 <label for="Name">Selecione Marca *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-fast-delivery"> </i>
+                                        <i class="icofont icofont-book-mark"> </i>
                                     </span>
                                     <select wire:model="selectbrands"
                                         class="form-control @error('selectbrands') is-invalid @enderror">
