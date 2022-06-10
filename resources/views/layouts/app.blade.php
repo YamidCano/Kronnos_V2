@@ -118,6 +118,14 @@
             )
         });
 
+        Livewire.on('alertError', function(message) {
+            Swal.fire(
+                '¡Algo no va bien!',
+                message,
+                'error'
+            )
+        });
+
         window.livewire.on('Store', () => {
             $('#Store').modal('hide');
         });

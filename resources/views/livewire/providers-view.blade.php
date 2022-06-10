@@ -56,7 +56,7 @@
                                         <th>Nombres Proveedor</th>
                                         <th>Telefono</th>
                                         <th>Nit</th>
-                                        <th>En Uso (Productos)</th>
+                                        <th>En Uso</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -84,13 +84,15 @@
                                                             <i class="icofont icofont-ui-edit"></i>
                                                         </button>
                                                     @endcan
-                                                    @can('Proveedor - Eliminar')
-                                                        <button type="button" class="btn btn-danger"
-                                                            wire:click="$emit('remove', {{ $item->id }})"
-                                                            data-bs-toggle="modal" data-bs-target="#permissionModal">
-                                                            <i class="icofont icofont-ui-delete"></i>
-                                                        </button>
-                                                    @endcan
+                                                    @if ($item->count_provider == 0)
+                                                        @can('Proveedor - Eliminar')
+                                                            <button type="button" class="btn btn-danger"
+                                                                wire:click="$emit('remove', {{ $item->id }})"
+                                                                data-bs-toggle="modal" data-bs-target="#permissionModal">
+                                                                <i class="icofont icofont-ui-delete"></i>
+                                                            </button>
+                                                        @endcan
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
@@ -126,13 +128,17 @@
                                 <label for="Name">Nombres Proveedor *</label>
                                 <input type="text" placeholder="Nombres Proveedor *"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />
-                                @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('name')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Telefono *</label>
                                 <input type="number" placeholder="Telefono *"
                                     class="form-control @error('phone') is-invalid @enderror" wire:model="phone" />
-                                @error('phone') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('phone')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <br>
@@ -141,7 +147,9 @@
                                 <label for="Name">Nit*</label>
                                 <input type="number" placeholder="Nit *"
                                     class="form-control @error('nit') is-invalid @enderror" wire:model="nit" />
-                                @error('nit') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('nit')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
 
@@ -177,13 +185,17 @@
                                 <label for="Name">Nombres Proveedor *</label>
                                 <input type="text" placeholder="Nombres Proveedor *"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />
-                                @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('name')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Telefono *</label>
                                 <input type="number" placeholder="Telefono *"
                                     class="form-control @error('phone') is-invalid @enderror" wire:model="phone" />
-                                @error('phone') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('phone')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <br>
@@ -192,7 +204,9 @@
                                 <label for="Name">Nit*</label>
                                 <input type="number" placeholder="Nit *"
                                     class="form-control @error('nit') is-invalid @enderror" wire:model="nit" />
-                                @error('nit') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('nit')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
 

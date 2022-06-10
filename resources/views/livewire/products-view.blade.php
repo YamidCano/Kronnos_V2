@@ -41,9 +41,9 @@
                                         <input class="form-control" type="search" wire:model="search"
                                             placeholder="Buscar" aria-label="Search">
                                         @if ($search != null)
-                                        <span class="input-group-text" style="cursor:pointer;" wire:click="clean">
-                                            <i class="icofont icofont-close-circled"> </i>
-                                        </span>
+                                            <span class="input-group-text" style="cursor:pointer;" wire:click="clean">
+                                                <i class="icofont icofont-close-circled"> </i>
+                                            </span>
                                         @endif
                                     </div>
 
@@ -110,13 +110,15 @@
                                                             <i class="icofont icofont-ui-edit"></i>
                                                         </button>
                                                     @endcan
-                                                    @can('Proveedor - Eliminar')
-                                                        <button type="button" class="btn btn-danger"
-                                                            wire:click="$emit('remove', {{ $item->id }})"
-                                                            data-bs-toggle="modal" data-bs-target="#permissionModal">
-                                                            <i class="icofont icofont-ui-delete"></i>
-                                                        </button>
-                                                    @endcan
+                                                    @if ($item->count_inventories == 0)
+                                                        @can('Proveedor - Eliminar')
+                                                            <button type="button" class="btn btn-danger"
+                                                                wire:click="$emit('remove', {{ $item->id }})"
+                                                                data-bs-toggle="modal" data-bs-target="#permissionModal">
+                                                                <i class="icofont icofont-ui-delete"></i>
+                                                            </button>
+                                                        @endcan
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
@@ -532,13 +534,14 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Stock Incial *</label>
+                                <label for="Name">Stock Actual *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="icofont icofont-memorial"> </i>
                                     </span>
-                                    <input type="number" placeholder="Stock Incial *"
-                                        class="form-control @error('stock') is-invalid @enderror" wire:model="stock" />
+                                    <input type="number" placeholder="Stock Incial *" disabled
+                                        class="form-control @error('stock') is-invalid @enderror"
+                                        wire:model="stock" />
                                 </div>
 
                                 @error('stock')
@@ -576,7 +579,8 @@
                                         <i class="icofont icofont-price"> </i>
                                     </span>
                                     <input type="number" step="0.01" placeholder="Precio *"
-                                        class="form-control @error('price') is-invalid @enderror" wire:model="price" />
+                                        class="form-control @error('price') is-invalid @enderror"
+                                        wire:model="price" />
                                 </div>
                                 <label class="mt-2 text-danger">
                                     @if ($price != null)
@@ -596,7 +600,8 @@
                                         <i class="icofont icofont-sale-discount"> </i>
                                     </span>
                                     <input type="number" placeholder="Descuento *"
-                                        class="form-control @error('sales') is-invalid @enderror" wire:model="sales" />
+                                        class="form-control @error('sales') is-invalid @enderror"
+                                        wire:model="sales" />
                                 </div>
 
                                 @error('sales')

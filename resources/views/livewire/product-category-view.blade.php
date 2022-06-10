@@ -76,13 +76,15 @@
                                                             <i class="icofont icofont-ui-edit"></i>
                                                         </button>
                                                     @endcan
-                                                    @can('Categoria-Producto - Eliminar')
-                                                        <button type="button" class="btn btn-danger"
-                                                            wire:click="$emit('remove', {{ $item->id }})"
-                                                            data-bs-toggle="modal" data-bs-target="#permissionModal">
-                                                            <i class="icofont icofont-ui-delete"></i>
-                                                        </button>
-                                                    @endcan
+                                                    @if ($item->count_category == 0)
+                                                        @can('Categoria-Producto - Eliminar')
+                                                            <button type="button" class="btn btn-danger"
+                                                                wire:click="$emit('remove', {{ $item->id }})"
+                                                                data-bs-toggle="modal" data-bs-target="#permissionModal">
+                                                                <i class="icofont icofont-ui-delete"></i>
+                                                            </button>
+                                                        @endcan
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
@@ -118,7 +120,9 @@
                                 <label for="Name">Nombres Categoría*</label>
                                 <input type="text" placeholder="Nombres Categoría*"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />
-                                @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('name')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </form>
@@ -151,7 +155,9 @@
                                 <label for="Name">Nombres Categoría*</label>
                                 <input type="text" placeholder="Nombres Categoría*"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />
-                                @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
+                                @error('name')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </form>

@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\providers;
 use Livewire\WithPagination;
 use App\Models\products;
+use App\Models\inventories;
 use App\Models\product_category;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -32,6 +33,7 @@ class ProductsView extends Component
 
     public function render()
     {
+
         $products =  products::query()
             ->when($this->search, function ($query) {
                 return $query->where(function ($query) {
@@ -41,6 +43,10 @@ class ProductsView extends Component
                 });
             })
             ->paginate($this->perPage);
+
+        $products->each(function ($item) {
+            return $item->count_inventories = inventories::where('id_product', $item->id)->count();
+        });
 
         return view('livewire.products-view', compact('products'));
     }
@@ -169,7 +175,7 @@ class ProductsView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name','stock', 'code', 'selectprovider', 'selectcategory', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
+        $this->reset(['name', 'stock', 'code', 'selectprovider', 'selectcategory', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -275,7 +281,7 @@ class ProductsView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name','stock', 'code', 'selectprovider', 'selectcategory2', 'selectcategory', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
+        $this->reset(['name', 'stock', 'code', 'selectprovider', 'selectcategory2', 'selectcategory', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
         $this->idenImg = rand();
     }
 
@@ -286,7 +292,7 @@ class ProductsView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name','stock', 'code', 'selectprovider', 'selectcategory2', 'selectcategory', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
+        $this->reset(['name', 'stock', 'code', 'selectprovider', 'selectcategory2', 'selectcategory', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
         $this->idenImg = rand();
     }
 

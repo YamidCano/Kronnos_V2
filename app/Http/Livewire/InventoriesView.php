@@ -25,17 +25,23 @@ class InventoriesView extends Component
         if ($this->idproduct != null) {
             $products = products::find($this->idproduct);
             $this->stockproducto = $products->stock;
+
+            if ($this->quantity >  $this->stockproducto) {
+                $this->emit('alertError', 'El Stock ingresado no puede ser mayor al Stock Actual');
+                $this->quantity = null;
+            }
         }
+
         $inventories =  inventories::query()
             ->when($this->search, function ($query) {
                 return $query->where(function ($query) {
                     $query->where('comments', 'like', "%{$this->search}%")
-                    ->orwhereHas('producto', function ($query) {
-                        $query->where('name', 'like', "%{$this->search}%");
-                    })
-                    ->orwhereHas('usuario', function ($query) {
-                        $query->where('name', 'like', "%{$this->search}%");
-                    });
+                        ->orwhereHas('producto', function ($query) {
+                            $query->where('name', 'like', "%{$this->search}%");
+                        })
+                        ->orwhereHas('usuario', function ($query) {
+                            $query->where('name', 'like', "%{$this->search}%");
+                        });
                 });
             })
             ->paginate($this->perPage);
