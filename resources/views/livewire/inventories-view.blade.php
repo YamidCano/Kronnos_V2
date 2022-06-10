@@ -246,7 +246,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" wire:click="close"
                         data-bs-dismiss="modal">Cerrar</button>
-                    @if ($idproduct != null)
+                    @if ($quantity != null)
                         <button type="button" class="btn btn-primary" wire:loading.attr="disabled"
                             wire:target="updatestock" wire:click="updatestock">Crear</button>
                     @endif

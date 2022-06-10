@@ -24,8 +24,8 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('id_product_categories')->nullable();
             $table->foreign('id_product_categories')->references('id')->on('product_categories');
 
-            $table->unsignedBigInteger('id_provider')->nullable();
-            $table->foreign('id_provider')->references('id')->on('providers');
+            $table->unsignedBigInteger('id_brands')->nullable();
+            $table->foreign('id_brands')->references('id')->on('brands');
 
             $table->string('photo')->nullable();
             $table->string('sliderphoto')->nullable();

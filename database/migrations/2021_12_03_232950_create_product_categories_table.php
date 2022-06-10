@@ -16,8 +16,6 @@ class CreateProductCategoriesTable extends Migration
         Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->unsignedBigInteger('id_brands')->nullable();
-            $table->foreign('id_brands')->references('id')->on('brands');
             $table->timestamps();
         });
     }

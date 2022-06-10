@@ -33,8 +33,18 @@
                             </div>
                             <div class="col-sm-6 col-md-5">
                                 <div class="mb-3">
-                                    <input class="form-control" type="search" wire:model="search" placeholder="Buscar"
-                                        aria-label="Search">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">
+                                            <i class="icofont icofont-search"> </i>
+                                        </span>
+                                        <input class="form-control" type="search" wire:model="search"
+                                            placeholder="Buscar" aria-label="Search">
+                                        @if ($search != null)
+                                            <span class="input-group-text" style="cursor:pointer;" wire:click="clean">
+                                                <i class="icofont icofont-close-circled"> </i>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-2">
@@ -118,8 +128,13 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Nombres Categoría*</label>
-                                <input type="text" placeholder="Nombres Categoría*"
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-cubes"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Nombres Categoría*"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />
+                                </div>
                                 @error('name')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -153,8 +168,13 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Nombres Categoría*</label>
-                                <input type="text" placeholder="Nombres Categoría*"
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-cubes"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Nombres Categoría*"
                                     class="form-control @error('name') is-invalid @enderror" wire:model="name" />
+                                </div>
                                 @error('name')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror

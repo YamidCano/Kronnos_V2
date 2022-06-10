@@ -15,7 +15,8 @@ class ProvidersView extends Component
 
     //Declaramos variables publicas
     public $perPage = 25;
-    public $search, $name, $provider_id, $provider, $phone, $nit;
+    public $search, $name, $provider_id, $provider, $phone, $nit, $address, $email;
+    public $updating = false, $status = 0;
 
     //Actualizamos la vista
     protected $listeners = ['destroy'];
@@ -26,26 +27,43 @@ class ProvidersView extends Component
             ->when($this->search, function ($query) {
                 return $query->where(function ($query) {
                     $query->where('name', 'like', "%{$this->search}%")
+                        ->orWhere('address', 'like', "%{$this->search}%")
+                        ->orWhere('email', 'like', "%{$this->search}%")
                         ->orWhere('phone', 'like', "%{$this->search}%")
                         ->orWhere('nit', 'like', "%{$this->search}%");
                 });
             })
             ->paginate($this->perPage);
 
-        $providers->each(function ($item) {
-            return $item->count_provider = products::where('id_provider', $item->id)->count();
-        });
+        // $providers->each(function ($item) {
+        //     return $item->count_provider = products::where('id_provider', $item->id)->count();
+        // });
 
         return view('livewire.providers-view', compact('providers'));
     }
 
     //Decleramos campos sin validar
-    function rules()
+
+    public function rules(): array
     {
+        if ($this->updating == true) {
+            return [
+                'name' => 'required|min:3|max:256|unique:App\Models\providers,name,' . optional($this->provider)->id,
+                'phone' => 'required|min:10|max:10|unique:App\Models\providers,phone,' . optional($this->provider)->id,
+                'nit' => 'required|min:9|max:10|unique:App\Models\providers,nit,' . optional($this->provider)->id,
+                'email' => 'required|min:3|max:50|email|unique:App\Models\providers,email,' . optional($this->provider)->id,
+                'address' => 'required',
+                'status' => 'required',
+            ];
+        }
+
         return [
-            'name' => '',
-            'phone' => '',
-            'nit' => '',
+            'name' => 'required|min:3|max:256|unique:App\Models\providers,name,',
+            'phone' => 'required|min:10|max:10|unique:App\Models\providers,phone,',
+            'nit' => 'required|min:9|max:10|unique:App\Models\providers,nit,',
+            'email' => 'required|min:3|max:50|email|unique:App\Models\providers,email',
+            'address' => 'required',
+            'status' => 'required',
         ];
     }
 
@@ -54,21 +72,25 @@ class ProvidersView extends Component
         $this->validateOnly($propertyName);
     }
 
+    public function clean()
+    {
+        $this->reset(['search']);
+    }
+
     //Creamos el registro
     public function save()
     {
         //Validamos los campos
-        $this->validate([
-            'name' => 'required|min:3|max:256',
-            'phone' => 'required|min:10|max:10',
-            'nit' => 'required|min:9|max:10|unique:App\Models\providers,nit,',
-        ]);
+        $this->validate();
 
         //Guardamos los registros
         providers::create([
             'name' => $this->name,
             'phone' => $this->phone,
             'nit' => $this->nit,
+            'email' => $this->email,
+            'address' => $this->address,
+            'status' => $this->status,
         ]);
 
         //Cerramos la ventana modal
@@ -77,7 +99,7 @@ class ProvidersView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'phone', 'nit']);
+        $this->reset(['name', 'phone', 'nit', 'email', 'address', 'status']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -85,30 +107,33 @@ class ProvidersView extends Component
     //Tramos los datos al editar y lo volcamos en variables
     public function edit(providers $provider)
     {
+        $this->updating = true;
         $this->provider = $provider;
         $this->provider_id = $provider->id;
         $this->name = $provider->name;
         $this->phone = $provider->phone;
         $this->nit = $provider->nit;
+        $this->email = $provider->email;
+        $this->address = $provider->address;
+        $this->status = $provider->status;
     }
 
     //Actualizamos formulario de edicion
     public function update()
     {
         //Validamos los campos
-        $this->validate([
-            'name' => 'required|min:3|max:256',
-            'phone' => 'required|min:10|max:10',
-            'nit' => 'required|min:9|max:10|unique:App\Models\providers,nit,' . optional($this->provider)->id,
-        ]);
+        $this->validate();
 
         $provider = providers::find($this->provider_id);
         $provider->update([
             'name' => $this->name,
             'phone' => $this->phone,
             'nit' => $this->nit,
+            'email' => $this->email,
+            'address' => $this->address,
+            'status' => $this->status,
         ]);
-        $this->reset(['name', 'phone', 'nit']);
+        $this->reset(['name', 'phone', 'nit', 'email', 'address', 'status']);
         $this->emit('update');
         $this->resetErrorBag();
         $this->resetValidation();
@@ -122,7 +147,7 @@ class ProvidersView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'phone', 'nit']);
+        $this->reset(['name', 'phone', 'nit', 'email', 'address', 'status']);
     }
 
     //Cerrar una ventana modal
@@ -132,6 +157,6 @@ class ProvidersView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'phone', 'nit']);
+        $this->reset(['name', 'phone', 'nit', 'email', 'address', 'status']);
     }
 }

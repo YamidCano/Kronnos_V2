@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $proveedor = Role::create(['name' => 'Proveedor']);
         $ProductCategory = Role::create(['name' => 'Categoria-Producto']);
         $Inventorie = Role::create(['name' => 'Inventorie']);
+        $Brands = Role::create(['name' => 'Brands']);
 
         //crud de usuarios
         $permission = [
@@ -63,6 +64,7 @@ class DatabaseSeeder extends Seeder
         $proveedor->syncPermissions(Permission::where('name', 'like', "%Proveedor%")->get());
         $ProductCategory->syncPermissions(Permission::where('name', 'like', "%Categoria-Producto%")->get());
         $Inventorie->syncPermissions(Permission::where('name', 'like', "%Inventorie%")->get());
+        $Brands->syncPermissions(Permission::where('name', 'like', "%Brands%")->get());
 
         $Administrador->assignRole('Administrador');
     }

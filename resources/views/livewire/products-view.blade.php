@@ -46,7 +46,6 @@
                                             </span>
                                         @endif
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-2">
@@ -85,7 +84,7 @@
                                                 {{ $item->categoria->name }}
                                             </td>
                                             <td>
-                                                {{ $item->provider->name }}
+                                                {{ $item->brands->name }}
                                             </td>
                                             <td>
                                                 {{ $item->code }}
@@ -194,7 +193,6 @@
                                     <input type="text" placeholder="Nombres Producto *"
                                         class="form-control @error('name') is-invalid @enderror" wire:model="name" />
                                 </div>
-
                                 @error('name')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -237,12 +235,22 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-                                {{-- <label for="Name">Slug *</label>
-                                <input type="number" step="0.01" placeholder="Precio *"
-                                    class="form-control @error('price') is-invalid @enderror" wire:model="slug" />
-                                @error('slug')
+                                <label for="Name">Selecione Marca *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-fast-delivery"> </i>
+                                    </span>
+                                    <select wire:model="selectbrands"
+                                        class="form-control @error('selectbrands') is-invalid @enderror">
+                                        <option value="">{{ __('Selecione Marca') }} *</option>
+                                        @foreach ($brands as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @error('selectbrands')
                                     <span class="text-danger error">{{ $message }}</span>
-                                @enderror --}}
+                                @enderror
                             </div>
                         </div>
                         <br>
@@ -341,7 +349,6 @@
                                         <option value="1">SI</option>
                                     </select>
                                 </div>
-
                                 @error('slider')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -379,33 +386,6 @@
                             </div>
                             <br>
                         @endif
-
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Selecione Proveedor *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-fast-delivery"> </i>
-                                    </span>
-                                    <select wire:model="selectprovider"
-                                        class="form-control @error('selectprovider') is-invalid @enderror">
-                                        <option value="">{{ __('Selecione Proveedor') }} *</option>
-                                        @foreach ($providers as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                @error('selectprovider')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Nit</label>
-                                <input type="text" class="form-control" value="{{ $providerNit }}" disabled>
-                            </div>
-                        </div>
-                        <br>
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Descripción *</label>
@@ -505,7 +485,6 @@
                                     <input type="text" placeholder="Nombres Producto *"
                                         class="form-control @error('name') is-invalid @enderror" wire:model="name" />
                                 </div>
-
                                 @error('name')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -525,7 +504,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-
                                 @error('selectcategory')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -534,14 +512,13 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Stock Actual *</label>
+                                <label for="Name">Stock Incial *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="icofont icofont-memorial"> </i>
                                     </span>
                                     <input type="number" placeholder="Stock Incial *" disabled
-                                        class="form-control @error('stock') is-invalid @enderror"
-                                        wire:model="stock" />
+                                        class="form-control @error('stock') is-invalid @enderror" wire:model="stock" />
                                 </div>
 
                                 @error('stock')
@@ -549,12 +526,22 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-                                {{-- <label for="Name">Slug *</label>
-                                <input type="number" step="0.01" placeholder="Precio *"
-                                    class="form-control @error('price') is-invalid @enderror" wire:model="slug" />
-                                @error('slug')
+                                <label for="Name">Selecione Marca *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-fast-delivery"> </i>
+                                    </span>
+                                    <select wire:model="selectbrands"
+                                        class="form-control @error('selectbrands') is-invalid @enderror">
+                                        <option value="">{{ __('Selecione Marca') }} *</option>
+                                        @foreach ($brands as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @error('selectbrands')
                                     <span class="text-danger error">{{ $message }}</span>
-                                @enderror --}}
+                                @enderror
                             </div>
                         </div>
                         <br>
@@ -579,8 +566,7 @@
                                         <i class="icofont icofont-price"> </i>
                                     </span>
                                     <input type="number" step="0.01" placeholder="Precio *"
-                                        class="form-control @error('price') is-invalid @enderror"
-                                        wire:model="price" />
+                                        class="form-control @error('price') is-invalid @enderror" wire:model="price" />
                                 </div>
                                 <label class="mt-2 text-danger">
                                     @if ($price != null)
@@ -600,8 +586,7 @@
                                         <i class="icofont icofont-sale-discount"> </i>
                                     </span>
                                     <input type="number" placeholder="Descuento *"
-                                        class="form-control @error('sales') is-invalid @enderror"
-                                        wire:model="sales" />
+                                        class="form-control @error('sales') is-invalid @enderror" wire:model="sales" />
                                 </div>
 
                                 @error('sales')
@@ -655,7 +640,6 @@
                                         <option value="1">SI</option>
                                     </select>
                                 </div>
-
                                 @error('slider')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -693,33 +677,6 @@
                             </div>
                             <br>
                         @endif
-
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Selecione Proveedor *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-fast-delivery"> </i>
-                                    </span>
-                                    <select wire:model="selectprovider"
-                                        class="form-control @error('selectprovider') is-invalid @enderror">
-                                        <option value="">{{ __('Selecione Proveedor') }} *</option>
-                                        @foreach ($providers as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                @error('selectprovider')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Nit</label>
-                                <input type="text" class="form-control" value="{{ $providerNit }}" disabled>
-                            </div>
-                        </div>
-                        <br>
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Descripción *</label>

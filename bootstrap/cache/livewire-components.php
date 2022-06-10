@@ -1,6 +1,7 @@
 <?php return array (
   'bill-details-view' => 'App\\Http\\Livewire\\BillDetailsView',
   'bills-view' => 'App\\Http\\Livewire\\BillsView',
+  'brand-view' => 'App\\Http\\Livewire\\BrandView',
   'brands-view' => 'App\\Http\\Livewire\\BrandsView',
   'components.header' => 'App\\Http\\Livewire\\Components\\Header',
   'components.sidebar' => 'App\\Http\\Livewire\\Components\\Sidebar',
@@ -15,8 +16,6 @@
   'product-types-view' => 'App\\Http\\Livewire\\ProductTypesView',
   'products-view' => 'App\\Http\\Livewire\\ProductsView',
   'providers-view' => 'App\\Http\\Livewire\\ProvidersView',
-  'prueba' => 'App\\Http\\Livewire\\Prueba',
-  'prueba-view' => 'App\\Http\\Livewire\\PruebaView',
   'suppliers-view' => 'App\\Http\\Livewire\\SuppliersView',
   'user.profile-view' => 'App\\Http\\Livewire\\User\\ProfileView',
   'user.role-view' => 'App\\Http\\Livewire\\User\\RoleView',

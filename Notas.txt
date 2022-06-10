@@ -93,3 +93,5 @@ php artisan make:model brands -m
 Customers
 php artisan make:livewire customersView
 php artisan make:model customers -m
+
+

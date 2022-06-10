@@ -63,16 +63,16 @@
                             </ul>
                         </li>
                     @endif
-                    @if (canView('Producto - Tabla') or canView('Proveedor - Tabla') or canView('Categoria-Producto - Tabla') or canView('Inventorie - Tabla'))
+                    @if (canView('Producto - Tabla') or canView('Brands - Tabla') or canView('Categoria-Producto - Tabla'))
                         <li class="sidebar-list"><a
-                                class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos' or Route::currentRouteName() == 'ajusteInventario') active @endif"
+                                class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'marcas' or Route::currentRouteName() == 'productos') active @endif"
                                 href="#"><i data-feather="package"></i><span class="lan-6">Productos</span>
                                 <div class="according-menu"><i
-                                        class="@if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos' or Route::currentRouteName() == 'ajusteInventario') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
+                                        class="@if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'marcas' or Route::currentRouteName() == 'productos') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
                                 </div>
                             </a>
                             <ul class="sidebar-submenu"
-                                style=" @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos' or Route::currentRouteName() == 'ajusteInventario') display: block; @else  display: none; @endif">
+                                style=" @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'marcas' or Route::currentRouteName() == 'productos') display: block; @else  display: none; @endif">
                                 @if (canView('Producto - Tabla'))
                                     <li>
                                         <a href="{{ url('productos') }}"
@@ -89,26 +89,46 @@
                                         </a>
                                     </li>
                                 @endif
-                                @if (canView('Proveedor - Tabla'))
+                                @if (canView('Brands - Tabla'))
                                     <li>
-                                        <a href="{{ url('proveedor') }}"
-                                            class="{{ Route::currentRouteName() == 'proveedor' ? 'active' : '' }}">
-                                            Proveedores
-                                        </a>
-                                    </li>
-                                @endif
-
-                                @if (canView('Inventorie - Tabla'))
-                                    <li>
-                                        <a href="{{ url('ajusteInventario') }}"
-                                            class="{{ Route::currentRouteName() == 'ajusteInventario' ? 'active' : '' }}">
-                                            Ajuste de Inventario
+                                        <a href="{{ url('marcas') }}"
+                                            class="{{ Route::currentRouteName() == 'marcas' ? 'active' : '' }}">
+                                            Marcas
                                         </a>
                                     </li>
                                 @endif
                             </ul>
                         </li>
                     @endif
+                    @if (canView('Inventorie - Tabla') or canView('Proveedor - Tabla'))
+                    <li class="sidebar-list"><a
+                            class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') active @endif"
+                            href="#"><i data-feather="layers"></i><span class="lan-6">Inventario y Proveedores </span>
+                            <div class="according-menu"><i
+                                    class="@if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
+                            </div>
+                        </a>
+                        <ul class="sidebar-submenu"
+                            style=" @if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') display: block; @else  display: none; @endif">
+                            @if (canView('Inventorie - Tabla'))
+                                <li>
+                                    <a href="{{ url('ajusteInventario') }}"
+                                        class="{{ Route::currentRouteName() == 'ajusteInventario' ? 'active' : '' }}">
+                                        Ajuste de Inventario
+                                    </a>
+                                </li>
+                            @endif
+                            @if (canView('Proveedor - Tabla'))
+                                    <li>
+                                        <a href="{{ url('proveedores') }}"
+                                            class="{{ Route::currentRouteName() == 'proveedores' ? 'active' : '' }}">
+                                            Proveedores
+                                        </a>
+                                    </li>
+                                @endif
+                        </ul>
+                    </li>
+                @endif
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

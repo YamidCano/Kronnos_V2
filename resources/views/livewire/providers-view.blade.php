@@ -33,8 +33,18 @@
                             </div>
                             <div class="col-sm-6 col-md-5">
                                 <div class="mb-3">
-                                    <input class="form-control" type="search" wire:model="search" placeholder="Buscar"
-                                        aria-label="Search">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">
+                                            <i class="icofont icofont-search"> </i>
+                                        </span>
+                                        <input class="form-control" type="search" wire:model="search"
+                                            placeholder="Buscar" aria-label="Search">
+                                        @if ($search != null)
+                                            <span class="input-group-text" style="cursor:pointer;" wire:click="clean">
+                                                <i class="icofont icofont-close-circled"> </i>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-2">
@@ -56,7 +66,9 @@
                                         <th>Nombres Proveedor</th>
                                         <th>Telefono</th>
                                         <th>Nit</th>
-                                        <th>En Uso</th>
+                                        <th>Email</th>
+                                        <th>Estado</th>
+                                        {{-- <th>En Uso</th> --}}
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -73,8 +85,22 @@
                                                 {{ $item->nit }}
                                             </td>
                                             <td>
-                                                {{ $item->count_provider }}
+                                                {{ $item->email }}
                                             </td>
+                                            <td>
+                                                @if ($item->status == 0)
+                                                    <div class="text-success">
+                                                        Activo
+                                                    </div>
+                                                @else
+                                                    <div class="text-danger">
+                                                        Inactivo
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            {{-- <td>
+                                                {{ $item->count_provider }}
+                                            </td> --}}
                                             <td>
                                                 <div class="">
                                                     @can('Proveedor - Editar')
@@ -84,15 +110,15 @@
                                                             <i class="icofont icofont-ui-edit"></i>
                                                         </button>
                                                     @endcan
-                                                    @if ($item->count_provider == 0)
-                                                        @can('Proveedor - Eliminar')
-                                                            <button type="button" class="btn btn-danger"
-                                                                wire:click="$emit('remove', {{ $item->id }})"
-                                                                data-bs-toggle="modal" data-bs-target="#permissionModal">
-                                                                <i class="icofont icofont-ui-delete"></i>
-                                                            </button>
-                                                        @endcan
-                                                    @endif
+                                                    {{-- @if ($item->count_provider == 0) --}}
+                                                    @can('Proveedor - Eliminar')
+                                                        <button type="button" class="btn btn-danger"
+                                                            wire:click="$emit('remove', {{ $item->id }})"
+                                                            data-bs-toggle="modal" data-bs-target="#permissionModal">
+                                                            <i class="icofont icofont-ui-delete"></i>
+                                                        </button>
+                                                    @endcan
+                                                    {{-- @endif --}}
                                                 </div>
                                             </td>
                                         </tr>
@@ -126,16 +152,26 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Nombres Proveedor *</label>
-                                <input type="text" placeholder="Nombres Proveedor *"
-                                    class="form-control @error('name') is-invalid @enderror" wire:model="name" />
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-ui-file"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Nombres Proveedor *"
+                                        class="form-control @error('name') is-invalid @enderror" wire:model="name" />
+                                </div>
                                 @error('name')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Telefono *</label>
-                                <input type="number" placeholder="Telefono *"
-                                    class="form-control @error('phone') is-invalid @enderror" wire:model="phone" />
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-ui-cell-phone"> </i>
+                                    </span>
+                                    <input type="number" placeholder="Telefono *"
+                                        class="form-control @error('phone') is-invalid @enderror" wire:model="phone" />
+                                </div>
                                 @error('phone')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -144,15 +180,63 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Nit*</label>
-                                <input type="number" placeholder="Nit *"
-                                    class="form-control @error('nit') is-invalid @enderror" wire:model="nit" />
+                                <label for="Name">Nit *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-numbered"> </i>
+                                    </span>
+                                    <input type="number" placeholder="Nit *"
+                                        class="form-control @error('nit') is-invalid @enderror" wire:model="nit" />
+                                </div>
                                 @error('nit')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-
+                                <label for="Name">Correo Electronico *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-email"> </i>
+                                    </span>
+                                    <input type="email" placeholder="Correo Electronico *"
+                                        class="form-control @error('email') is-invalid @enderror" wire:model="email" />
+                                </div>
+                                @error('email')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Dirrecion *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-address-book"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Dirrecion *"
+                                        class="form-control @error('address') is-invalid @enderror"
+                                        wire:model="address" />
+                                </div>
+                                @error('address')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">{{ __('Desactivar Proveedor?') }}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-toggle-off"> </i>
+                                    </span>
+                                    <select wire:model="status"
+                                        class="form-control @error('status') is-invalid @enderror">
+                                        <option value="0">NO</option>
+                                        <option value="1">SI</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </form>
@@ -183,16 +267,26 @@
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Nombres Proveedor *</label>
-                                <input type="text" placeholder="Nombres Proveedor *"
-                                    class="form-control @error('name') is-invalid @enderror" wire:model="name" />
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-ui-file"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Nombres Proveedor *"
+                                        class="form-control @error('name') is-invalid @enderror" wire:model="name" />
+                                </div>
                                 @error('name')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Telefono *</label>
-                                <input type="number" placeholder="Telefono *"
-                                    class="form-control @error('phone') is-invalid @enderror" wire:model="phone" />
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-ui-cell-phone"> </i>
+                                    </span>
+                                    <input type="number" placeholder="Telefono *"
+                                        class="form-control @error('phone') is-invalid @enderror" wire:model="phone" />
+                                </div>
                                 @error('phone')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -201,15 +295,63 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Nit*</label>
-                                <input type="number" placeholder="Nit *"
-                                    class="form-control @error('nit') is-invalid @enderror" wire:model="nit" />
+                                <label for="Name">Nit *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-numbered"> </i>
+                                    </span>
+                                    <input type="number" placeholder="Nit *"
+                                        class="form-control @error('nit') is-invalid @enderror" wire:model="nit" />
+                                </div>
                                 @error('nit')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-
+                                <label for="Name">Correo Electronico *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-email"> </i>
+                                    </span>
+                                    <input type="email" placeholder="Correo Electronico *"
+                                        class="form-control @error('email') is-invalid @enderror" wire:model="email" />
+                                </div>
+                                @error('email')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Dirrecion *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-address-book"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Dirrecion *"
+                                        class="form-control @error('address') is-invalid @enderror"
+                                        wire:model="address" />
+                                </div>
+                                @error('address')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">{{ __('Desactivar Proveedor?') }}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-toggle-off"> </i>
+                                    </span>
+                                    <select wire:model="status"
+                                        class="form-control @error('status') is-invalid @enderror">
+                                        <option value="0">NO</option>
+                                        <option value="1">SI</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </form>

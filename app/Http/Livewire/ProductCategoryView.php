@@ -16,6 +16,7 @@ class ProductCategoryView extends Component
     //Declaramos variables publicas
     public $perPage = 25;
     public $search, $name, $category_id, $category;
+    public $updating = false;
 
     //Actualizamos la vista
     protected $listeners = ['destroy'];
@@ -34,10 +35,16 @@ class ProductCategoryView extends Component
     }
 
     //Decleramos campos sin validar
-    function rules()
+    public function rules(): array
     {
+        if ($this->updating == true) {
+            return [
+                'name' => 'required|min:3|max:256|unique:App\Models\product_category,name,' . optional($this->category)->id,
+            ];
+        }
+
         return [
-            'name' => '',
+            'name' => 'required|min:3|max:256|unique:App\Models\product_category,name,',
         ];
     }
 
@@ -50,9 +57,7 @@ class ProductCategoryView extends Component
     public function save()
     {
         //Validamos los campos
-        $this->validate([
-            'name' => 'required|min:3|max:256|unique:App\Models\product_category,name,',
-        ]);
+        $this->validate();
 
         //Guardamos los registros
         product_category::create([
@@ -73,6 +78,7 @@ class ProductCategoryView extends Component
     //Tramos los datos al editar y lo volcamos en variables
     public function edit(product_category $category)
     {
+        $this->updating = true;
         $this->category = $category;
         $this->category_id = $category->id;
         $this->name = $category->name;
@@ -82,9 +88,7 @@ class ProductCategoryView extends Component
     public function update()
     {
         //Validamos los campos
-        $this->validate([
-            'name' => 'required|min:3|max:256|unique:App\Models\product_category,name,'. optional($this->category)->id,
-        ]);
+        $this->validate();
 
         $category = product_category::find($this->category_id);
         $category->update([
@@ -115,5 +119,10 @@ class ProductCategoryView extends Component
         $this->resetValidation();
         //Limpiamos Campos
         $this->reset(['name']);
+    }
+
+    public function clean()
+    {
+        $this->reset(['search']);
     }
 }
