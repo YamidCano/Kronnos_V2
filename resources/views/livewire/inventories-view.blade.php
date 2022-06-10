@@ -3,12 +3,12 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Ajuste de Inventario</h3>
+                    <h3>Ajuste de Stock</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item">Ajuste de Inventario</li>
+                        <li class="breadcrumb-item">Ajuste de Stock</li>
                         {{-- <li class="breadcrumb-item active">Sample Page</li> --}}
                     </ol>
                 </div>
@@ -27,7 +27,7 @@
                                     <div class="mb-3">
                                         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
                                             data-bs-target="#Store">
-                                            Agregar Nuevo Ajuste
+                                            Agregar Nuevo Ajuste de Stock
                                         </button>
                                     </div>
                                 @endcan
@@ -117,7 +117,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">
-                        Nuevo Ajuste de Inventario
+                        Nuevo Ajuste de Stock
                     </h5>
                     <button type="button" class="btn-close" wire:click="close" data-bs-dismiss="modal"
                         aria-label="Close"></button>

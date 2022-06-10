@@ -101,24 +101,17 @@
                         </li>
                     @endif
                     @if (canView('Inventorie - Tabla') or canView('Proveedor - Tabla'))
-                    <li class="sidebar-list"><a
-                            class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') active @endif"
-                            href="#"><i data-feather="layers"></i><span class="lan-6">Inventario y Proveedores </span>
-                            <div class="according-menu"><i
-                                    class="@if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
-                            </div>
-                        </a>
-                        <ul class="sidebar-submenu"
-                            style=" @if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') display: block; @else  display: none; @endif">
-                            @if (canView('Inventorie - Tabla'))
-                                <li>
-                                    <a href="{{ url('ajusteInventario') }}"
-                                        class="{{ Route::currentRouteName() == 'ajusteInventario' ? 'active' : '' }}">
-                                        Ajuste de Inventario
-                                    </a>
-                                </li>
-                            @endif
-                            @if (canView('Proveedor - Tabla'))
+                        <li class="sidebar-list"><a
+                                class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') active @endif"
+                                href="#"><i data-feather="layers"></i><span class="lan-6">Proveedores y Ajuste
+                                    de Stock</span>
+                                <div class="according-menu"><i
+                                        class="@if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
+                                </div>
+                            </a>
+                            <ul class="sidebar-submenu"
+                                style=" @if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') display: block; @else  display: none; @endif">
+                                @if (canView('Proveedor - Tabla'))
                                     <li>
                                         <a href="{{ url('proveedores') }}"
                                             class="{{ Route::currentRouteName() == 'proveedores' ? 'active' : '' }}">
@@ -126,9 +119,17 @@
                                         </a>
                                     </li>
                                 @endif
-                        </ul>
-                    </li>
-                @endif
+                                @if (canView('Inventorie - Tabla'))
+                                    <li>
+                                        <a href="{{ url('ajusteInventario') }}"
+                                            class="{{ Route::currentRouteName() == 'ajusteInventario' ? 'active' : '' }}">
+                                            Ajuste de Stock
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
