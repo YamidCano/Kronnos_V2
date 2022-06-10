@@ -25,10 +25,11 @@ class InventoriesView extends Component
         if ($this->idproduct != null) {
             $products = products::find($this->idproduct);
             $this->stockproducto = $products->stock;
-
-            if ($this->quantity >  $this->stockproducto) {
-                $this->emit('alertError', 'El Stock ingresado no puede ser mayor al Stock Actual');
-                $this->quantity = null;
+            if ($this->type == 1) {
+                if ($this->quantity >  $this->stockproducto) {
+                    $this->emit('alertError', 'El Stock ingresado no puede ser mayor al Stock Actual');
+                    $this->quantity = null;
+                }
             }
         }
 
