@@ -100,6 +100,11 @@ class ProductCategoryView extends Component
     public function destroy(product_category $category)
     {
         $category->delete();
+        //Limpiamos validaciones
+        $this->resetErrorBag();
+        $this->resetValidation();
+        //Limpiamos Campos
+        $this->reset(['name']);
     }
 
     //Cerrar una ventana modal

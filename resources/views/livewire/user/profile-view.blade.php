@@ -21,7 +21,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:ignore.self>
+                        <form>
                             <div class="row row-sm">
                                 <div class="col-lg">
                                     <label for="Name">Nombres *</label>

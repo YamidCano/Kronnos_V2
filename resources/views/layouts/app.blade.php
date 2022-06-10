@@ -21,8 +21,33 @@
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 
     @include('layouts.cuba.head')
-    <livewire:styles />
+
+    @livewireStyles
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+        textarea:focus,
+        select:focus,
+        input:focus,
+        input[type]:focus {
+            /* border: none; */
+            border: 1px solid #ced4da;
+            box-shadow: 0 2px 2px rgba(229, 37, 23, 0.075)inset, 0 0 8px #e74d3c00;
+            outline: 0 none;
+        }
+
+        .form-select:focus {
+            border-bottom: 3px solid #e74d3c00;
+            outline: 0;
+            /* border: none; */
+            -webkit-box-shadow: 0 0 0 .25rem rgba(13, 110, 253, 0.25);
+            box-shadow: 0 2px 2px rgba(229, 37, 23, 0.075)inset, 0 0 8px #e74d3c00;
+        }
+    </style>
+
 </head>
 
 <body onload="startTime()" @if (auth()->user()->theme == 1) class="dark-only" @endif>
@@ -67,15 +92,22 @@
 
     @livewireScripts
 
-    <script type="module">
+    {{-- <script type="module">
         import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
     </script>
 
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
-        data-turbolinks-eval="false" data-turbo-eval="false"></script>
+    <script src="https://cdn.jsdelivr.net/npm/livewire-turbolinks@0.1.x/dist/livewire-turbolinks.min.js"
+        data-turbolinks-eval="false" data-turbo-eval="false"></script> --}}
+
     @include('layouts.cuba.plugins')
 
     @stack('js')
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
     <script>
         Livewire.on('alert', function(message) {

@@ -21,6 +21,11 @@ php artisan vendor:publish --tag=laravel-errors
 
 php artisan storage:link
 composer require cviebrock/eloquent-sluggable "8.0.8"
+_______________________________________________
+
+
+composer remove darbaoui/laravel-ui-avatars
+composer remove glebred/search-multiselect-input
 ____________________________________
 
 
@@ -58,9 +63,9 @@ PRODUCT_TYPES
 php artisan make:livewire product_categoryView
 php artisan make:model product_category -m
 
-PROVIDERS
-php artisan make:livewire providersView
-php artisan make:model providers -m
+Suppliers
+php artisan make:livewire suppliersView
+php artisan make:model suppliers -m
 
 PRODUCTS
 php artisan make:livewire productsView
@@ -84,3 +89,7 @@ php artisan make:model role -m
 BRANDS
 php artisan make:livewire brandsView
 php artisan make:model brands -m
+
+Customers
+php artisan make:livewire customersView
+php artisan make:model customers -m

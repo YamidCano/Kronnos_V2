@@ -118,6 +118,11 @@ class ProvidersView extends Component
     public function destroy(providers $provider)
     {
         $provider->delete();
+        //Limpiamos validaciones
+        $this->resetErrorBag();
+        $this->resetValidation();
+        //Limpiamos Campos
+        $this->reset(['name', 'phone', 'nit']);
     }
 
     //Cerrar una ventana modal

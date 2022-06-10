@@ -11,6 +11,8 @@
 
     <link rel="shortcut icon" href="favicon.ico">
 
+    @livewireStyles
+
     @include('layouts.seiko.head')
 
 </head>
@@ -161,6 +163,15 @@
         </div>
     </div>
     <!-- /Modal Quick View -->
+
+    @livewireScripts
+
+    {{-- <script type="module">
+        import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
+        data-turbolinks-eval="false" data-turbo-eval="false"></script> --}}
 
     <!-- jQuery Scripts  -->
     @include('layouts.seiko.plugins')

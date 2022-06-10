@@ -17,8 +17,11 @@ class CreateInventoriesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_product')->nullable();
             $table->foreign('id_product')->references('id')->on('products');
+            $table->unsignedBigInteger('id_user')->nullable();
+            $table->foreign('id_user')->references('id')->on('users');
 
             $table->integer('quantity')->nullable();
+            $table->integer('type')->nullable();
             $table->string('comments',200)->nullable();
             $table->timestamps();
         });

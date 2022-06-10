@@ -28,6 +28,7 @@ class UserView extends Component
     public function render()
     {
         //declarmos una variables y tramos los datos de la tabla
+        $usuarios = User::all();
         $users =  User::query()
             // ->where('name', 'like', "%{$this->search}%")
             ->when($this->search, function ($query) {
@@ -42,7 +43,7 @@ class UserView extends Component
             ->paginate($this->perPage);
 
         //Retornamos la vista y volcamos los datos
-        return view('livewire.user.user-view', compact('users'));
+        return view('livewire.user.user-view', compact('users', 'usuarios'));
     }
 
     //Decleramos campos sin validar
@@ -79,8 +80,8 @@ class UserView extends Component
     {
         //Validamos los campos
         $this->validate([
-            'name' => 'required|min:3|max:256',
-            'last_name' => 'required|min:3|max:256',
+            'name' => 'required|min:3|max:256|regex:/^[\pL\s\-]+$/u',
+            'last_name' => 'required|min:3|max:256|regex:/^[\pL\s\-]+$/u',
             'identification' => 'required|min:7|max:10|unique:App\Models\User,identification',
             'email' => 'required|min:3|max:50|email|unique:App\Models\User,email',
             'phone' => 'required|min:3|max:11',

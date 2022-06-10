@@ -6,33 +6,11 @@
       0 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
     ),
   ),
-  'darbaoui/laravel-ui-avatars' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Darbaoui\\Avatar\\AvatarServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Avatar' => 'Darbaoui\\Avatar\\Facades\\Avatar',
-    ),
-  ),
   'fruitcake/laravel-cors' => 
   array (
     'providers' => 
     array (
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
-    ),
-  ),
-  'intervention/image' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Intervention\\Image\\ImageServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
   'laravel/sail' => 
@@ -68,24 +46,6 @@
     'providers' => 
     array (
       0 => 'Laraveles\\Spanish\\SpanishServiceProvider',
-    ),
-  ),
-  'laravolt/avatar' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravolt\\Avatar\\ServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Avatar' => 'Laravolt\\Avatar\\Facade',
-    ),
-  ),
-  'livewire-ui/modal' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'LivewireUI\\Modal\\LivewireModalServiceProvider',
     ),
   ),
   'livewire/livewire' => 

@@ -12,6 +12,7 @@ use App\Http\Livewire\EcommerceView;
 use App\Http\Livewire\ProductsView;
 use App\Http\Livewire\ProductCategoryView;
 use App\Http\Livewire\ProvidersView;
+use App\Http\Livewire\InventoriesView;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -50,4 +51,8 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
 
     Route::get('/productos', ProductsView::class)->name('productos')
         ->middleware('can_view:Producto - Tabla');
-});
+
+    Route::get('/ajusteInventario', InventoriesView::class)->name('ajusteInventario')
+        ->middleware('can_view:Producto - Tabla');
+
+    });

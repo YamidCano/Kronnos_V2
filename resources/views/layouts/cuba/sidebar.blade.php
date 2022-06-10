@@ -2,8 +2,8 @@
     @else class="sidebar-wrapper" @endif>
     <div>
         <div class="logo-wrapper">
-                <img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt="">
-                <img class="img-fluid for-dark" src="../assets/images/logo/logo.png" alt="">
+            <img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt="">
+            <img class="img-fluid for-dark" src="../assets/images/logo/logo.png" alt="">
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             @livewire('components.sidebar')
         </div>
@@ -30,7 +30,8 @@
                     </li>
                     <li class="sidebar-list">
                         {{-- <label class="badge badge-success">2</label> --}}
-                        <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ url('home') }}">
+                        <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'home' ? 'active' : '' }}"
+                            href="{{ url('home') }}">
                             <i data-feather="home"></i><span class="lan-6">Dashboard </span></a>
                     </li>
                     @if (canView('Usuario - Tabla') or canView('Role y Permisos - Tabla'))
@@ -62,16 +63,24 @@
                             </ul>
                         </li>
                     @endif
-                    @if (canView('Producto - Tabla') or canView('Proveedor - Tabla') or canView('Categoria-Producto - Tabla'))
+                    @if (canView('Producto - Tabla') or canView('Proveedor - Tabla') or canView('Categoria-Producto - Tabla') or canView('Inventorie - Tabla'))
                         <li class="sidebar-list"><a
-                                class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos') active @endif"
+                                class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos' or Route::currentRouteName() == 'ajusteInventario') active @endif"
                                 href="#"><i data-feather="package"></i><span class="lan-6">Productos</span>
                                 <div class="according-menu"><i
-                                    class="@if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
-                            </div>
+                                        class="@if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos' or Route::currentRouteName() == 'ajusteInventario') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
+                                </div>
                             </a>
                             <ul class="sidebar-submenu"
-                                style=" @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos') display: block; @else  display: none; @endif">
+                                style=" @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'proveedor' or Route::currentRouteName() == 'productos' or Route::currentRouteName() == 'ajusteInventario') display: block; @else  display: none; @endif">
+                                @if (canView('Producto - Tabla'))
+                                    <li>
+                                        <a href="{{ url('productos') }}"
+                                            class="{{ Route::currentRouteName() == 'productos' ? 'active' : '' }}">
+                                            Listado Productos
+                                        </a>
+                                    </li>
+                                @endif
                                 @if (canView('Categoria-Producto - Tabla'))
                                     <li>
                                         <a href="{{ url('ProductoCategoria') }}"
@@ -88,11 +97,12 @@
                                         </a>
                                     </li>
                                 @endif
-                                @if (canView('Producto - Tabla'))
+
+                                @if (canView('Inventorie - Tabla'))
                                     <li>
-                                        <a href="{{ url('productos') }}"
-                                            class="{{ Route::currentRouteName() == 'productos' ? 'active' : '' }}">
-                                            Productos
+                                        <a href="{{ url('ajusteInventario') }}"
+                                            class="{{ Route::currentRouteName() == 'ajusteInventario' ? 'active' : '' }}">
+                                            Ajuste de Inventario
                                         </a>
                                     </li>
                                 @endif
