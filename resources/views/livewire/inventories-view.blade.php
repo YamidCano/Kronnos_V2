@@ -82,17 +82,25 @@
                                                 {{ $item->usuario->name }}
                                             </td>
                                             <td>
-                                                {{ $item->quantity }}
+                                                @if ($item->type == 0)
+                                                    <div class="text-success">
+                                                        + {{ $item->quantity }}
+                                                    </div>
+                                                @else
+                                                    <div class="text-danger">
+                                                        - {{ $item->quantity }}
+                                                    </div>
+                                                @endif
                                             </td>
                                             <td>
-                                                @if (empty($item->type))
-                                                    <div class="text-danger">
-                                                        N/A
+                                                @if ($item->type == 0)
+                                                    <div class="text-success">
+                                                        Agregar
                                                     </div>
-                                                @elseif ($item->type == 0)
-                                                    Agregar
-                                                @elseif ($item->type == 1)
-                                                    Sustraer
+                                                @else
+                                                    <div class="text-danger">
+                                                        Sustraer
+                                                    </div>
                                                 @endif
                                             </td>
                                             <td>
@@ -125,60 +133,60 @@
                 <div class="modal-body">
                     <form>
                         <div class="row row-sm">
-                            <label for="buscar" class="mb-1">
-                                Seleccione un producto *
-                                {{-- @if ($picked)
-                                    <span class="badge bg-success">OK</span>
-                                @else
-                                    <span class="badge bg-danger">OK</span>
-                                @endif --}}
-                            </label>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-search"> </i>
-                                    </span>
-                                    <input wire:model="buscar" wire:keydown.enter="asignarPrimero()" type="text"
-                                        class="form-control" id="buscar" autocomplete="off">
-                                    @if ($buscar != null)
-                                        <span class="input-group-text" style="cursor:pointer;" wire:click="clean2">
-                                            <i class="icofont icofont-close-circled"> </i>
+                            <div>
+                                <label for="buscar" class="mb-1">
+                                    Seleccione un producto *
+                                    {{-- @if ($picked)
+                                        <span class="badge bg-success">OK</span>
+                                    @else
+                                        <span class="badge bg-danger">OK</span>
+                                    @endif --}}
+                                </label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="icofont icofont-search"> </i>
                                         </span>
+                                        <input wire:model="buscar" wire:keydown.enter="asignarPrimero()" type="text"
+                                            class="form-control" id="buscar" autocomplete="off">
+                                        @if ($buscar != null)
+                                            <span class="input-group-text" style="cursor:pointer;" wire:click="close">
+                                                <i class="icofont icofont-close-circled"> </i>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    @if (count($product) > 0)
+                                        @if (!$picked)
+                                            @foreach ($product as $item)
+                                                <span class="form-control" style="cursor: pointer"
+                                                    wire:click="asignarProduct('{{ $item->id }}')">
+                                                    {{ $item->name }}
+                                                </span>
+                                            @endforeach
+                                        @endif
+                                    @else
+                                        @if (!empty($buscar))
+                                            <span class="form-control text-danger">
+                                                No se han encontrado resultados
+                                            </span>
+                                        @endif
                                     @endif
                                 </div>
-
                                 @error('buscar')
                                     <small class="form-text text-danger">{{ $message }}</small>
                                 @enderror
-                                @if (count($product) > 0)
-                                    @if (!$picked)
-                                        {{-- <div style="z-index: 1; width: 97%;" class="form-control position-absolute start-1"> --}}
-                                        @foreach ($product as $item)
-                                            {{-- <span class="form-control position-absolute start-1"
-                                                style="cursor: pointer;z-index: 1; width: 97%;"
-                                                wire:click="asignarUsuario('{{ $item->id }}')">
-                                                {{ $item->name }}
-                                            </span>
-                                            <hr class="m-1"> --}}
-                                            <span class="form-control"
-                                                style="cursor: pointer"
-                                                wire:click="asignarUsuario('{{ $item->id }}')">
-                                                {{ $item->name }}
-                                            </span>
-                                        @endforeach
-                                        {{-- </div> --}}
-                                    @endif
-                                @else
+                                @error('idproduct')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                                @if (empty($buscar))
                                     <small class="form-text text-muted">
-                                        Comience digitar para que el resultado aparezca
+                                        <div>
+                                            Comience digitar para que el resultado aparezca
+                                        </div>
                                     </small>
                                 @endif
                             </div>
-
                         </div>
-                        @error('idproduct')
-                            <span class="text-danger error">{{ $message }}</span>
-                        @enderror
                         <br>
                         @if ($idproduct != null)
                             <div class="row row-sm">

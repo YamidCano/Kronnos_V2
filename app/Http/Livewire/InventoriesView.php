@@ -79,29 +79,23 @@ class InventoriesView extends Component
         $this->reset(['search']);
     }
 
-    public function clean2()
-    {
-        $this->reset(['buscar', 'stockproducto', 'idproduct']);
-        $this->buscar = "";
-        $this->product = [];
-        $this->picked = false;
-    }
-
     public function close()
     {
         $this->reset(['buscar', 'stockproducto', 'idproduct', 'id_user', 'quantity', 'type', 'comments']);
         $this->buscar = "";
         $this->product = [];
         $this->picked = false;
+        $this->resetErrorBag();
+        $this->resetValidation();
     }
 
     public function updatedBuscar()
     {
         $this->picked = false;
 
-        $this->validate([
-            "buscar" => "required|min:2"
-        ]);
+        // $this->validate([
+        //     "buscar" => "required|min:2"
+        // ]);
 
         $product = products::where('status', 0);
 
@@ -110,7 +104,7 @@ class InventoriesView extends Component
             ->get();
     }
 
-    public function asignarUsuario(products $product)
+    public function asignarProduct(products $product)
     {
         $this->buscar = $product->name;
         $this->idproduct = $product->id;

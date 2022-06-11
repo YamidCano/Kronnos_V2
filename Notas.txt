@@ -94,4 +94,19 @@ Customers
 php artisan make:livewire customersView
 php artisan make:model customers -m
 
+shopping
+php artisan make:livewire shoppingView
+php artisan make:model shopping -m
+
+shopping_details
+php artisan make:livewire shopping_detailsView
+php artisan make:model shopping_details -m
+
+shopping_CREARE
+php artisan make:livewire shopping_createView
+php artisan make:model shopping_create -m
+
+Taxes
+php artisan make:livewire taxesView
+php artisan make:model taxes -m
 

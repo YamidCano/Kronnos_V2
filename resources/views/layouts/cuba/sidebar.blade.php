@@ -63,6 +63,14 @@
                             </ul>
                         </li>
                     @endif
+                    @if (canView('Proveedor - Tabla'))
+                        <li class="sidebar-list">
+                            {{-- <label class="badge badge-success">2</label> --}}
+                            <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'proveedores' ? 'active' : '' }}"
+                                href="{{ url('proveedores') }}">
+                                <i data-feather="truck"></i><span class="lan-6">Proveedores</span></a>
+                        </li>
+                    @endif
                     @if (canView('Producto - Tabla') or canView('Brands - Tabla') or canView('Categoria-Producto - Tabla'))
                         <li class="sidebar-list"><a
                                 class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ProductoCategoria' or Route::currentRouteName() == 'marcas' or Route::currentRouteName() == 'productos') active @endif"
@@ -100,33 +108,40 @@
                             </ul>
                         </li>
                     @endif
-                    @if (canView('Inventorie - Tabla') or canView('Proveedor - Tabla'))
+                    @if (canView('Inventorie - Tabla'))
+                        <li class="sidebar-list">
+                            {{-- <label class="badge badge-success">2</label> --}}
+                            <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'ajusteInventario' ? 'active' : '' }}"
+                                href="{{ url('ajusteInventario') }}">
+                                <i data-feather="layers"></i><span class="lan-6">Ajuste de Stock </span></a>
+                        </li>
+                    @endif
+                    @if (canView('Shopping - Tabla') or canView('Taxes - Tabla'))
                         <li class="sidebar-list"><a
-                                class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') active @endif"
-                                href="#"><i data-feather="layers"></i><span class="lan-6">Proveedores y Ajuste
-                                    de Stock</span>
+                                class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'compras' or Route::currentRouteName() == 'impuestos') active @endif"
+                                href="#"><i data-feather="gift"></i><span class="lan-6">Compras</span>
                                 <div class="according-menu"><i
-                                        class="@if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
+                                        class="@if (Route::currentRouteName() == 'compras' or Route::currentRouteName() == 'impuestos') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
                                 </div>
                             </a>
                             <ul class="sidebar-submenu"
-                                style=" @if (Route::currentRouteName() == 'ajusteInventario' or Route::currentRouteName() == 'proveedores') display: block; @else  display: none; @endif">
-                                @if (canView('Proveedor - Tabla'))
+                                style=" @if (Route::currentRouteName() == 'compras' or Route::currentRouteName() == 'impuestos') display: block; @else  display: none; @endif">
+                                @if (canView('Shopping - Tabla'))
                                     <li>
-                                        <a href="{{ url('proveedores') }}"
-                                            class="{{ Route::currentRouteName() == 'proveedores' ? 'active' : '' }}">
-                                            Proveedores
+                                        <a href="{{ url('compras') }}"
+                                            class="{{ Route::currentRouteName() == 'compras' ? 'active' : '' }}">
+                                            Compras
                                         </a>
                                     </li>
                                 @endif
-                                @if (canView('Inventorie - Tabla'))
-                                    <li>
-                                        <a href="{{ url('ajusteInventario') }}"
-                                            class="{{ Route::currentRouteName() == 'ajusteInventario' ? 'active' : '' }}">
-                                            Ajuste de Stock
-                                        </a>
-                                    </li>
-                                @endif
+                                @if (canView('Taxes - Tabla'))
+                                <li>
+                                    <a href="{{ url('impuestos') }}"
+                                        class="{{ Route::currentRouteName() == 'impuestos' ? 'active' : '' }}">
+                                        Impuestos
+                                    </a>
+                                </li>
+                            @endif
                             </ul>
                         </li>
                     @endif

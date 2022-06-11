@@ -14,6 +14,9 @@ use App\Http\Livewire\ProductCategoryView;
 use App\Http\Livewire\ProvidersView;
 use App\Http\Livewire\InventoriesView;
 use App\Http\Livewire\BrandsView;
+use App\Http\Livewire\ShoppingView;
+use App\Http\Livewire\ShoppingCreateView;
+use App\Http\Livewire\TaxesView;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -58,5 +61,14 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
 
     Route::get('/marcas', BrandsView::class)->name('marcas')
         ->middleware('can_view:Brands - Tabla');
+
+    Route::get('/compras', ShoppingView::class)->name('compras')
+        ->middleware('can_view:Shopping - Tabla');
+
+    Route::get('/comprasCrear', ShoppingCreateView::class)->name('comprasCrear')
+        ->middleware('can_view:Shopping - Tabla');
+
+    Route::get('/impuestos', TaxesView::class)->name('impuestos')
+        ->middleware('can_view:Taxes - Tabla');
 
     });
