@@ -15,7 +15,7 @@ class ProvidersView extends Component
 
     //Declaramos variables publicas
     public $perPage = 25;
-    public $search, $name, $provider_id, $provider, $phone, $nit, $address, $email;
+    public $search, $name, $provider_id, $provider, $phone, $nit, $address, $email, $city;
     public $updating = false, $status = 0;
 
     //Actualizamos la vista
@@ -52,6 +52,7 @@ class ProvidersView extends Component
                 'phone' => 'required|min:10|max:10|unique:App\Models\providers,phone,' . optional($this->provider)->id,
                 'nit' => 'required|min:9|max:10|unique:App\Models\providers,nit,' . optional($this->provider)->id,
                 'email' => 'required|min:3|max:50|email|unique:App\Models\providers,email,' . optional($this->provider)->id,
+                'city' => 'required',
                 'address' => 'required',
                 'status' => 'required',
             ];
@@ -62,6 +63,7 @@ class ProvidersView extends Component
             'phone' => 'required|min:10|max:10|unique:App\Models\providers,phone,',
             'nit' => 'required|min:9|max:10|unique:App\Models\providers,nit,',
             'email' => 'required|min:3|max:50|email|unique:App\Models\providers,email',
+            'city' => 'required',
             'address' => 'required',
             'status' => 'required',
         ];
@@ -89,6 +91,7 @@ class ProvidersView extends Component
             'phone' => $this->phone,
             'nit' => $this->nit,
             'email' => $this->email,
+            'city' => $this->city,
             'address' => $this->address,
             'status' => $this->status,
         ]);
@@ -99,7 +102,7 @@ class ProvidersView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'phone', 'nit', 'email', 'address', 'status']);
+        $this->reset(['name', 'phone', 'nit', 'email', 'city', 'address', 'status']);
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -115,6 +118,7 @@ class ProvidersView extends Component
         $this->nit = $provider->nit;
         $this->email = $provider->email;
         $this->address = $provider->address;
+        $this->city = $provider->city;
         $this->status = $provider->status;
     }
 
@@ -130,10 +134,11 @@ class ProvidersView extends Component
             'phone' => $this->phone,
             'nit' => $this->nit,
             'email' => $this->email,
+            'city' => $this->city,
             'address' => $this->address,
             'status' => $this->status,
         ]);
-        $this->reset(['name', 'phone', 'nit', 'email', 'address', 'status']);
+        $this->reset(['name', 'phone', 'nit', 'email', 'city', 'address', 'status']);
         $this->emit('update');
         $this->resetErrorBag();
         $this->resetValidation();
@@ -147,7 +152,7 @@ class ProvidersView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'phone', 'nit', 'email', 'address', 'status']);
+        $this->reset(['name', 'phone', 'nit', 'email', 'city', 'address', 'status']);
     }
 
     //Cerrar una ventana modal
@@ -157,6 +162,6 @@ class ProvidersView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['name', 'phone', 'nit', 'email', 'address', 'status']);
+        $this->reset(['name', 'phone', 'nit', 'email', 'city', 'address', 'status']);
     }
 }

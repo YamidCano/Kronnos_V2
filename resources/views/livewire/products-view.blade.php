@@ -66,9 +66,10 @@
                                     <tr>
                                         <th>Nombres Producto</th>
                                         <th>Categoria</th>
-                                        <th>Proveedor</th>
+                                        <th>Marca</th>
                                         <th>Codigo</th>
-                                        <th>Precio</th>
+                                        <th>Precio Compra</th>
+                                        <th>Precio Venta</th>
                                         <th>Stock</th>
                                         <th>Imagen</th>
                                         <th></th>
@@ -91,6 +92,9 @@
                                             </td>
                                             <td>
                                                 {{ $item->price }}
+                                            </td>
+                                            <td>
+                                                {{ $item->price_sale }}
                                             </td>
                                             <td>
                                                 {{ $item->stock }}
@@ -269,12 +273,12 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Precio *</label>
+                                <label for="Name">Precio Compra*</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="icofont icofont-price"> </i>
                                     </span>
-                                    <input type="number" step="0.01" placeholder="Precio *"
+                                    <input type="number" step="0.01" placeholder="Precio Compra *"
                                         class="form-control @error('price') is-invalid @enderror" wire:model="price" />
                                 </div>
                                 <label class="mt-2 text-danger">
@@ -283,38 +287,6 @@
                                     @endif
                                 </label>
                                 @error('price')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Descuento *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-sale-discount"> </i>
-                                    </span>
-                                    <input type="number" placeholder="Descuento *"
-                                        class="form-control @error('sales') is-invalid @enderror" wire:model="sales" />
-                                </div>
-
-                                @error('sales')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Nuevo</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-news"> </i>
-                                    </span>
-                                    <select wire:model="new" class="form-control @error('new') is-invalid @enderror">
-                                        <option value="0">NO</option>
-                                        <option value="1">SI</option>
-                                    </select>
-                                </div>
-
-                                @error('new')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -338,84 +310,31 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">{{ __('Productos Slider?') }}</label>
+                                <label for="Name">Precio Venta*</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-maximize"> </i>
+                                        <i class="icofont icofont-price"> </i>
                                     </span>
-                                    <select wire:model="slider"
-                                        class="form-control @error('slider') is-invalid @enderror">
-                                        <option value="0">NO</option>
-                                        <option value="1">SI</option>
-                                    </select>
+                                    <input type="number" step="0.01" placeholder="Precio Compra *"
+                                        class="form-control @error('priceSale') is-invalid @enderror" wire:model="priceSale" />
                                 </div>
-                                @error('slider')
+                                <label class="mt-2 text-danger">
+                                    @if ($priceSale != null)
+                                        $ <?php echo number_format($priceSale, 0, ',', '.'); ?> <br>
+                                    @endif
+                                </label>
+                                @error('priceSale')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
                         <br>
-                        @if ($slider == 1)
-                            <div class="row row-sm">
-                                <div class="col-lg">
-                                    <label for="Name">Selecione un Imgen Slaider* - Imagen 1815*710</label>
-                                    @if ($photo2)
-                                        <br>
-                                        <button type="button" class="btn-close" wire:click="cancelimg"
-                                            aria-label="Close"></button>
-
-                                        <button wire:loading wire:target="photo2" class="btn btn-primary" type="button"
-                                            disabled>
-                                            <span class="spinner-border spinner-border-sm" role="status"
-                                                aria-hidden="true"></span>
-                                            <span class="visually-hidden">Loading...</span>
-                                        </button>
-                                        <div class="col-lg text-center">
-                                            <img src="{{ $photo2->temporaryUrl() }}" class="img-100 img-fluid"
-                                                alt="Responsive image">
-                                        </div>
-                                    @else
-                                        <input type="file" placeholder="Selecione un Imgen *" accept="image/*"
-                                            class="form-control @error('photo2') is-invalid @enderror"
-                                            wire:model="photo2" />
-                                    @endif
-                                    @error('photo2')
-                                        <span class="text-danger error">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <br>
-                        @endif
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Descripción *</label>
                                 <textarea wire:model="description" rows="3" cols="20" class="form-control @error('description') is-invalid @enderror"
                                     placeholder="{{ __('Descripción') }} *"></textarea>
                                 @error('description')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Descripción Larga *</label>
-                                <textarea wire:model="descriptionLong" rows="3" cols="20"
-                                    class="form-control @error('descriptionLong') is-invalid @enderror"
-                                    placeholder="{{ __('Descripción Larga') }} *"></textarea>
-                                @error('descriptionLong')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Especificaciones *</label>
-                                <textarea wire:model="Specifications" rows="3" cols="20"
-                                    class="form-control @error('Specifications') is-invalid @enderror"
-                                    placeholder="{{ __('Especificaciones') }} *"></textarea>
-                                @error('Specifications')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -504,6 +423,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+
                                 @error('selectcategory')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -517,13 +437,10 @@
                                     <span class="input-group-text">
                                         <i class="icofont icofont-memorial"> </i>
                                     </span>
-                                    <input type="number" placeholder="Stock Incial *" disabled
-                                        class="form-control @error('stock') is-invalid @enderror" wire:model="stock" />
+                                    <div class="form-control">
+                                        {{$stock}}
+                                    </div>
                                 </div>
-
-                                @error('stock')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Selecione Marca *</label>
@@ -560,12 +477,12 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Precio *</label>
+                                <label for="Name">Precio Compra*</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="icofont icofont-price"> </i>
                                     </span>
-                                    <input type="number" step="0.01" placeholder="Precio *"
+                                    <input type="number" step="0.01" placeholder="Precio Compra *"
                                         class="form-control @error('price') is-invalid @enderror" wire:model="price" />
                                 </div>
                                 <label class="mt-2 text-danger">
@@ -574,38 +491,6 @@
                                     @endif
                                 </label>
                                 @error('price')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Descuento *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-sale-discount"> </i>
-                                    </span>
-                                    <input type="number" placeholder="Descuento *"
-                                        class="form-control @error('sales') is-invalid @enderror" wire:model="sales" />
-                                </div>
-
-                                @error('sales')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Nuevo</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-news"> </i>
-                                    </span>
-                                    <select wire:model="new" class="form-control @error('new') is-invalid @enderror">
-                                        <option value="0">NO</option>
-                                        <option value="1">SI</option>
-                                    </select>
-                                </div>
-
-                                @error('new')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -629,84 +514,31 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">{{ __('Productos Slider?') }}</label>
+                                <label for="Name">Precio Venta*</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-maximize"> </i>
+                                        <i class="icofont icofont-price"> </i>
                                     </span>
-                                    <select wire:model="slider"
-                                        class="form-control @error('slider') is-invalid @enderror">
-                                        <option value="0">NO</option>
-                                        <option value="1">SI</option>
-                                    </select>
+                                    <input type="number" step="0.01" placeholder="Precio Compra *"
+                                        class="form-control @error('priceSale') is-invalid @enderror" wire:model="priceSale" />
                                 </div>
-                                @error('slider')
+                                <label class="mt-2 text-danger">
+                                    @if ($priceSale != null)
+                                        $ <?php echo number_format($priceSale, 0, ',', '.'); ?> <br>
+                                    @endif
+                                </label>
+                                @error('priceSale')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
                         <br>
-                        @if ($slider == 1)
-                            <div class="row row-sm">
-                                <div class="col-lg">
-                                    <label for="Name">Selecione un Imgen Slaider* - Imagen 1815*710</label>
-                                    @if ($photo2)
-                                        <br>
-                                        <button type="button" class="btn-close" wire:click="cancelimg"
-                                            aria-label="Close"></button>
-
-                                        <button wire:loading wire:target="photo2" class="btn btn-primary" type="button"
-                                            disabled>
-                                            <span class="spinner-border spinner-border-sm" role="status"
-                                                aria-hidden="true"></span>
-                                            <span class="visually-hidden">Loading...</span>
-                                        </button>
-                                        <div class="col-lg text-center">
-                                            <img src="{{ $photo2->temporaryUrl() }}" class="img-100 img-fluid"
-                                                alt="Responsive image">
-                                        </div>
-                                    @else
-                                        <input type="file" placeholder="Selecione un Imgen *" accept="image/*"
-                                            class="form-control @error('photo2') is-invalid @enderror"
-                                            wire:model="photo2" />
-                                    @endif
-                                    @error('photo2')
-                                        <span class="text-danger error">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <br>
-                        @endif
                         <div class="row row-sm">
                             <div class="col-lg">
                                 <label for="Name">Descripción *</label>
                                 <textarea wire:model="description" rows="3" cols="20" class="form-control @error('description') is-invalid @enderror"
                                     placeholder="{{ __('Descripción') }} *"></textarea>
                                 @error('description')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Descripción Larga *</label>
-                                <textarea wire:model="descriptionLong" rows="3" cols="20"
-                                    class="form-control @error('descriptionLong') is-invalid @enderror"
-                                    placeholder="{{ __('Descripción Larga') }} *"></textarea>
-                                @error('descriptionLong')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row row-sm">
-                            <div class="col-lg">
-                                <label for="Name">Especificaciones *</label>
-                                <textarea wire:model="Specifications" rows="3" cols="20"
-                                    class="form-control @error('Specifications') is-invalid @enderror"
-                                    placeholder="{{ __('Especificaciones') }} *"></textarea>
-                                @error('Specifications')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -776,20 +608,6 @@
                         )
                     }
                 })
-            });
-        </script>
-
-
-        <script>
-            $(document).ready(function() {
-                $('#selectcategory2').select2();
-                $('#selectcategory2').on('change', function(e) {
-                    let data = $(this).val();
-                    @this.set('prueba', data);
-                });
-                window.livewire.on('pruebaid', () => {
-                    $('#selectcategory2').select2();
-                });
             });
         </script>
     @endpush

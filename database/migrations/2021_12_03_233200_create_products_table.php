@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
 
             $table->bigInteger('code')->unique()->nullable();
             $table->decimal('price', 12 , 2)->unique()->nullable();
+            $table->decimal('price_sale', 12 , 2)->unique()->nullable();
             $table->string('slug')->unique()->nullable();
 
             $table->unsignedBigInteger('id_product_categories')->nullable();
@@ -28,15 +29,15 @@ class CreateProductsTable extends Migration
             $table->foreign('id_brands')->references('id')->on('brands');
 
             $table->string('photo')->nullable();
-            $table->string('sliderphoto')->nullable();
-            $table->string('new')->nullable();
+            // $table->string('sliderphoto')->nullable();
+            // $table->string('new')->nullable();
             $table->text('description')->nullable();
-            $table->text('descriptionLong')->nullable();
-            $table->text('Specifications')->nullable();
-            $table->bigInteger('visits')->nullable();
-            $table->bigInteger('sales')->nullable();
+            // $table->text('descriptionLong')->nullable();
+            // $table->text('Specifications')->nullable();
+            // $table->bigInteger('visits')->nullable();
+            // $table->bigInteger('sales')->nullable();
             $table->char('status')->nullable();
-            $table->char('slider')->nullable();
+            // $table->char('slider')->nullable();
 
             $table->integer('stock')->nullable()->default(0);
             $table->timestamps();

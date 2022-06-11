@@ -10,11 +10,23 @@ class ShoppingCreateView extends Component
 {
     public $invoiceNumber, $selectProvider, $date, $orderStatus, $idTaxe,  $note;
     public $providers;
-
     public $buscar, $product, $picked, $users_id, $idproduct, $stockproducto;
+
+    public $orderProducts = [], $action = 1;
 
     public function render()
     {
+        if ($this->idproduct != null) {
+            $product = providers::find($this->idproduct);
+            $name = $product->name;
+
+            $orderProducts = array(
+               'name'  => $name
+            );
+
+            $this->$orderProducts[] =  $orderProducts;
+        }
+
         return view('livewire.shopping-create-view');
     }
 
@@ -43,6 +55,15 @@ class ShoppingCreateView extends Component
         $this->picked = false;
     }
 
+    public function updatedselectProvider($providerid)
+    {
+        $provider = providers::find($providerid);
+        $this->providerName = $provider->name;
+        $this->providerPhone = $provider->phone;
+        $this->providerEmail = $provider->email;
+        $this->providerRut = $provider->nit;
+    }
+
     public function clean1()
     {
         $this->reset(['invoiceNumber']);
@@ -50,7 +71,7 @@ class ShoppingCreateView extends Component
 
     public function clean2()
     {
-        $this->reset(['selectProvider']);
+        $this->reset(['selectProvider', 'invoiceNumber', 'date']);
     }
 
     public function clean3()

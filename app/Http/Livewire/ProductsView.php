@@ -23,10 +23,10 @@ class ProductsView extends Component
     protected $paginationTheme = 'bootstrap';
 
     //Declaramos variables publicas
-    public $perPage = 25, $descriptionLong, $Specifications, $status = 0, $slider = 0, $stock, $price, $slug;
-    public $search, $name, $selectbrands, $selectcategory, $selectcategory2, $description, $sales = 0, $new = 0;
-    public $photo, $Updatephotos, $photos, $photo2, $Updatephotos2, $photos2, $selectslider = 0;
-    public $providers, $product_category, $providerNit, $idenImg, $providerNit2, $providersNit, $code, $modalPhoto;
+    public $perPage = 25,  $status = 0, $stock, $price, $slug;
+    public $search, $name, $selectbrands, $selectcategory, $description, $priceSale = 0;
+    public $photo, $Updatephotos, $photos;
+    public $product_category, $idenImg, $code, $modalPhoto;
     public $createslug;
     public $updating = false;
 
@@ -40,8 +40,9 @@ class ProductsView extends Component
             ->when($this->search, function ($query) {
                 return $query->where(function ($query) {
                     $query->where('name', 'like', "%{$this->search}%")
-                        ->orWhere('description', 'like', "%{$this->search}%")
-                        ->orWhere('description', 'like', "%{$this->search}%");
+                        ->orWhere('code', 'like', "%{$this->search}%")
+                        ->orWhere('price', 'like', "%{$this->search}%")
+                        ->orWhere('price_sale', 'like', "%{$this->search}%");
                 });
             })
             ->paginate($this->perPage);
@@ -59,20 +60,15 @@ class ProductsView extends Component
         if ($this->updating == true) {
             return [
                 'name' => 'required|min:3|max:256|unique:App\Models\products,name,' . optional($this->product)->id,
-                'selectcategory2' => 'required',
+                'selectcategory' => 'required',
                 'code' => 'required|unique:App\Models\products,code,' . optional($this->product)->id,
                 'selectbrands' => 'required',
                 'photo' => '',
                 'description' => 'required',
-                'new' => 'required',
-                'sales' => 'required',
-                'descriptionLong' => 'required',
-                'Specifications' => 'required',
                 'status' => 'required',
-                'slider' => 'required',
                 'price' => 'required',
+                'priceSale' => 'required',
                 'stock' => 'required',
-                'photo2'  => 'exclude_unless:selectslider,true|required',
             ];
         }
 
@@ -83,15 +79,10 @@ class ProductsView extends Component
             'selectbrands' => 'required',
             'photo' => 'required|image|max:2048',
             'description' => 'required',
-            'descriptionLong' => 'required',
-            'Specifications' => 'required',
             'status' => 'required',
-            'new' => 'required',
-            'sales' => 'required',
-            'slider' => 'required',
             'price' => 'required',
+            'priceSale' => 'required',
             'stock' => 'required',
-            'photo2'  => 'exclude_unless:selectslider,true|required',
         ];
     }
 
@@ -101,17 +92,6 @@ class ProductsView extends Component
         $this->brands = brands::orderBy('name')->get();
         $this->product_category = product_category::orderBy('name')->get();
         $this->idenImg = rand();
-    }
-
-    // public function updatedselectbrands()
-    // {
-    //     $nit = providers::find($this->selectbrands);
-    //     $this->providerNit = $nit->nit;
-    // }
-
-    public function updatedslider($idslider)
-    {
-        $this->selectslider = $idslider > 0 ? true : false;
     }
 
     public function codeg()
@@ -124,26 +104,21 @@ class ProductsView extends Component
         $this->validateOnly($propertyName);
     }
 
+    public function resetCV()
+    {
+        $this->reset(['name', 'stock', 'code', 'selectbrands', 'photo', 'description', 'status',  'price', 'priceSale', 'slug', 'photo', 'idenImg', 'updating']);
+        $this->idenImg = rand();
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
+
     //Creamos el registro
     public function save()
     {
         //Validamos los campos
         $this->validate();
 
-        // $img = Image::make($this->photo)->resize(300,300);
         $img = $this->photo->store('imgProduct', 'public');
-        if ($this->slider == 1) {
-            $img2 = $this->photo2->store('imgProduct', 'public');
-        } else {
-            $img2 = null;
-        }
-
-        // $image = $this->photo;
-        // $avatarName = $this->name .  '-' . substr(uniqid(rand(), true), 8, 8) . '.' . $image->getClientOriginalExtension();
-        // $img = Image::make($image)->resize(386,480);
-        // $img->stream(); // <-- Key point
-        // Storage::disk('local')->put('public/imgProduct' . '/' . $avatarName, $img, 'public');
-
 
         $this->createslug();
 
@@ -154,28 +129,20 @@ class ProductsView extends Component
             'code' => $this->code,
             'id_product_categories' => $this->selectcategory,
             'photo' => $img,
-            'new' => $this->new,
-            'sales' => $this->sales,
-            'sliderphoto' => $img2,
             'description' => $this->description,
-            'descriptionLong' => $this->descriptionLong,
-            'Specifications' => $this->Specifications,
             'status' => $this->status,
-            'slider' => $this->slider,
             'price' => $this->price,
+            'price_sale' => $this->priceSale,
             'slug' => $this->slug,
             'stock' => $this->stock,
         ]);
 
-        $this->idenImg = rand();
+        //Limpiar campos, Validaciones
+        $this->resetCV();
 
         //Cerramos la ventana modal
         $this->emit('Store');
-        //Limpiamos validaciones
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['name', 'stock', 'code', 'selectbrands', 'selectcategory', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
+
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -188,22 +155,14 @@ class ProductsView extends Component
         $this->product_id = $product->id;
         $this->name = $product->name;
         $this->code = $product->code;
-        $this->descriptionLong = $product->descriptionLong;
-        $this->Specifications = $product->Specifications;
         $this->status = $product->status;
-        $this->slider = $product->slider;
-        $this->new = $product->new;
-        $this->sales = $product->sales;
         $this->stock = $product->stock;
         $this->price = $product->price;
+        $this->priceSale = $product->price_sale;
         $this->selectbrands = $product->id_brands;
         $this->selectcategory = $product->id_product_categories;
         $this->Updatephotos = $product->photo;
-        $this->Updatephotos2 = $product->sliderphoto;
         $this->description = $product->description;
-
-        // $providers = providers::find($product->id_provider);
-        // $this->providerNit = $providers->nit;
     }
 
     public function modalPhoto(products $product)
@@ -216,22 +175,10 @@ class ProductsView extends Component
     public function update()
     {
         //Validamos los campos
-        // $this->validate();
+        $this->validate();
 
         if ($this->photos == !null) {
             $img = $this->photos->store('imgProduct', 'public');
-        }
-
-        if ($this->photos2 == !null) {
-            $img2 = $this->photos2->store('imgProduct', 'public');
-        }
-
-        if ($this->status == null) {
-            $this->status = null;
-        }
-
-        if ($this->sales == null) {
-            $this->sales = null;
         }
 
         $this->createslug();
@@ -242,13 +189,9 @@ class ProductsView extends Component
             $update->id_brands = $this->selectbrands;
             $update->id_product_categories = $this->selectcategory;
             $update->description = $this->description;
-            $update->new = $this->new;
-            $update->sales = $this->sales;
-            $update->descriptionLong = $this->descriptionLong;
-            $update->Specifications = $this->Specifications;
             $update->status = $this->status;
-            $update->slider = $this->slider;
             $update->price = $this->price;
+            $update->price_sale = $this->priceSale;
             $update->slug = $this->slug;
 
             if ($this->photos == !null) {
@@ -257,43 +200,28 @@ class ProductsView extends Component
                 $update->photo = $this->Updatephotos;
             }
 
-            if ($this->photos2 == !null) {
-                $update->sliderphoto = $img2;
-            } else {
-                $update->sliderphoto = $this->Updatephotos2;
-            }
-
             $update->save();
         }
 
+        //Limpiar campos, Validaciones
+        $this->resetCV();
 
-        $this->reset(['name', 'stock', 'code', 'selectbrands', 'selectcategory2', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
-        $this->idenImg = rand();
         $this->emit('update');
-        $this->resetErrorBag();
-        $this->resetValidation();
         $this->emit('alert', 'Registro Actualizada sastifactoriamente');
     }
 
     public function destroy(products $products)
     {
         $products->delete();
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['name', 'stock', 'code', 'selectbrands', 'selectcategory2', 'selectcategory', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
-        $this->idenImg = rand();
+        //Limpiar campos, Validaciones
+        $this->resetCV();
     }
 
     //Cerrar una ventana modal
     public function close()
     {
-        //Limpiamos validaciones
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['name', 'stock', 'code', 'selectbrands', 'selectcategory2', 'selectcategory', 'photo', 'photo2', 'description', 'descriptionLong', 'Specifications', 'status', 'new', 'sales', 'slider', 'price', 'slug', 'photo', 'providerNit', 'idenImg', 'updating']);
-        $this->idenImg = rand();
+        //Limpiar campos, Validaciones
+        $this->resetCV();
     }
 
     public function cancelimg()
@@ -303,17 +231,6 @@ class ProductsView extends Component
         $this->resetValidation();
         //Limpiamos Campos
         $this->reset(['photo', 'photos', 'Updatephotos']);
-
-        $this->idenImg = rand();
-    }
-
-    public function cancelimg2()
-    {
-        //Limpiamos validaciones
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['photo2', 'photos', 'Updatephotos2']);
 
         $this->idenImg = rand();
     }

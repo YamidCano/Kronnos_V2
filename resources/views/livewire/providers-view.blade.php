@@ -209,10 +209,24 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for="Name">Ciudad *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont  icofont-location-pin"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Ciudad *"
+                                        class="form-control @error('city') is-invalid @enderror"
+                                        wire:model="city" />
+                                </div>
+                                @error('city')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Dirrecion *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-address-book"> </i>
+                                        <i class="icofont  icofont-location-pin"> </i>
                                     </span>
                                     <input type="text" placeholder="Dirrecion *"
                                         class="form-control @error('address') is-invalid @enderror"
@@ -222,7 +236,10 @@
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="Name">{{ __('Desactivar Proveedor?') }}</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -237,6 +254,9 @@
                                 @error('status')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+
                             </div>
                         </div>
                     </form>
@@ -324,10 +344,24 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for="Name">Ciudad *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont  icofont-location-pin"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Ciudad *"
+                                        class="form-control @error('city') is-invalid @enderror"
+                                        wire:model="city" />
+                                </div>
+                                @error('city')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
                                 <label for="Name">Dirrecion *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-address-book"> </i>
+                                        <i class="icofont  icofont-location-pin"> </i>
                                     </span>
                                     <input type="text" placeholder="Dirrecion *"
                                         class="form-control @error('address') is-invalid @enderror"
@@ -337,7 +371,10 @@
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="Name">{{ __('Desactivar Proveedor?') }}</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -352,6 +389,9 @@
                                 @error('status')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+
                             </div>
                         </div>
                     </form>

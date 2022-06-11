@@ -31,7 +31,10 @@ Route::get('lang/{locale}', function ($locale) {
 Auth::routes();
 
 //Ruta Publicas
-Route::get('/', EcommerceView::class)->name('ecommerce');
+// Route::get('/', EcommerceView::class)->name('ecommerce');
+Route::get('/', function () {
+    return view('/auth/login');
+});
 
 
 //Rutas Protegidas

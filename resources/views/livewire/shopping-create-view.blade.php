@@ -23,87 +23,105 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div>
+                                <a type="button" class="btn btn-primary float-end" href="{{ url('compras') }}">
+                                    Volver
+                                </a>
+                            </div>
+                        </div>
+                        @if ($selectProvider == null)
+                            <div class="row ">
+                                <div class="col">
+                                    <label for="Name">Selecione Proveedor *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="icofont icofont-fast-delivery"> </i>
+                                        </span>
+                                        <select class="form-control" wire:model="selectProvider">
+                                            <option value="">
+                                                Selecione Proveedor *
+                                            </option>
+                                            @foreach ($providers as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('selectProvider')
+                                            <span class="text-danger error">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                </div>
+                            </div>
+                        @else
+                            <div class="row">
+                                <div class="col-6 mt-4">
+                                    <div class="m-2">
+                                        <div class="h6 mt-4">Nombre del Proveedor:
+                                            <strong>{{ $providerName }}</strong>
+                                        </div>
+                                        <button type="button" wire:click="clean2"
+                                            class="btn btn-outline-secundary btn-icon float-end">
+                                            <i class="icofont icofont-ui-delete text-danger" style="font-size: 20px;">
+                                            </i>
+                                        </button>
+                                        <div class="h6">Rut: <strong>{{ $providerRut }}</strong></div>
+                                        <div class="h6">Telefono: <strong>{{ $providerPhone }}</strong>
+                                        </div>
+                                        <div class="h6">Email: <strong>{{ $providerEmail }}</strong></div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="col mt-4">
+                                        <label for="Name">Numero Factura *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">
+                                                <i class="icofont icofont-numbered"> </i>
+                                            </span>
+                                            <input class="form-control" type="text" wire:model="invoiceNumber"
+                                                placeholder="Numero Factura *">
+                                            @if ($invoiceNumber != null)
+                                                <span class="input-group-text" style="cursor:pointer;"
+                                                    wire:click="clean1">
+                                                    <i class="icofont icofont-close-circled"> </i>
+                                                </span>
+                                            @endif
+                                        </div>
+                                        @error('invoiceNumber')
+                                            <span class="text-danger error">{{ $message }}</span>
+                                        @enderror
+                                    </div>
 
-                            </div>
-                            <div class="col-sm-6 col-md-5">
-                            </div>
-                            <div class="col-sm-6 col-md-2">
-                                <div class="mb-3">
-                                    <a type="button" class="btn btn-primary mb-3" href="{{ url('compras') }}">
-                                        Volver
-                                    </a>
+                                    <div class="col">
+                                        <label for="Name">Selecione una fecha *</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">
+                                                <i class="icofont icofont-calendar"> </i>
+                                            </span>
+                                            <input class="form-control" type="date" wire:model="date"
+                                                placeholder="Numero Factura *">
+                                            @if ($date != null)
+                                                <span class="input-group-text" style="cursor:pointer;"
+                                                    wire:click="clean3">
+                                                    <i class="icofont icofont-close-circled"> </i>
+                                                </span>
+                                            @endif
+                                        </div>
+                                        @error('date')
+                                            <span class="text-danger error">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <hr class="m-0">
-                        <div class="row mt-4">
-                            <div class="col">
-                                <label for="Name">Numero Factura *</label>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-numbered"> </i>
-                                    </span>
-                                    <input class="form-control" type="text" wire:model="invoiceNumber"
-                                        placeholder="Numero Factura *">
-                                    @if ($invoiceNumber != null)
-                                        <span class="input-group-text" style="cursor:pointer;" wire:click="clean1">
-                                            <i class="icofont icofont-close-circled"> </i>
-                                        </span>
-                                    @endif
-                                </div>
-                                @error('invoiceNumber')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col">
-                                <label for="Name">Selecione Proveedor *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-fast-delivery"> </i>
-                                    </span>
-                                    <select class="form-control" wire:model="selectProvider">
-                                        <option value="">
-                                            Selecione Proveedor *
-                                        </option>
-                                        @foreach ($providers as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($selectProvider != null)
-                                        <span class="input-group-text" style="cursor:pointer;" wire:click="clean2">
-                                            <i class="icofont icofont-close-circled"> </i>
-                                        </span>
-                                    @endif
-                                </div>
-                                @error('selectProvider')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col">
-                                <label for="Name">Selecione una fecha *</label>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-calendar"> </i>
-                                    </span>
-                                    <input class="form-control" type="date" wire:model="date"
-                                        placeholder="Numero Factura *">
-                                    @if ($date != null)
-                                        <span class="input-group-text" style="cursor:pointer;" wire:click="clean3">
-                                            <i class="icofont icofont-close-circled"> </i>
-                                        </span>
-                                    @endif
-                                </div>
-                                @error('date')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
+                        @endif
+
+
+                        <br>
                         <div class="row ">
                             <div class="col">
                                 <div>
                                     <label for="buscar" class="mb-1">
-                                        Seleccione un producto *
+                                        Seleccione un producto * {{$idproduct}}
                                         {{-- @if ($picked)
                                             <span class="badge bg-success">OK</span>
                                         @else
@@ -158,6 +176,98 @@
                                         </small>
                                     @endif
                                 </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="order-history table-responsive wishlist">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Prdouct</th>
+                                            <th>Prdouct Name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Action</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($orderProducts as key => $product)
+                                            <tr class="text-center" wire:key="{{ $key }}">
+                                                <td>
+                                                    {{ $key + 1 }}
+                                                </td>
+                                                <td>
+                                                    {{ $product['name'] }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td>
+                                                <div class="product-name"><a href="#">Long Top</a></div>
+                                            </td>
+                                            <td>
+                                                <div class="product-name"><a href="#">Long Top</a></div>
+                                            </td>
+                                            <td>$21</td>
+                                            <td>
+                                                <fieldset class="qty-box">
+                                                    <div class="input-group bootstrap-touchspin">
+                                                        <button
+                                                            class="btn btn-primary btn-square bootstrap-touchspin-down"
+                                                            type="button">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                        <span class="input-group-text bootstrap-touchspin-prefix"
+                                                            style="display: none;"></span>
+                                                        <input class="touchspin text-center form-control" type="text"
+                                                            value="5" style="display: block;">
+                                                        <span class="input-group-text bootstrap-touchspin-postfix"
+                                                            style="display: none;"></span>
+                                                        <button
+                                                            class="btn btn-primary btn-square bootstrap-touchspin-up"
+                                                            type="button">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </fieldset>
+                                            </td>
+                                            <td>
+                                                <button type="button" wire:click="clean2"
+                                                    class="btn btn-outline-secundary btn-icon float-end">
+                                                    <i class="icofont icofont-ui-delete text-danger"
+                                                        style="font-size: 20px;">
+                                                    </i>
+                                                </button>
+                                            </td>
+                                            <td>$12456</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="input-group">
+                                                    <input class="form-control me-2" type="text"
+                                                        placeholder="Enter coupan code"><a class="btn btn-primary"
+                                                        href="#">Apply</a>
+                                                </div>
+                                            </td>
+                                            <td class="total-amount">
+                                                <h6 class="m-0 text-end">
+                                                    <span class="f-w-600">Total Price
+                                                        :</span>
+                                                </h6>
+                                            </td>
+                                            <td><span>$6935.00 </span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end" colspan="6">
+                                                <button type="button" class="btn btn-primary"
+                                                    wire:loading.attr="disabled" wire:target="save, photo"
+                                                    wire:click="save">Crear</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
