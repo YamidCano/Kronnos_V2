@@ -5,29 +5,46 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\providers;
 use App\Models\products;
+use App\Models\taxes;
+use phpDocumentor\Reflection\Types\This;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class ShoppingCreateView extends Component
 {
     public $invoiceNumber, $selectProvider, $date, $orderStatus, $idTaxe,  $note;
     public $providers;
     public $buscar, $product, $picked, $users_id, $idproduct, $stockproducto;
+    public $totalCart, $cant = 0, $cartTotalQuantity, $quantityMas = 0, $taxesall;
 
-    public $orderProducts = [], $action = 1;
+
+    public $ordeproducts = [], $action = 1;
 
     public function render()
     {
+
         if ($this->idproduct != null) {
-            $product = providers::find($this->idproduct);
-            $name = $product->name;
+            $allproduct = products::find($this->idproduct);
+            $exist = Cart::session(auth()->user()->id)->get($allproduct->id);
+            if ($exist) {
+                $this->emit('toastAlertError', 'Producto ya existe');
+            } else {
+                \Cart::session(auth()->user()->id)->add(array(
+                    'id' =>  $allproduct->id,
+                    'name' => $allproduct->name,
+                    'price' => $allproduct->price,
+                    'quantity' => 1,
+                    'attributes' => array(),
 
-            $orderProducts = array(
-               'name'  => $name
-            );
-
-            $this->$orderProducts[] =  $orderProducts;
+                ));
+                $this->emit('toastAlert', 'Producto Agregado');
+            }
+            $this->idproduct = '';
+            $this->buscar = '';
         }
 
-        return view('livewire.shopping-create-view');
+        $Cart = \Cart::session(auth()->user()->id)->getContent();
+
+        return view('livewire.shopping-create-view', compact('Cart'));
     }
 
     function rules()
@@ -45,10 +62,71 @@ class ShoppingCreateView extends Component
     {
         $this->validateOnly($propertyName);
     }
+    public function delete($idproduct)
+    {
+        \Cart::session(auth()->user()->id)->remove($idproduct);
+        $this->emit('toastAlert', 'Producto Eliminado');
+    }
+
+    public function quantityMas($itemId, $quantity)
+    {
+        // $allproduct = products::find($itemId);
+        // if ($quantity >= $allproduct->stock) {
+        //     $this->emit('alertError', 'Stock Insuficiente');
+        // } else {
+        //     $quantity += 1;
+        //     Cart::session(auth()->user()->id)->update($itemId, array(
+        //         'quantity' => array(
+        //             'relative' => false,
+        //             'value' => $quantity
+        //         ),
+        //     ));
+        // }
+
+        $quantity += 1;
+        Cart::session(auth()->user()->id)->update($itemId, array(
+            'quantity' => array(
+                'relative' => false,
+                'value' => $quantity
+            ),
+        ));
+    }
+
+    public function quantityChange($itemId, $quantity)
+    {
+        if ($quantity <= 1) {
+            \Cart::session(auth()->user()->id)->remove($itemId);
+            $this->emit('toastAlert', 'Producto Eliminado');
+        } else {
+            Cart::session(auth()->user()->id)->update($itemId, array(
+                'quantity' => array(
+                    'relative' => false,
+                    'value' => $quantity
+                ),
+            ));
+        }
+    }
+
+    public function quantitymenos($itemId, $quantity)
+    {
+        if ($quantity <= 1) {
+            \Cart::session(auth()->user()->id)->remove($itemId);
+            $this->emit('toastAlert', 'Producto Eliminado');
+        } else {
+            $quantity -= 1;
+            Cart::session(auth()->user()->id)->update($itemId, array(
+                'quantity' => array(
+                    'relative' => false,
+                    'value' => $quantity
+                ),
+            ));
+        }
+    }
 
     public function mount()
     {
         $this->providers = providers::orderBy('name')->get();
+        $this->taxesall = taxes::orderBy('name')->get();
 
         $this->buscar = "";
         $this->product = [];
@@ -62,6 +140,7 @@ class ShoppingCreateView extends Component
         $this->providerPhone = $provider->phone;
         $this->providerEmail = $provider->email;
         $this->providerRut = $provider->nit;
+        \Cart::session(auth()->user()->id)->clear();
     }
 
     public function clean1()
@@ -72,6 +151,7 @@ class ShoppingCreateView extends Component
     public function clean2()
     {
         $this->reset(['selectProvider', 'invoiceNumber', 'date']);
+        \Cart::session(auth()->user()->id)->clear();
     }
 
     public function clean3()

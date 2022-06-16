@@ -19,3 +19,8 @@ function can(string $permissions)
     }
 }
 
+function cardArray(){
+    $cartCollection= \Cart::getContent();
+    return $cartCollection->toArray;
+}
+

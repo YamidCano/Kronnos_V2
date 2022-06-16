@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('name')->nullable();
 
             $table->bigInteger('code')->unique()->nullable();
-            $table->decimal('price', 12 , 2)->unique()->nullable();
-            $table->decimal('price_sale', 12 , 2)->unique()->nullable();
+            $table->decimal('price', 12 , 2)->nullable();
+            $table->decimal('price_sale', 12 , 2)->nullable();
             $table->string('slug')->unique()->nullable();
 
             $table->unsignedBigInteger('id_product_categories')->nullable();
