@@ -135,14 +135,20 @@
                                     </li>
                                 @endif
                                 @if (canView('Taxes - Tabla'))
-                                <li>
-                                    <a href="{{ url('impuestos') }}"
-                                        class="{{ Route::currentRouteName() == 'impuestos' ? 'active' : '' }}">
-                                        Impuestos
-                                    </a>
-                                </li>
-                            @endif
+                                    <li>
+                                        <a href="{{ url('impuestos') }}"
+                                            class="{{ Route::currentRouteName() == 'impuestos' ? 'active' : '' }}">
+                                            Impuestos
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
+                        </li>
+                        <li class="sidebar-list">
+                            <li>
+                                <br>
+                                <br>
+                            </li>
                         </li>
                     @endif
                 </ul>
@@ -150,4 +156,5 @@
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
         </nav>
     </div>
+
 </div>

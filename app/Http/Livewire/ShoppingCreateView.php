@@ -12,7 +12,7 @@ use Darryldecode\Cart\Facades\CartFacade as Cart;
 class ShoppingCreateView extends Component
 {
     public $invoiceNumber, $selectProvider, $date, $orderStatus, $idTaxe,  $note;
-    public $providers;
+    public $providers, $taxRate = 1;
     public $buscar, $product, $picked, $users_id, $idproduct, $stockproducto;
     public $totalCart, $cant = 0, $cartTotalQuantity, $quantityMas = 0, $taxesall;
 
@@ -62,6 +62,7 @@ class ShoppingCreateView extends Component
     {
         $this->validateOnly($propertyName);
     }
+
     public function delete($idproduct)
     {
         \Cart::session(auth()->user()->id)->remove($idproduct);
@@ -90,6 +91,18 @@ class ShoppingCreateView extends Component
                 'value' => $quantity
             ),
         ));
+    }
+
+    public function updatedidTaxe($idtaxe)
+    {
+        if ($idtaxe == 0) {
+            $this->reset(['taxRate', 'idTaxe']);
+        } else {
+
+            $taxe = taxes::find($idtaxe);
+            $taxRate = $taxe->tax_rate;
+            $this->taxRate = '1.' . $taxRate;
+        }
     }
 
     public function quantityChange($itemId, $quantity)
@@ -141,6 +154,7 @@ class ShoppingCreateView extends Component
         $this->providerEmail = $provider->email;
         $this->providerRut = $provider->nit;
         \Cart::session(auth()->user()->id)->clear();
+        $this->reset(['taxRate', 'idTaxe']);
     }
 
     public function clean1()

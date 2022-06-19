@@ -38,7 +38,7 @@ class BrandsView extends Component
         //Decleramos campos sin validar
         public function rules(): array
         {
-            if ($this->updating == true) {
+            if ($this->updating) {
                 return [
                     'name' => 'required|min:3|max:256|unique:App\Models\brands,name,' . optional($this->brand)->id,
                 ];
