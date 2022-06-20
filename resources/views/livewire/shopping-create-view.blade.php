@@ -24,9 +24,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div>
-                                <a type="button" class="btn btn-primary float-end" href="{{ url('compras') }}">
+                                <button type="button" class="btn btn-primary float-end" wire:click="close">
                                     Volver
-                                </a>
+                                </button>
                             </div>
                         </div>
                         @if ($selectProvider == null)
@@ -266,7 +266,7 @@
 
                                             <tr class="mt-1" style="border-top: 2px solid #ced4da">
                                                 <td colspan="3" rowspan="4">
-                                                    <textarea wire:model="des_activity" rows="4" cols="4" class="form-control"
+                                                    <textarea wire:model="note" rows="4" cols="4" class="form-control"
                                                         placeholder="{{ __('Nota') }} "></textarea>
                                                 </td>
                                             </tr>
@@ -295,9 +295,9 @@
                                                 <td>
                                                     <span>
                                                         <select class="form-select " wire:model="idTaxe">
-                                                            <option value="0">
+                                                            {{-- <option value="">
                                                                 N/A
-                                                            </option>
+                                                            </option> --}}
                                                             @foreach ($taxesall as $item)
                                                                 <option value="{{ $item->id }}">
                                                                     {{ $item->name }} -- {{ $item->tax_rate }} %

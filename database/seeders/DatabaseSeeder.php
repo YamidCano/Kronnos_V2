@@ -20,14 +20,34 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $Administrador = User::factory()->create([
-            'name' => 'Kronnos',
-            'last_name' => 'Business',
+            'name' => 'Administrador',
+            'last_name' => 'Kronnos',
             'identification' => '9005213556',
             'email' => 'admin@kronnos.com',
             'phone' => '3215555555',
             'address' => 'Bogota',
             'city' => 'Bogota DC',
-            'password' => Hash::make('123456'),
+            'password' => Hash::make('VUyOvScy'),
+        ]);
+        $Vendedor = User::factory()->create([
+            'name' => 'Vendedor',
+            'last_name' => 'Kronnos',
+            'identification' => '9005213557',
+            'email' => 'vendedor@kronnos.com',
+            'phone' => '3215555555',
+            'address' => 'Bogota',
+            'city' => 'Bogota DC',
+            'password' => Hash::make('VUyOvScy'),
+        ]);
+        $Usuario = User::factory()->create([
+            'name' => 'Usuario',
+            'last_name' => 'Kronnos',
+            'identification' => '9005213558',
+            'email' => 'usuario@kronnos.com',
+            'phone' => '3215555555',
+            'address' => 'Bogota',
+            'city' => 'Bogota DC',
+            'password' => Hash::make('VUyOvScy'),
         ]);
 
         $admin = Role::create(['name' => 'Administrador']);
@@ -71,5 +91,7 @@ class DatabaseSeeder extends Seeder
         $Taxes->syncPermissions(Permission::where('name', 'like', "%Taxes%")->get());
 
         $Administrador->assignRole('Administrador');
+        $Vendedor->assignRole('Administrador');
+        $Usuario->assignRole('Usuario');
     }
 }

@@ -24,6 +24,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_taxe')->nullable();
             $table->foreign('id_taxe')->references('id')->on('taxes');
             $table->text('note')->nullable();
+            $table->decimal('Subtotal', 12 , 2)->nullable();
+            $table->decimal('total', 12 , 2)->nullable();
             $table->timestamps();
         });
     }

@@ -6,13 +6,16 @@ use Livewire\Component;
 use App\Models\providers;
 use App\Models\products;
 use App\Models\taxes;
+use App\Models\shopping;
+use App\Models\shopping_details;
 use phpDocumentor\Reflection\Types\This;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
+use PhpParser\Node\Stmt\Foreach_;
 
 class ShoppingCreateView extends Component
 {
-    public $invoiceNumber, $selectProvider, $date, $orderStatus, $idTaxe,  $note;
-    public $providers, $taxRate = 1;
+    public $invoiceNumber, $selectProvider, $date, $orderStatus = 0, $idTaxe,  $note;
+    public $providers, $taxRate = 1, $Subtotal, $total;
     public $buscar, $product, $picked, $users_id, $idproduct, $stockproducto;
     public $totalCart, $cant = 0, $cartTotalQuantity, $quantityMas = 0, $taxesall;
 
@@ -55,6 +58,9 @@ class ShoppingCreateView extends Component
             'date' => 'required',
             'orderStatus' => 'required',
             'idTaxe' => 'required',
+            'note' => '',
+            'Subtotal' => '',
+            'total' => '',
         ];
     }
 
@@ -95,14 +101,17 @@ class ShoppingCreateView extends Component
 
     public function updatedidTaxe($idtaxe)
     {
-        if ($idtaxe == 0) {
-            $this->reset(['taxRate', 'idTaxe']);
-        } else {
+        // if ($idtaxe == '') {
+        //     $this->reset(['taxRate', 'idTaxe']);
+        // } else {
 
-            $taxe = taxes::find($idtaxe);
-            $taxRate = $taxe->tax_rate;
-            $this->taxRate = '1.' . $taxRate;
-        }
+        //     $taxe = taxes::find($idtaxe);
+        //     $taxRate = $taxe->tax_rate;
+        //     $this->taxRate = '1.' . $taxRate;
+        // }
+
+        $taxe = taxes::find($idtaxe);
+        $this->taxRate = '1.' . $taxe->tax_rate;
     }
 
     public function quantityChange($itemId, $quantity)
@@ -139,7 +148,7 @@ class ShoppingCreateView extends Component
     public function mount()
     {
         $this->providers = providers::orderBy('name')->get();
-        $this->taxesall = taxes::orderBy('name')->get();
+        $this->taxesall = taxes::orderBy('tax_rate')->get();
 
         $this->buscar = "";
         $this->product = [];
@@ -218,5 +227,39 @@ class ShoppingCreateView extends Component
         $this->picked = false;
         $this->resetErrorBag();
         $this->resetValidation();
+        return redirect()->to('compras');
+    }
+
+    public function save()
+    {
+        $this->validate();
+
+        $purchase = shopping::create([
+            'invoice_number' => $this->invoiceNumber,
+            'id_provider' => $this->selectProvider,
+            'date' => $this->date,
+            'order_status' => $this->orderStatus,
+            'id_taxe' => $this->idTaxe,
+            'note' => $this->note,
+            'Subtotal' => \Cart::session(auth()->user()->id)->getTotal(),
+            'total' => \Cart::session(auth()->user()->id)->getTotal() * $this->taxRate,
+        ]);
+
+        foreach (\Cart::session(auth()->user()->id)->getContent() as $value) {
+            shopping_details::create([
+                'id_shoppings' => $purchase->id,
+                'id_products' => $value->id,
+                'price' => $value->price,
+                'quantity' => $value->quantity,
+            ]);
+
+            $product = products::find($value->id);
+            $productstock = $product->stock + $value->quantity;
+            $product->update([
+                'stock' => $productstock,
+            ]);
+        }
+
+        $this->close();
     }
 }

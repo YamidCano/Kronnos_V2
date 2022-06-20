@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('shopping_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_shopping')->nullable();
-            $table->foreign('id_shopping')->references('id')->on('shoppings');
-            $table->unsignedBigInteger('id_product')->nullable();
-            $table->foreign('id_product')->references('id')->on('products');
+            $table->unsignedBigInteger('id_shoppings')->nullable();
+            $table->foreign('id_shoppings')->references('id')->on('shoppings');
+            $table->unsignedBigInteger('id_products')->nullable();
+            $table->foreign('id_products')->references('id')->on('products');
+            $table->unsignedBigInteger('quantity')->nullable();
             $table->timestamps();
         });
     }

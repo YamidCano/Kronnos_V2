@@ -236,7 +236,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emitTo('providers-view', 'destroy', Id)
+                        Livewire.emitTo('taxes-view', 'destroy', Id)
 
                         Swal.fire(
                             'Eliminar!',

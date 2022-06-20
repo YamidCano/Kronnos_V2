@@ -79,7 +79,7 @@
                                         <th>Proveedor</th>
                                         <th>Fecha de compra</th>
                                         <th>Estado de compra</th>
-                                        <th>Monto de pago</th>
+                                        <th>Monto Pagado</th>
                                         <th>Cantidad total</th>
                                         <th>Estado de pago</th>
                                         <th></th>
@@ -100,26 +100,38 @@
                                             <td>
                                                 @if ($item->order_status == 0)
                                                     <div class="text-success">
-                                                        Recibido
+                                                        Ordenado
                                                     </div>
                                                 @elseif ($item->order_status == 1)
                                                     <div class="text-warning">
-                                                        Ordenado
+                                                        Pendiente
                                                     </div>
                                                 @else
                                                     <div class="text-danger">
-                                                        Pendiente
+                                                        Recibido
                                                     </div>
                                                 @endif
                                             </td>
                                             <td>
-
+                                                {{ $item->total }}
                                             </td>
                                             <td>
-
+                                                {{ $item->total }}
                                             </td>
                                             <td>
-
+                                                @if ($item->order_status == 0)
+                                                    <div class="text-success">
+                                                        Ordenado
+                                                    </div>
+                                                @elseif ($item->order_status == 1)
+                                                    <div class="text-warning">
+                                                        Pendiente
+                                                    </div>
+                                                @else
+                                                    <div class="text-danger">
+                                                        Recibido
+                                                    </div>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
