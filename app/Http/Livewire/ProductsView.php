@@ -9,11 +9,9 @@ use Livewire\WithPagination;
 use App\Models\products;
 use App\Models\inventories;
 use App\Models\product_category;
+use App\Models\shopping_details;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use Intervention\Image\Facades\Image;
-use Intervention\Image\ImageManager;
 
 class ProductsView extends Component
 {
@@ -48,7 +46,9 @@ class ProductsView extends Component
             ->paginate($this->perPage);
 
         $products->each(function ($item) {
-            return $item->count_inventories = inventories::where('id_product', $item->id)->count();
+            $inventories = inventories::where('id_product', $item->id)->count();
+            $shopping_details = shopping_details::where('id_products', $item->id)->count();
+            return $item->count_products = $shopping_details + $inventories;
         });
 
         return view('livewire.products-view', compact('products'));
@@ -57,7 +57,7 @@ class ProductsView extends Component
     //Decleramos campos sin validar
     public function rules(): array
     {
-        if ($this->updating == true) {
+        if ($this->updating) {
             return [
                 'name' => 'required|min:3|max:256|unique:App\Models\products,name,' . optional($this->product)->id,
                 'selectcategory' => 'required',

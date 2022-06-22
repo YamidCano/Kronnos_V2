@@ -99,6 +99,9 @@
                                             <td>
                                                 {{ $item->stock }}
                                             </td>
+                                            <td>
+                                                {{ $item->count_products }}
+                                            </td>
                                             <td style="cursor:pointer;" wire:click="modalPhoto({{ $item->id }})"
                                                 data-bs-toggle="modal" wire:target="edit"
                                                 data-bs-target="#PhotoCharacter">
@@ -113,7 +116,7 @@
                                                             <i class="icofont icofont-ui-edit"></i>
                                                         </button>
                                                     @endcan
-                                                    @if ($item->count_inventories == 0)
+                                                    @if ($item->count_products == 0)
                                                         @can('Proveedor - Eliminar')
                                                             <button type="button" class="btn btn-danger"
                                                                 wire:click="$emit('remove', {{ $item->id }})"

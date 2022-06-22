@@ -3,12 +3,12 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Impuestos</h3>
+                    <h3>Modo de Pago</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item">Impuestos</li>
+                        <li class="breadcrumb-item">Modo de Pago</li>
                         {{-- <li class="breadcrumb-item active">Sample Page</li> --}}
                     </ol>
                 </div>
@@ -26,7 +26,7 @@
                                     <div class="mb-3">
                                         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
                                             data-bs-target="#Store">
-                                            Crear Impuesto
+                                            Crear Modo de Pago
                                         </button>
                                     </div>
                                 @endcan
@@ -60,26 +60,22 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover card-table table-vcenter text-nowrap">
+                            <table class="table table-striped table-hover card-table table-vcenter">
                                 <thead>
                                     <tr>
-                                        <th>Nombres Impuesto</th>
-                                        <th>Tasa de impuesto</th>
+                                        <th>Modo de Pago</th>
                                         <th>En Uso</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($taxes as $item)
+                                    @foreach ($paymentModes as $item)
                                         <tr>
                                             <td>
                                                 {{ $item->name }}
                                             </td>
                                             <td>
-                                                {{ $item->tax_rate }}
-                                            </td>
-                                            <td>
-                                                {{ $item->count_taxes }}
+                                                {{ $item->count_paymentOut }}
                                             </td>
                                             <td>
                                                 <div class="">
@@ -90,7 +86,7 @@
                                                             <i class="icofont icofont-ui-edit"></i>
                                                         </button>
                                                     @endcan
-                                                    @if ($item->count_taxes == 0)
+                                                    @if ($item->count_paymentOut == 0)
                                                         @can('Taxes - Eliminar')
                                                             <button type="button" class="btn btn-danger"
                                                                 wire:click="$emit('remove', {{ $item->id }})"
@@ -106,7 +102,7 @@
                                 </tbody>
                             </table>
                             <br>
-                            {{ $taxes->links() }}
+                            {{ $paymentModes->links() }}
                         </div>
                     </div>
                 </div>
@@ -118,11 +114,11 @@
     <!-- Modal  Crear-->
     <div wire:ignore.self class="modal fade" id="Store" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">
-                        Crear Impuesto
+                        Crear Modo de Pago
                     </h5>
                     <button type="button" class="btn-close" wire:click="close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -131,29 +127,15 @@
                     <form>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Nombres Impuesto *</label>
+                                <label for="Name">Modo de Pago *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-ui-file"> </i>
+                                        <i class="icofont icofont-credit-card"> </i>
                                     </span>
-                                    <input type="text" placeholder="Nombres Impuesto *"
+                                    <input type="text" placeholder="Modo de Pago *"
                                         class="form-control @error('name') is-invalid @enderror" wire:model="name" />
                                 </div>
                                 @error('name')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Tasa de impuesto *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-sale-discount"> </i>
-                                    </span>
-                                    <input type="number" placeholder="Tasa de impuesto *"
-                                        class="form-control @error('taxRate') is-invalid @enderror"
-                                        wire:model="taxRate" />
-                                </div>
-                                @error('taxRate')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -176,7 +158,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">
-                        Editar Impuesto
+                        Editar Modo de Pago
                     </h5>
                     <button type="button" class="btn-close" wire:click="close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -185,29 +167,15 @@
                     <form>
                         <div class="row row-sm">
                             <div class="col-lg">
-                                <label for="Name">Nombres Impuesto *</label>
+                                <label for="Name">Modo de Pago *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="icofont icofont-ui-file"> </i>
+                                        <i class="icofont icofont-credit-card"> </i>
                                     </span>
-                                    <input type="text" placeholder="Nombres Impuesto *"
+                                    <input type="text" placeholder="Modo de Pago *"
                                         class="form-control @error('name') is-invalid @enderror" wire:model="name" />
                                 </div>
                                 @error('name')
-                                    <span class="text-danger error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <label for="Name">Tasa de impuesto *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="icofont icofont-sale-discount"> </i>
-                                    </span>
-                                    <input type="number" placeholder="Tasa de impuesto *"
-                                        class="form-control @error('taxRate') is-invalid @enderror"
-                                        wire:model="taxRate" />
-                                </div>
-                                @error('taxRate')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -238,7 +206,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emitTo('taxes-view', 'destroy', Id)
+                        Livewire.emitTo('payment-mode-view', 'destroy', Id)
 
                         Swal.fire(
                             'Eliminar!',

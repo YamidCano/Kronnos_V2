@@ -68,7 +68,7 @@
                                         <th>Nit</th>
                                         <th>Email</th>
                                         <th>Estado</th>
-                                        {{-- <th>En Uso</th> --}}
+                                        <th>En Uso</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -98,9 +98,9 @@
                                                     </div>
                                                 @endif
                                             </td>
-                                            {{-- <td>
+                                            <td>
                                                 {{ $item->count_provider }}
-                                            </td> --}}
+                                            </td>
                                             <td>
                                                 <div class="">
                                                     @can('Proveedor - Editar')
@@ -110,15 +110,15 @@
                                                             <i class="icofont icofont-ui-edit"></i>
                                                         </button>
                                                     @endcan
-                                                    {{-- @if ($item->count_provider == 0) --}}
-                                                    @can('Proveedor - Eliminar')
-                                                        <button type="button" class="btn btn-danger"
-                                                            wire:click="$emit('remove', {{ $item->id }})"
-                                                            data-bs-toggle="modal" data-bs-target="#permissionModal">
-                                                            <i class="icofont icofont-ui-delete"></i>
-                                                        </button>
-                                                    @endcan
-                                                    {{-- @endif --}}
+                                                    @if ($item->count_provider == 0)
+                                                        @can('Proveedor - Eliminar')
+                                                            <button type="button" class="btn btn-danger"
+                                                                wire:click="$emit('remove', {{ $item->id }})"
+                                                                data-bs-toggle="modal" data-bs-target="#permissionModal">
+                                                                <i class="icofont icofont-ui-delete"></i>
+                                                            </button>
+                                                        @endcan
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
@@ -215,8 +215,7 @@
                                         <i class="icofont  icofont-location-pin"> </i>
                                     </span>
                                     <input type="text" placeholder="Ciudad *"
-                                        class="form-control @error('city') is-invalid @enderror"
-                                        wire:model="city" />
+                                        class="form-control @error('city') is-invalid @enderror" wire:model="city" />
                                 </div>
                                 @error('city')
                                     <span class="text-danger error">{{ $message }}</span>
@@ -334,7 +333,8 @@
                                         <i class="icofont icofont-email"> </i>
                                     </span>
                                     <input type="email" placeholder="Correo Electronico *"
-                                        class="form-control @error('email') is-invalid @enderror" wire:model="email" />
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        wire:model="email" />
                                 </div>
                                 @error('email')
                                     <span class="text-danger error">{{ $message }}</span>
@@ -350,8 +350,7 @@
                                         <i class="icofont  icofont-location-pin"> </i>
                                     </span>
                                     <input type="text" placeholder="Ciudad *"
-                                        class="form-control @error('city') is-invalid @enderror"
-                                        wire:model="city" />
+                                        class="form-control @error('city') is-invalid @enderror" wire:model="city" />
                                 </div>
                                 @error('city')
                                     <span class="text-danger error">{{ $message }}</span>

@@ -4,16 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\products;
 
-class shopping_details extends Model
+class paymentOut extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
-    public function productsName()
+    public function MedioPago()
     {
-        return $this->belongsTo(products::class, 'id_products');
+        return $this->belongsTo(paymentMode::class, 'id_payment_modes');
     }
-
 }

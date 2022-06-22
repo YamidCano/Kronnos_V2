@@ -23,11 +23,9 @@ php artisan storage:link
 composer require cviebrock/eloquent-sluggable "8.0.8"
 _______________________________________________
 
-
 composer remove darbaoui/laravel-ui-avatars
 composer remove glebred/search-multiselect-input
 ____________________________________
-
 
 php artisan make:livewire components/header
 
@@ -35,7 +33,6 @@ php artisan make:livewire components/sidebar
 
 php artisan make:livewire dashboardView
 php artisan make:model dashboard -m
-
 
 php artisan make:livewire ecommerceView
 php artisan make:model ecommerce -m
@@ -45,7 +42,6 @@ php artisan make:livewire user/RoleView
 
 php artisan make:livewire user/profileView
 php artisan make:model profile -m
-
 
 PAYROLL_HISTORIES
 php artisan make:livewire payroll_historiesView
@@ -85,7 +81,6 @@ php artisan make:model bills -m
 php artisan make:livewire user/roleView
 php artisan make:model role -m
 
-
 BRANDS
 php artisan make:livewire brandsView
 php artisan make:model brands -m
@@ -109,3 +104,11 @@ php artisan make:model shopping_create -m
 Taxes
 php artisan make:livewire taxesView
 php artisan make:model taxes -m
+
+Payment Out
+php artisan make:livewire paymentOutView
+php artisan make:model paymentOut -m
+
+Payment Mode
+php artisan make:livewire paymentModeView
+php artisan make:model paymentMode -m

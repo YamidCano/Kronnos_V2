@@ -8,14 +8,13 @@ use App\Models\products;
 use App\Models\taxes;
 use App\Models\shopping;
 use App\Models\shopping_details;
-use phpDocumentor\Reflection\Types\This;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
-use PhpParser\Node\Stmt\Foreach_;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class ShoppingCreateView extends Component
 {
     public $invoiceNumber, $selectProvider, $date, $orderStatus = 0, $idTaxe,  $note;
-    public $providers, $taxRate = 1, $Subtotal, $total;
+    public $providers, $taxRate = 1, $Subtotal, $total, $slug;
     public $buscar, $product, $picked, $users_id, $idproduct, $stockproducto;
     public $totalCart, $cant = 0, $cartTotalQuantity, $quantityMas = 0, $taxesall;
 
@@ -31,7 +30,7 @@ class ShoppingCreateView extends Component
             if ($exist) {
                 $this->emit('toastAlertError', 'Producto ya existe');
             } else {
-                \Cart::session(auth()->user()->id)->add(array(
+                Cart::session(auth()->user()->id)->add(array(
                     'id' =>  $allproduct->id,
                     'name' => $allproduct->name,
                     'price' => $allproduct->price,
@@ -45,7 +44,7 @@ class ShoppingCreateView extends Component
             $this->buscar = '';
         }
 
-        $Cart = \Cart::session(auth()->user()->id)->getContent();
+        $Cart = Cart::session(auth()->user()->id)->getContent();
 
         return view('livewire.shopping-create-view', compact('Cart'));
     }
@@ -53,7 +52,7 @@ class ShoppingCreateView extends Component
     function rules()
     {
         return [
-            'invoiceNumber' => 'required|min:3|max:256',
+            'invoiceNumber' => 'required|min:3|max:256|unique:App\Models\shopping,invoice_number,',
             'selectProvider' => 'required',
             'date' => 'required',
             'orderStatus' => 'required',
@@ -71,7 +70,7 @@ class ShoppingCreateView extends Component
 
     public function delete($idproduct)
     {
-        \Cart::session(auth()->user()->id)->remove($idproduct);
+        Cart::session(auth()->user()->id)->remove($idproduct);
         $this->emit('toastAlert', 'Producto Eliminado');
     }
 
@@ -117,7 +116,7 @@ class ShoppingCreateView extends Component
     public function quantityChange($itemId, $quantity)
     {
         if ($quantity <= 1) {
-            \Cart::session(auth()->user()->id)->remove($itemId);
+            Cart::session(auth()->user()->id)->remove($itemId);
             $this->emit('toastAlert', 'Producto Eliminado');
         } else {
             Cart::session(auth()->user()->id)->update($itemId, array(
@@ -132,7 +131,7 @@ class ShoppingCreateView extends Component
     public function quantitymenos($itemId, $quantity)
     {
         if ($quantity <= 1) {
-            \Cart::session(auth()->user()->id)->remove($itemId);
+            Cart::session(auth()->user()->id)->remove($itemId);
             $this->emit('toastAlert', 'Producto Eliminado');
         } else {
             $quantity -= 1;
@@ -162,7 +161,7 @@ class ShoppingCreateView extends Component
         $this->providerPhone = $provider->phone;
         $this->providerEmail = $provider->email;
         $this->providerRut = $provider->nit;
-        \Cart::session(auth()->user()->id)->clear();
+        Cart::session(auth()->user()->id)->clear();
         $this->reset(['taxRate', 'idTaxe']);
     }
 
@@ -174,7 +173,7 @@ class ShoppingCreateView extends Component
     public function clean2()
     {
         $this->reset(['selectProvider', 'invoiceNumber', 'date']);
-        \Cart::session(auth()->user()->id)->clear();
+        Cart::session(auth()->user()->id)->clear();
     }
 
     public function clean3()
@@ -234,6 +233,8 @@ class ShoppingCreateView extends Component
     {
         $this->validate();
 
+        $this->createslug();
+
         $purchase = shopping::create([
             'invoice_number' => $this->invoiceNumber,
             'id_provider' => $this->selectProvider,
@@ -241,16 +242,18 @@ class ShoppingCreateView extends Component
             'order_status' => $this->orderStatus,
             'id_taxe' => $this->idTaxe,
             'note' => $this->note,
-            'Subtotal' => \Cart::session(auth()->user()->id)->getTotal(),
-            'total' => \Cart::session(auth()->user()->id)->getTotal() * $this->taxRate,
+            'slug' => $this->slug,
+            'Subtotal' => Cart::session(auth()->user()->id)->getTotal(),
+            'total' => Cart::session(auth()->user()->id)->getTotal() * $this->taxRate,
         ]);
 
-        foreach (\Cart::session(auth()->user()->id)->getContent() as $value) {
+        foreach (Cart::session(auth()->user()->id)->getContent() as $value) {
             shopping_details::create([
                 'id_shoppings' => $purchase->id,
                 'id_products' => $value->id,
                 'price' => $value->price,
                 'quantity' => $value->quantity,
+                'total' => Cart::session(auth()->user()->id)->get($value->id)->getPriceSum(),
             ]);
 
             $product = products::find($value->id);
@@ -261,5 +264,10 @@ class ShoppingCreateView extends Component
         }
 
         $this->close();
+    }
+
+    private function createslug()
+    {
+        $this->slug = SlugService::createSlug(shopping::class, 'slug', $this->invoiceNumber);
     }
 }

@@ -17,6 +17,9 @@ use App\Http\Livewire\BrandsView;
 use App\Http\Livewire\ShoppingView;
 use App\Http\Livewire\ShoppingCreateView;
 use App\Http\Livewire\TaxesView;
+use App\Http\Livewire\PaymentOutView;
+use App\Http\Livewire\PaymentModeView;
+use App\Http\Livewire\ShoppingDetailsView;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -73,5 +76,14 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
 
     Route::get('/impuestos', TaxesView::class)->name('impuestos')
         ->middleware('can_view:Taxes - Tabla');
+
+    Route::get('/salidaPago', PaymentOutView::class)->name('salidaPago')
+        ->middleware('can_view:Taxes - Tabla');
+
+    Route::get('/modoPago', PaymentModeView::class)->name('modoPago')
+        ->middleware('can_view:Taxes - Tabla');
+
+    Route::get('/compraDetalle/{slug}', ShoppingDetailsView::class)->name('compraDetalle')
+        ->middleware('can_view:Shopping - Tabla');
 
     });

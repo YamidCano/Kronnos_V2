@@ -113,10 +113,34 @@
                             {{-- <label class="badge badge-success">2</label> --}}
                             <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'ajusteInventario' ? 'active' : '' }}"
                                 href="{{ url('ajusteInventario') }}">
-                                <i data-feather="layers"></i><span class="lan-6">Ajuste de Stock </span></a>
+                                <i data-feather="layers"></i><span class="lan-6">Ajuste de Stock</span></a>
                         </li>
                     @endif
-                    @if (canView('Shopping - Tabla') or canView('Taxes - Tabla'))
+                    @if (canView('Inventorie - Tabla'))
+                        <li class="sidebar-list">
+                            {{-- <label class="badge badge-success">2</label> --}}
+                            <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'modoPago' ? 'active' : '' }}"
+                                href="{{ url('modoPago') }}">
+                                <i data-feather="credit-card"></i><span class="lan-6">Modo de pago</span></a>
+                        </li>
+                    @endif
+                    @if (canView('Taxes - Tabla'))
+                        <li class="sidebar-list">
+                            {{-- <label class="badge badge-success">2</label> --}}
+                            <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'impuestos' ? 'active' : '' }}"
+                                href="{{ url('impuestos') }}">
+                                <i data-feather="target"></i><span class="lan-6">Impuestos</span></a>
+                        </li>
+                    @endif
+                    @if (canView('Shopping - Tabla'))
+                        <li class="sidebar-list">
+                            {{-- <label class="badge badge-success">2</label> --}}
+                            <a class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'compras' or Route::currentRouteName() == 'comprasCrear') active @endif"
+                                href="{{ url('compras') }}">
+                                <i data-feather="gift"></i><span class="lan-6">Compras</span></a>
+                        </li>
+                    @endif
+                    {{-- @if (canView('Shopping - Tabla') or canView('Taxes - Tabla'))
                         <li class="sidebar-list"><a
                                 class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'compras' or Route::currentRouteName() == 'impuestos') active @endif"
                                 href="#"><i data-feather="gift"></i><span class="lan-6">Compras</span>
@@ -150,7 +174,11 @@
                                 <br>
                             </li>
                         </li>
-                    @endif
+                    @endif --}}
+                    <li>
+                        <br>
+                        <br>
+                    </li>
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

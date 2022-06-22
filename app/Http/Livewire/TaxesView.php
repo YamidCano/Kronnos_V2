@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\taxes;
+use App\Models\shopping;
 use Livewire\WithPagination;
 
 class TaxesView extends Component
@@ -36,9 +37,9 @@ class TaxesView extends Component
             })
             ->paginate($this->perPage);
 
-        // $providers->each(function ($item) {
-        //     return $item->count_provider = products::where('id_provider', $item->id)->count();
-        // });
+        $taxes->each(function ($item) {
+            return $item->count_taxes = shopping::where('id_taxe', $item->id)->count();
+        });
 
         return view('livewire.taxes-view', compact('taxes'));
     }
@@ -47,7 +48,7 @@ class TaxesView extends Component
 
     public function rules(): array
     {
-        if ($this->updating == true) {
+        if ($this->updating) {
             return [
                 'name' => 'required|max:56|unique:App\Models\taxes,name,' . optional($this->taxe)->id,
                 'taxRate' => 'required',
@@ -84,12 +85,7 @@ class TaxesView extends Component
 
         //Cerramos la ventana modal
         $this->emit('Store');
-        //Limpiamos validaciones
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['name', 'taxRate']);
-        //Enviamos el mensaje de confirmacion
+        $this->close();
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
 
@@ -114,21 +110,15 @@ class TaxesView extends Component
             'name' => $this->name,
             'tax_rate' => $this->taxRate,
         ]);
-        $this->reset(['name', 'taxRate']);
         $this->emit('update');
-        $this->resetErrorBag();
-        $this->resetValidation();
+        $this->close();
         $this->emit('alert', 'Registro Actualizada sastifactoriamente');
     }
 
     public function destroy(taxes $taxe)
     {
         $taxe->delete();
-        //Limpiamos validaciones
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['name', 'taxRate']);
+        $this->close();
     }
 
     //Cerrar una ventana modal

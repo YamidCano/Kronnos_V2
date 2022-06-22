@@ -73,7 +73,7 @@
                                 </div>
                                 <button type="button" onclick="Administrador()" data-bs-toggle="tooltip"
                                     data-bs-placement="top"
-                                    title="Haga clic aquí para copiar las credenciales de administrador"
+                                    title="Haga clic aquí para copiar las credenciales de admin"
                                     class="btn btn-outline-secundary btn-icon float-end">
                                     <i class="icofont icofont-ui-copy text-danger" style="font-size: 20px;">
                                     </i>

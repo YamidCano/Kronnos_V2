@@ -3,11 +3,11 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\product_category;
-use App\Models\products;
+use App\Models\paymentMode;
+use App\Models\paymentOut;
 use Livewire\WithPagination;
 
-class ProductCategoryView extends Component
+class PaymentModeView extends Component
 {
     //Paginacion
     use WithPagination;
@@ -15,7 +15,7 @@ class ProductCategoryView extends Component
 
     //Declaramos variables publicas
     public $perPage = 25;
-    public $search, $name, $category_id, $category;
+    public $search, $name, $paymentModeId;
     public $updating = false;
 
     //Actualizamos la vista
@@ -23,34 +23,44 @@ class ProductCategoryView extends Component
 
     public function render()
     {
-        $categories =  product_category::query()
-            ->where('name', 'like', "%{$this->search}%")
+        $paymentModes =  paymentMode::query()
+            ->when($this->search, function ($query) {
+                return $query->where(function ($query) {
+                    $query->where('name', 'like', "%{$this->search}%");
+                });
+            })
             ->paginate($this->perPage);
 
-        $categories->each(function ($item) {
-            return $item->count_category = products::where('id_product_categories', $item->id)->count();
+        $paymentModes->each(function ($item) {
+            return $item->count_paymentOut = paymentOut::where('id_payment_modes', $item->id)->count();
         });
 
-        return view('livewire.product-category-view', compact('categories'));
+        return view('livewire.payment-mode-view', compact('paymentModes'));
     }
 
     //Decleramos campos sin validar
+
     public function rules(): array
     {
         if ($this->updating) {
             return [
-                'name' => 'required|min:3|max:256|unique:App\Models\product_category,name,' . optional($this->category)->id,
+                'name' => 'required|max:56|unique:App\Models\paymentMode,name,' . optional($this->paymentMode)->id,
+            ];
+        } else {
+            return [
+                'name' => 'required|max:56|unique:App\Models\paymentMode,name,',
             ];
         }
-
-        return [
-            'name' => 'required|min:3|max:256|unique:App\Models\product_category,name,',
-        ];
     }
 
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+    }
+
+    public function clean()
+    {
+        $this->reset(['search']);
     }
 
     //Creamos el registro
@@ -60,55 +70,44 @@ class ProductCategoryView extends Component
         $this->validate();
 
         //Guardamos los registros
-        product_category::create([
+        paymentMode::create([
             'name' => $this->name,
         ]);
 
         //Cerramos la ventana modal
         $this->emit('Store');
-        //Limpiamos validaciones
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['name']);
-        //Enviamos el mensaje de confirmacion
+        $this->close();
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
 
     //Tramos los datos al editar y lo volcamos en variables
-    public function edit(product_category $category)
+    public function edit(paymentMode $paymentMode)
     {
         $this->updating = true;
-        $this->category = $category;
-        $this->category_id = $category->id;
-        $this->name = $category->name;
+        $this->paymentMode = $paymentMode;
+        $this->paymentModeId = $paymentMode->id;
+        $this->name = $paymentMode->name;
     }
-
     //Actualizamos formulario de edicion
     public function update()
     {
         //Validamos los campos
         $this->validate();
 
-        $category = product_category::find($this->category_id);
-        $category->update([
+        $paymentMode = paymentMode::find($this->paymentModeId);
+
+        $paymentMode->update([
             'name' => $this->name,
         ]);
-        $this->reset(['name']);
         $this->emit('update');
-        $this->resetErrorBag();
-        $this->resetValidation();
+        $this->close();
         $this->emit('alert', 'Registro Actualizada sastifactoriamente');
     }
 
-    public function destroy(product_category $category)
+    public function destroy(paymentMode $paymentModeId)
     {
-        $category->delete();
-        //Limpiamos validaciones
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['name']);
+        $paymentModeId->delete();
+        $this->close();
     }
 
     //Cerrar una ventana modal
@@ -119,10 +118,5 @@ class ProductCategoryView extends Component
         $this->resetValidation();
         //Limpiamos Campos
         $this->reset(['name']);
-    }
-
-    public function clean()
-    {
-        $this->reset(['search']);
     }
 }

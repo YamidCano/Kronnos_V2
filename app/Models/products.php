@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\product_category;
-use App\Models\providers;
 use App\Models\brands;
 use Cviebrock\EloquentSluggable\Sluggable;
 

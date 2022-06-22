@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('shopping_details', function (Blueprint $table) {
+        Schema::create('payment_outs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_provider')->nullable();
+            $table->foreign('id_provider')->references('id')->on('providers');
             $table->unsignedBigInteger('id_shoppings')->nullable();
             $table->foreign('id_shoppings')->references('id')->on('shoppings');
-            $table->unsignedBigInteger('id_products')->nullable();
-            $table->foreign('id_products')->references('id')->on('products');
-            $table->unsignedBigInteger('quantity')->nullable();
-            $table->decimal('price', 12 , 2)->nullable();
-            $table->decimal('total', 12 , 2)->nullable();
+            $table->decimal('amount', 12 , 2)->nullable();
+            $table->date('date')->nullable();
+            $table->text('note')->nullable();
+            $table->unsignedBigInteger('id_payment_modes')->nullable();
+            $table->foreign('id_payment_modes')->references('id')->on('payment_modes');
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shopping_details');
+        Schema::dropIfExists('payment_outs');
     }
 };

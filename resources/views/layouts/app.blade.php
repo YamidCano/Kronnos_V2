@@ -134,6 +134,10 @@
             $('#update').modal('hide');
         });
 
+        window.livewire.on('view', () => {
+            $('#update').modal('hide');
+        });
+
         Livewire.on('toastAlert', function(message) {
             const Toast = Swal.mixin({
                 toast: true,

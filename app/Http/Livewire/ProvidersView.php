@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\providers;
 use Livewire\WithPagination;
 use App\Models\products;
+use App\Models\shopping;
 
 class ProvidersView extends Component
 {
@@ -35,9 +36,9 @@ class ProvidersView extends Component
             })
             ->paginate($this->perPage);
 
-        // $providers->each(function ($item) {
-        //     return $item->count_provider = products::where('id_provider', $item->id)->count();
-        // });
+        $providers->each(function ($item) {
+            return $item->count_provider = shopping::where('id_provider', $item->id)->count();
+        });
 
         return view('livewire.providers-view', compact('providers'));
     }
@@ -46,7 +47,7 @@ class ProvidersView extends Component
 
     public function rules(): array
     {
-        if ($this->updating == true) {
+        if ($this->updating) {
             return [
                 'name' => 'required|min:3|max:256|unique:App\Models\providers,name,' . optional($this->provider)->id,
                 'phone' => 'required|min:10|max:10|unique:App\Models\providers,phone,' . optional($this->provider)->id,
