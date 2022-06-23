@@ -49,7 +49,7 @@ class ShoppingView extends Component
         if ($this->paymenAmount != null) {
             $this->difference = $this->total - $this->paymentsum;
             if ($this->paymenAmount > $this->difference) {
-                $this->emit('alertError', 'El Monto a pagar no puede ser mayor a la Restante a pagar');
+                $this->emit('alertError', 'El Monto a pagar no puede ser mayor al Restante a pagar');
                 $this->paymenAmount = null;
             }
         }
@@ -118,7 +118,7 @@ class ShoppingView extends Component
         ]);
 
         $this->close();
-        $this->emit('alert', 'Registro creada sastifactoriamente');
+        $this->emit('alert', 'Pago creada sastifactoriamente');
     }
 
     public function clean1(){

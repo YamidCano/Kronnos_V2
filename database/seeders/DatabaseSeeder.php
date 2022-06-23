@@ -2,6 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\brands;
+use App\Models\paymentMode;
+use App\Models\product_category;
+use App\Models\products;
+use App\Models\providers;
+use App\Models\shopping;
+use App\Models\shopping_details;
+use App\Models\taxes;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -18,6 +26,73 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+
+
+        $marca = new taxes();
+        $marca->name = "No Aplica";
+        $marca->tax_rate = "0";
+        $marca->save();
+
+        $marca = new taxes();
+        $marca->name = "Iva";
+        $marca->tax_rate = "19";
+        $marca->save();
+
+        $marca = new paymentMode();
+        $marca->name = "Efectivo";
+        $marca->save();
+
+        $marca = new paymentMode();
+        $marca->name = "Tarjeta";
+        $marca->save();
+
+        $marca = new paymentMode();
+        $marca->name = "Consignación";
+        $marca->save();
+
+        $marca = new brands();
+        $marca->name = "Marca A";
+        $marca->save();
+
+        $marca = new brands();
+        $marca->name = "Marca B";
+        $marca->save();
+
+        $marca = new brands();
+        $marca->name = "Marca C";
+        $marca->save();
+
+        $marca = new product_category();
+        $marca->name = "Categoría A";
+        $marca->save();
+
+        $marca = new product_category();
+        $marca->name = "Categoría B";
+        $marca->save();
+
+        $marca = new product_category();
+        $marca->name = "Categoría C";
+        $marca->save();
+
+        $provider = new providers();
+        $provider->name = "Proveedor A";
+        $provider->city = "Bogota";
+        $provider->address = "Calle";
+        $provider->email = "proveedora@proveedora.com";
+        $provider->phone = "32145675456";
+        $provider->nit = "900521344";
+        $provider->status = "0";
+        $provider->save();
+
+        $provider = new providers();
+        $provider->name = "Proveedor B";
+        $provider->city = "Bogota";
+        $provider->address = "Calle";
+        $provider->email = "proveedorb@proveedorb.com";
+        $provider->phone = "32145675457";
+        $provider->nit = "900521345";
+        $provider->status = "0";
+        $provider->save();
 
         $Administrador = User::factory()->create([
             'name' => 'Administrador',
@@ -97,5 +172,89 @@ class DatabaseSeeder extends Seeder
         $Administrador->assignRole('Administrador');
         $Vendedor->assignRole('Administrador');
         $Usuario->assignRole('Usuario');
+
+        $provider = new products();
+        $provider->name = "Producto A";
+        $provider->code = "45634565";
+        $provider->price = "45000";
+        $provider->price_sale = "54000";
+        $provider->id_product_categories = "1";
+        $provider->id_brands = "2";
+        $provider->description = "N/A";
+        $provider->status = "0";
+        $provider->stock = "20";
+        $provider->save();
+
+        $provider = new products();
+        $provider->name = "Producto B";
+        $provider->code = "986542344";
+        $provider->price = "50000";
+        $provider->price_sale = "59000";
+        $provider->id_product_categories = "3";
+        $provider->id_brands = "1";
+        $provider->description = "N/A";
+        $provider->status = "0";
+        $provider->stock = "40";
+        $provider->save();
+
+        $provider = new products();
+        $provider->name = "Producto C";
+        $provider->code = "985433244";
+        $provider->price = "25000";
+        $provider->price_sale = "36000";
+        $provider->id_product_categories = "2";
+        $provider->id_brands = "2";
+        $provider->description = "N/A";
+        $provider->status = "0";
+        $provider->stock = "60";
+        $provider->save();
+
+        $provider = new shopping();
+        $provider->invoice_number = "FC-001";
+        $provider->slug = "FC-001";
+        $provider->id_provider = "1";
+        $provider->date = "2022-06-23";
+        $provider->order_status = "0";
+        $provider->id_taxe = "2";
+        $provider->note = "N/A";
+        $provider->Subtotal = "1740000";
+        $provider->total = "2070600";
+        $provider->save();
+
+        $provider = new shopping_details();
+        $provider->id_shoppings = "1";
+        $provider->id_products = "1";
+        $provider->quantity = "22";
+        $provider->price = "45000";
+        $provider->total = "990000";
+        $provider->save();
+
+        $provider = new shopping_details();
+        $provider->id_shoppings = "1";
+        $provider->id_products = "2";
+        $provider->quantity = "15";
+        $provider->price = "50000";
+        $provider->total = "750000";
+        $provider->save();
+
+        $provider = new shopping();
+        $provider->invoice_number = "FC-002";
+        $provider->slug = "FC-002";
+        $provider->id_provider = "2";
+        $provider->date = "2022-06-23";
+        $provider->order_status = "0";
+        $provider->id_taxe = "2";
+        $provider->note = "N/A";
+        $provider->Subtotal = "5000000";
+        $provider->total = "595000";
+        $provider->save();
+
+        $provider = new shopping_details();
+        $provider->id_shoppings = "2";
+        $provider->id_products = "3";
+        $provider->quantity = "20";
+        $provider->price = "25000";
+        $provider->total = "500000";
+        $provider->save();
     }
 }

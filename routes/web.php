@@ -74,16 +74,15 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
     Route::get('/comprasCrear', ShoppingCreateView::class)->name('comprasCrear')
         ->middleware('can_view:Shopping - Tabla');
 
+    Route::get('/compraDetalle/{slug}', ShoppingDetailsView::class)->name('compraDetalle')
+        ->middleware('can_view:Shopping - Tabla');
+
     Route::get('/impuestos', TaxesView::class)->name('impuestos')
         ->middleware('can_view:Taxes - Tabla');
 
     Route::get('/salidaPago', PaymentOutView::class)->name('salidaPago')
-        ->middleware('can_view:Taxes - Tabla');
+        ->middleware('can_view:OutPayment - Tabla');
 
     Route::get('/modoPago', PaymentModeView::class)->name('modoPago')
-        ->middleware('can_view:Taxes - Tabla');
-
-    Route::get('/compraDetalle/{slug}', ShoppingDetailsView::class)->name('compraDetalle')
-        ->middleware('can_view:Shopping - Tabla');
-
-    });
+        ->middleware('can_view:Payment-Mode - Tabla');
+});

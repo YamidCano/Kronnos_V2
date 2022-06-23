@@ -13,7 +13,7 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class ShoppingCreateView extends Component
 {
-    public $invoiceNumber, $selectProvider, $date, $orderStatus = 0, $idTaxe,  $note;
+    public $invoiceNumber = 'FC-', $selectProvider, $date, $orderStatus = 0, $idTaxe,  $note;
     public $providers, $taxRate = 1, $Subtotal, $total, $slug;
     public $buscar, $product, $picked, $users_id, $idproduct, $stockproducto;
     public $totalCart, $cant = 0, $cartTotalQuantity, $quantityMas = 0, $taxesall;
