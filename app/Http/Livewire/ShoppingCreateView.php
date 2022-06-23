@@ -56,7 +56,7 @@ class ShoppingCreateView extends Component
             'selectProvider' => 'required',
             'date' => 'required',
             'orderStatus' => 'required',
-            'idTaxe' => 'required',
+            'idTaxe' => '',
             'note' => '',
             'Subtotal' => '',
             'total' => '',

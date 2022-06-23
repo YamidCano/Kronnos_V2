@@ -225,7 +225,7 @@
                                                                 <input class=" text-center form-control"
                                                                     id="v{{ $item->id }}"
                                                                     wire:change="quantityChange({{ $item->id }}, $('#v' + {{ $item->id }}).val())"
-                                                                    type="text" value="{{ $item->quantity }}"
+                                                                    type="number" value="{{ $item->quantity }}"
                                                                     style="display: block;">
                                                                 {{-- <label class="touchspin text-center mt-2" style="display: block;">
                                                                     <strong>{{ $item->quantity }}</strong>
@@ -322,13 +322,15 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="text-end" colspan="5">
-                                                    <button type="button" class="btn btn-primary"
-                                                        wire:loading.attr="disabled" wire:target="save"
-                                                        wire:click="save">
-                                                        Crear Venta
-                                                    </button>
-                                                </td>
+                                                @if (count(Cart::session(auth()->user()->id)->getContent()))
+                                                    <td class="text-end" colspan="5">
+                                                        <button type="button" class="btn btn-primary"
+                                                            wire:loading.attr="disabled" wire:target="save"
+                                                            wire:click="save">
+                                                            Crear Venta
+                                                        </button>
+                                                    </td>
+                                                @endif
                                             </tr>
                                         </tbody>
                                     </table>
