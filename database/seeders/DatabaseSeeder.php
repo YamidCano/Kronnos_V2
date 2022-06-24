@@ -137,6 +137,7 @@ class DatabaseSeeder extends Seeder
         $Taxes = Role::create(['name' => 'Taxes']);
         $PaymentMode = Role::create(['name' => 'Payment-Mode']);
         $OutPayment  = Role::create(['name' => 'OutPayment']);
+        $Invoice  = Role::create(['name' => 'Invoice']);
 
         //crud de usuarios
         $permission = [
@@ -168,9 +169,10 @@ class DatabaseSeeder extends Seeder
         $Taxes->syncPermissions(Permission::where('name', 'like', "%Taxes%")->get());
         $PaymentMode->syncPermissions(Permission::where('name', 'like', "%Payment-Mode%")->get());
         $OutPayment->syncPermissions(Permission::where('name', 'like', "%OutPayment%")->get());
+        $Invoice->syncPermissions(Permission::where('name', 'like', "%Invoice%")->get());
 
         $Administrador->assignRole('Administrador');
-        $Vendedor->assignRole('Administrador');
+        $Vendedor->assignRole('Invoice');
         $Usuario->assignRole('Usuario');
 
         $provider = new products();

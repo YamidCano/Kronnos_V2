@@ -20,6 +20,9 @@ use App\Http\Livewire\TaxesView;
 use App\Http\Livewire\PaymentOutView;
 use App\Http\Livewire\PaymentModeView;
 use App\Http\Livewire\ShoppingDetailsView;
+use App\Http\Livewire\InvoiceCreateView;
+use App\Http\Livewire\InvoiceDetailsView;
+use App\Http\Livewire\InvoiceView;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -85,4 +88,13 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
 
     Route::get('/modoPago', PaymentModeView::class)->name('modoPago')
         ->middleware('can_view:Payment-Mode - Tabla');
+
+    Route::get('/ventas', InvoiceView::class)->name('ventas')
+        ->middleware('can_view:Invoice - Tabla');
+
+    Route::get('/ventasCrear', ShoppingCreateView::class)->name('ventasCrear')
+        ->middleware('can_view:Invoice - Tabla');
+
+    Route::get('/VentasDetalle/{slug}', ShoppingDetailsView::class)->name('VentasDetalle')
+        ->middleware('can_view:Invoice - Tabla');
 });

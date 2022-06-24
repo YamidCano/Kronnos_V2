@@ -99,7 +99,17 @@ php artisan make:model shopping_details -m
 
 shopping_CREARE
 php artisan make:livewire shopping_createView
-php artisan make:model shopping_create -m
+
+invoice
+php artisan make:livewire invoiceView
+php artisan make:model invoice -m
+
+invoice_details
+php artisan make:livewire invoice_detailsView
+php artisan make:model invoice_details -m
+
+invoice_create
+php artisan make:livewire invoice_createView
 
 Taxes
 php artisan make:livewire taxesView

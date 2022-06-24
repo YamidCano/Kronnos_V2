@@ -140,6 +140,14 @@
                                 <i data-feather="gift"></i><span class="lan-6">Compras</span></a>
                         </li>
                     @endif
+                    @if (canView('Invoice - Tabla'))
+                        <li class="sidebar-list">
+                            {{-- <label class="badge badge-success">2</label> --}}
+                            <a class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ventas' or Route::currentRouteName() == 'ventasCrear') active @endif"
+                                href="{{ url('ventas') }}">
+                                <i data-feather="gift"></i><span class="lan-6">Ventas</span></a>
+                        </li>
+                    @endif
                     {{-- @if (canView('Shopping - Tabla') or canView('Taxes - Tabla'))
                         <li class="sidebar-list"><a
                                 class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'compras' or Route::currentRouteName() == 'impuestos') active @endif"
