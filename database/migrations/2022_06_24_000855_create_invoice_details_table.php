@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('invoice_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_invoices')->nullable();
-            $table->foreign('id_invoices')->references('id')->on('invoices');
-            $table->unsignedBigInteger('id_products')->nullable();
-            $table->foreign('id_products')->references('id')->on('products');
+            $table->unsignedBigInteger('id_invoice')->nullable();
+            $table->foreign('id_invoice')->references('id')->on('invoices');
+            $table->unsignedBigInteger('id_product')->nullable();
+            $table->foreign('id_product')->references('id')->on('products');
             $table->unsignedBigInteger('id_seller')->nullable();
             $table->foreign('id_seller')->references('id')->on('users');
             $table->unsignedBigInteger('quantity')->nullable();

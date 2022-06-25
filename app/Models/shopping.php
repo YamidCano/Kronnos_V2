@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\providers;
-use App\Models\paymentMode;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class shopping extends Model

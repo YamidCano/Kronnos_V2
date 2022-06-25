@@ -1,6 +1,4 @@
 <?php return array (
-  'bill-details-view' => 'App\\Http\\Livewire\\BillDetailsView',
-  'bills-view' => 'App\\Http\\Livewire\\BillsView',
   'brands-view' => 'App\\Http\\Livewire\\BrandsView',
   'components.header' => 'App\\Http\\Livewire\\Components\\Header',
   'components.sidebar' => 'App\\Http\\Livewire\\Components\\Sidebar',
@@ -12,9 +10,9 @@
   'invoice-create-view' => 'App\\Http\\Livewire\\InvoiceCreateView',
   'invoice-details-view' => 'App\\Http\\Livewire\\InvoiceDetailsView',
   'invoice-view' => 'App\\Http\\Livewire\\InvoiceView',
+  'payment-entry-view' => 'App\\Http\\Livewire\\PaymentEntryView',
   'payment-mode-view' => 'App\\Http\\Livewire\\PaymentModeView',
   'payment-out-view' => 'App\\Http\\Livewire\\PaymentOutView',
-  'payment-types-view' => 'App\\Http\\Livewire\\PaymentTypesView',
   'payroll-histories-view' => 'App\\Http\\Livewire\\PayrollHistoriesView',
   'product-category-view' => 'App\\Http\\Livewire\\ProductCategoryView',
   'product-types-view' => 'App\\Http\\Livewire\\ProductTypesView',

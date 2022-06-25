@@ -13,21 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('payment_entries', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_number')->unique()->nullable();
-            $table->string('slug')->unique()->nullable();
-            $table->unsignedBigInteger('id_seller')->nullable();
-            $table->foreign('id_seller')->references('id')->on('users');
+            $table->unsignedBigInteger('id_user')->nullable();
+            $table->foreign('id_user')->references('id')->on('users');
             $table->unsignedBigInteger('id_client')->nullable();
             $table->foreign('id_client')->references('id')->on('users');
+            $table->unsignedBigInteger('id_invoice')->nullable();
+            $table->foreign('id_invoice')->references('id')->on('invoices');
+            $table->decimal('amount', 12 , 2)->nullable();
             $table->date('date')->nullable();
-            $table->bigInteger('order_status')->nullable();
-            $table->unsignedBigInteger('id_taxe')->nullable();
-            $table->foreign('id_taxe')->references('id')->on('taxes');
             $table->text('note')->nullable();
-            $table->decimal('Subtotal', 12 , 2)->nullable();
-            $table->decimal('total', 12 , 2)->nullable();
+            $table->unsignedBigInteger('id_payment_modes')->nullable();
+            $table->foreign('id_payment_modes')->references('id')->on('payment_modes');
             $table->timestamps();
         });
     }
@@ -39,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('payment_entries');
     }
 };

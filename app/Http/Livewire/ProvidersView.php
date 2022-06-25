@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\providers;
 use Livewire\WithPagination;
-use App\Models\products;
 use App\Models\shopping;
 
 class ProvidersView extends Component

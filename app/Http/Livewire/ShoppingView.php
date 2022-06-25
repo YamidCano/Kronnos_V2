@@ -14,7 +14,7 @@ class ShoppingView extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $perPage = 25, $perPage2 = 3, $search, $search2;
+    public $perPage = 25, $perPage2 = 10, $search, $search2;
     public $invoiceNumber, $idProvider, $date, $orderStatus, $idTaxe, $note;
     public $total, $paymenAmount, $paymentDate, $paymentModes, $paymentMode, $paymentNote;
     public $id_shoppings, $difference, $paymentsum = 0;

@@ -118,12 +118,7 @@
                                 <div class="col">
                                     <div>
                                         <label for="buscar" class="mb-1">
-                                            Seleccione un producto * {{ $idproduct }}
-                                            {{-- @if ($picked)
-                                                <span class="badge bg-success">OK</span>
-                                            @else
-                                                <span class="badge bg-danger">OK</span>
-                                            @endif --}}
+                                            Seleccione un producto *
                                         </label>
                                         <div class="form-group">
                                             <div class="input-group">

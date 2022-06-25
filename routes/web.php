@@ -92,9 +92,9 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
     Route::get('/ventas', InvoiceView::class)->name('ventas')
         ->middleware('can_view:Invoice - Tabla');
 
-    Route::get('/ventasCrear', ShoppingCreateView::class)->name('ventasCrear')
+    Route::get('/ventasCrear', InvoiceCreateView::class)->name('ventasCrear')
         ->middleware('can_view:Invoice - Tabla');
 
-    Route::get('/VentasDetalle/{slug}', ShoppingDetailsView::class)->name('VentasDetalle')
+    Route::get('/VentasDetalle/{slug}', InvoiceDetailsView::class)->name('VentasDetalle')
         ->middleware('can_view:Invoice - Tabla');
 });

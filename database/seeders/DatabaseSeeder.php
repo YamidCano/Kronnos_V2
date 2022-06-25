@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\brands;
+use App\Models\invoice;
+use App\Models\invoice_details;
 use App\Models\paymentMode;
 use App\Models\product_category;
 use App\Models\products;
@@ -115,10 +117,20 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('VUyOvScy'),
         ]);
         $Usuario = User::factory()->create([
-            'name' => 'Usuario',
-            'last_name' => 'Kronnos',
+            'name' => 'Pepito',
+            'last_name' => 'Perez',
             'identification' => '9005213558',
-            'email' => 'usuario@kronnos.com',
+            'email' => 'Perez@kronnos.com',
+            'phone' => '3215555555',
+            'address' => 'Bogota',
+            'city' => 'Bogota DC',
+            'password' => Hash::make('VUyOvScy'),
+        ]);
+        $Usuario = User::factory()->create([
+            'name' => 'Juna',
+            'last_name' => 'Cardona',
+            'identification' => '90052133546',
+            'email' => 'Cardona@kronnos.com',
             'phone' => '3215555555',
             'address' => 'Bogota',
             'city' => 'Bogota DC',
@@ -254,6 +266,48 @@ class DatabaseSeeder extends Seeder
         $provider = new shopping_details();
         $provider->id_shoppings = "2";
         $provider->id_products = "3";
+        $provider->quantity = "20";
+        $provider->price = "25000";
+        $provider->total = "500000";
+        $provider->save();
+
+        $provider = new invoice();
+        $provider->invoice_number = "FV-001";
+        $provider->slug = "FV-001";
+        $provider->id_seller = "1";
+        $provider->id_client = "3";
+        $provider->date = "2022-06-23";
+        $provider->order_status = "0";
+        $provider->id_taxe = "2";
+        $provider->note = "N/A";
+        $provider->Subtotal = "5000000";
+        $provider->total = "595000";
+        $provider->save();
+
+        $provider = new invoice_details();
+        $provider->id_invoice = "1";
+        $provider->id_product = "3";
+        $provider->quantity = "20";
+        $provider->price = "25000";
+        $provider->total = "500000";
+        $provider->save();
+
+        $provider = new invoice();
+        $provider->invoice_number = "FV-002";
+        $provider->slug = "FV-002";
+        $provider->id_seller = "2";
+        $provider->id_client = "4";
+        $provider->date = "2022-06-23";
+        $provider->order_status = "0";
+        $provider->id_taxe = "2";
+        $provider->note = "N/A";
+        $provider->Subtotal = "5000000";
+        $provider->total = "595000";
+        $provider->save();
+
+        $provider = new invoice_details();
+        $provider->id_invoice = "1";
+        $provider->id_product = "3";
         $provider->quantity = "20";
         $provider->price = "25000";
         $provider->total = "500000";

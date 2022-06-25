@@ -137,7 +137,7 @@
                             {{-- <label class="badge badge-success">2</label> --}}
                             <a class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'compras' or Route::currentRouteName() == 'comprasCrear') active @endif"
                                 href="{{ url('compras') }}">
-                                <i data-feather="gift"></i><span class="lan-6">Compras</span></a>
+                                <i data-feather="shopping-bag"></i><span class="lan-6">Compras</span></a>
                         </li>
                     @endif
                     @if (canView('Invoice - Tabla'))
@@ -145,7 +145,7 @@
                             {{-- <label class="badge badge-success">2</label> --}}
                             <a class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'ventas' or Route::currentRouteName() == 'ventasCrear') active @endif"
                                 href="{{ url('ventas') }}">
-                                <i data-feather="gift"></i><span class="lan-6">Ventas</span></a>
+                                <i data-feather="shopping-cart"></i><span class="lan-6">Ventas</span></a>
                         </li>
                     @endif
                     {{-- @if (canView('Shopping - Tabla') or canView('Taxes - Tabla'))
