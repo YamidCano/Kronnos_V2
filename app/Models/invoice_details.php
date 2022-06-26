@@ -9,4 +9,9 @@ class invoice_details extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function productsName()
+    {
+        return $this->belongsTo(products::class, 'id_product');
+    }
 }

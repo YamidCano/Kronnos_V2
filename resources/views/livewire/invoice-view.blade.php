@@ -90,7 +90,7 @@
                                     @foreach ($invoices as $item)
                                         <tr>
                                             <td>
-                                                <a type="button" href="{{ route('compraDetalle', $item->slug) }}">
+                                                <a type="button" href="{{ route('VentasDetalle', $item->slug) }}">
                                                     {{ $item->invoice_number }}
                                                 </a>
 

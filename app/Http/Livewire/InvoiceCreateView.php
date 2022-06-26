@@ -231,7 +231,7 @@ class InvoiceCreateView extends Component
         $this->picked = false;
         $this->resetErrorBag();
         $this->resetValidation();
-        return redirect()->to('compras');
+        return redirect()->to('ventas');
     }
 
     public function save()

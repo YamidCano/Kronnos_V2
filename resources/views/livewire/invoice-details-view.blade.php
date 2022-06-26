@@ -24,21 +24,21 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="mt-2">
-                                    @if ($paymentOut == 0)
+                                    @if ($paymentEntry == 0)
                                         <div style="position: absolute;" id="bg-text"
                                             class="bg-danger text-center text-white float-none">
                                             <div class="me-5 ms-5">
                                                 No pagado
                                             </div>
                                         </div>
-                                    @elseif ($paymentOut < $total)
+                                    @elseif ($paymentEntry < $total)
                                         <div style="position: absolute;" id="bg-text"
                                             class="bg-info text-center text-white float-none">
                                             <div class="me-5 ms-5">
                                                 Par. pagado
                                             </div>
                                         </div>
-                                    @elseif ($paymentOut == $total)
+                                    @elseif ($paymentEntry == $total)
                                         <div style="position: absolute;" id="bg-text"
                                             class="bg-success text-center text-white float-left">
                                             <div class="me-5 ms-5">
@@ -59,12 +59,12 @@
                             <div class="col-6 mt-4">
                                 <div class="m-2">
                                     <div class="h6 mt-4">Nombre del Proveedor:
-                                        <strong>{{ $providerName }}</strong>
+                                        <strong>{{ $clientName }}</strong>
                                     </div>
-                                    <div class="h6">Rut: <strong>{{ $providerRut }}</strong></div>
-                                    <div class="h6">Telefono: <strong>{{ $providerPhone }}</strong>
+                                    <div class="h6">Rut: <strong>{{ $clientRut }}</strong></div>
+                                    <div class="h6">Telefono: <strong>{{ $clientPhone }}</strong>
                                     </div>
-                                    <div class="h6">Email: <strong>{{ $providerEmail }}</strong></div>
+                                    <div class="h6">Email: <strong>{{ $clientEmail }}</strong></div>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -106,7 +106,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($shoppingDetails as $item)
+                                        @foreach ($invoiceDetails as $item)
                                             <tr class="text-center">
                                                 <td>
                                                     <div class="product-name">

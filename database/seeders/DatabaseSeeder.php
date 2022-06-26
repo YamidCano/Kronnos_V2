@@ -301,16 +301,24 @@ class DatabaseSeeder extends Seeder
         $provider->order_status = "0";
         $provider->id_taxe = "2";
         $provider->note = "N/A";
-        $provider->Subtotal = "5000000";
-        $provider->total = "595000";
+        $provider->Subtotal = "2580000";
+        $provider->total = "3070200";
         $provider->save();
 
         $provider = new invoice_details();
-        $provider->id_invoice = "1";
-        $provider->id_product = "3";
-        $provider->quantity = "20";
-        $provider->price = "25000";
-        $provider->total = "500000";
+        $provider->id_invoice = "2";
+        $provider->id_product = "1";
+        $provider->quantity = "15";
+        $provider->price = "54000";
+        $provider->total = "810000";
+        $provider->save();
+
+        $provider = new invoice_details();
+        $provider->id_invoice = "2";
+        $provider->id_product = "2";
+        $provider->quantity = "15";
+        $provider->price = "59000";
+        $provider->total = "1770000";
         $provider->save();
     }
 }
