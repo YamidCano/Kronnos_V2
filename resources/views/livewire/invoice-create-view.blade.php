@@ -29,7 +29,7 @@
                                 </button>
                             </div>
 
-                            {{$stockproducto}}
+                            {{ $stockproducto }}
                         </div>
                         @if ($selectClients == null)
                             <div class="row ">
@@ -52,7 +52,15 @@
                                         @enderror
                                     </div>
                                 </div>
+
                                 <div class="col-6">
+                                    <label for="Name">&nbsp</label>
+                                    <div>
+                                        <button class="btn btn-outline-info " type="button" data-bs-toggle="modal"
+                                            data-bs-target="#Store" wire:click="createClient">
+                                            <i class="icofont icofont-ui-add"> </i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         @else
@@ -67,7 +75,9 @@
                                             <i class="icofont icofont-ui-delete text-danger" style="font-size: 20px;">
                                             </i>
                                         </button>
-                                        <div class="h6">Número de Identificación: <strong>{{ $userIdentification }}</strong></div>
+                                        <div class="h6">Número de Identificación:
+                                            <strong>{{ $userIdentification }}</strong>
+                                        </div>
                                         <div class="h6">Telefono: <strong>{{ $userPhone }}</strong>
                                         </div>
                                         <div class="h6">Email: <strong>{{ $userEmail }}</strong></div>
@@ -128,8 +138,7 @@
                                                     <i class="icofont icofont-search"> </i>
                                                 </span>
                                                 <input wire:model="buscar" wire:keydown.enter="asignarPrimero()"
-                                                    type="text" class="form-control" id="buscar"
-                                                    autocomplete="off">
+                                                    type="text" class="form-control" id="buscar" autocomplete="off">
                                                 @if ($buscar != null)
                                                     <span class="input-group-text" style="cursor:pointer;"
                                                         wire:click="close">
@@ -239,8 +248,7 @@
                                                         </fieldset>
                                                     </td>
                                                     <td>
-                                                        <button type="button"
-                                                            wire:click="delete({{ $item->id }})"
+                                                        <button type="button" wire:click="delete({{ $item->id }})"
                                                             class="btn btn-outline-secundary btn-icon ">
                                                             <i class="icofont icofont-ui-delete text-danger"
                                                                 style="font-size: 20px;">
@@ -263,8 +271,7 @@
 
                                             <tr class="mt-1" style="border-top: 2px solid #ced4da">
                                                 <td colspan="3" rowspan="4">
-                                                    <textarea wire:model="note" rows="4" cols="4" class="form-control"
-                                                        placeholder="{{ __('Nota') }} "></textarea>
+                                                    <textarea wire:model="note" rows="4" cols="4" class="form-control" placeholder="{{ __('Nota') }} "></textarea>
                                                 </td>
                                             </tr>
                                             <tr class="mt-1" style="border-top: 2px solid #ced4da">
@@ -340,4 +347,121 @@
         </div>
     </div>
 
+    <!-- Modal  Crear-->
+    <div wire:ignore.self class="modal fade" id="Store" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Crear Cliente
+                    </h5>
+                    <button type="button" class="btn-close" wire:click="close2" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Nombres *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-user-alt-5"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Nombres"
+                                        class="form-control @error('name') is-invalid @enderror" wire:model="name" />
+                                </div>
+                                @error('name')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Identificacion *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-id"> </i>
+                                    </span>
+                                    <input type="number" placeholder="Identificacion"
+                                        class="form-control @error('identification') is-invalid @enderror"
+                                        wire:model="identification" />
+                                </div>
+
+                                @error('identification')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Telefono *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-phone"> </i>
+                                    </span>
+                                    <input type="number" placeholder="Telefono"
+                                        class="form-control @error('phone') is-invalid @enderror" wire:model="phone" />
+                                </div>
+
+                                @error('phone')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Correo Electonico *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-email"> </i>
+                                    </span>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        autocomplete="off" placeholder="email" wire:model="email" />
+                                </div>
+
+                                @error('email')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Direccion *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-location-pin"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Direccion"
+                                        class="form-control @error('address') is-invalid @enderror"
+                                        wire:model="address" />
+                                </div>
+
+                                @error('address')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Ciudad *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-map"> </i>
+                                    </span>
+                                    <input type="text" class="form-control @error('city') is-invalid @enderror"
+                                        autocomplete="off" placeholder="Ciudad" wire:model="city" />
+                                </div>
+
+                                @error('city')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" wire:click="close2"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" wire:click="saveClient">Crear Cliente</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

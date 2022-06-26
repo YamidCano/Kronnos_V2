@@ -17,7 +17,8 @@ class InvoiceCreateView extends Component
     public $users, $taxRate = 1, $Subtotal, $total, $slug, $idSeller;
     public $buscar, $product, $picked, $users_id, $idproduct, $stockproducto;
     public $totalCart, $cant = 0, $cartTotalQuantity, $quantityMas = 0, $taxesall;
-
+    public $updating = false;
+    public $name, $email, $phone, $address, $identification, $city, $status = 0;
 
     public $ordeproducts = [], $action = 1;
 
@@ -50,8 +51,20 @@ class InvoiceCreateView extends Component
         return view('livewire.invoice-create-view', compact('Cart'));
     }
 
-    function rules()
+    public function rules(): array
     {
+        if ($this->updating) {
+            return [
+                'name' => 'required|min:3|max:256|regex:/^[\pL\s\-]+$/u',
+                'identification' => 'required|min:7|max:10|unique:App\Models\clients,identification',
+                'email' => 'required|min:3|max:50|email|unique:App\Models\clients,email',
+                'phone' => 'required|min:3|max:11',
+                'city' => 'required|min:3|max:256',
+                'address' => 'required',
+                'status' => 'required',
+            ];
+        }
+
         return [
             'invoiceNumber' => 'required|min:3|max:256|unique:App\Models\shopping,invoice_number,',
             'selectClients' => 'required',
@@ -79,7 +92,7 @@ class InvoiceCreateView extends Component
     {
         $allproduct = products::find($itemId);
         if ($quantity >=  $allproduct->stock) {
-            $this->emit('alertError', 'Stock Insuficiente, el estock limite es de '. $allproduct->stock );
+            $this->emit('alertError', 'Stock Insuficiente, el estock limite es de ' . $allproduct->stock);
         } else {
             $quantity += 1;
             Cart::session(auth()->user()->id)->update($itemId, array(
@@ -89,14 +102,6 @@ class InvoiceCreateView extends Component
                 ),
             ));
         }
-
-        // $quantity += 1;
-        // Cart::session(auth()->user()->id)->update($itemId, array(
-        //     'quantity' => array(
-        //         'relative' => false,
-        //         'value' => $quantity
-        //     ),
-        // ));
     }
 
     public function updatedidTaxe($idtaxe)
@@ -110,7 +115,7 @@ class InvoiceCreateView extends Component
 
         $allproduct = products::find($itemId);
         if ($quantity >=  $allproduct->stock) {
-            $this->emit('alertError', 'Stock Insuficiente, el estock limite es de '. $allproduct->stock );
+            $this->emit('alertError', 'Stock Insuficiente, el estock limite es de ' . $allproduct->stock);
 
             Cart::session(auth()->user()->id)->update($itemId, array(
                 'quantity' => array(
@@ -186,7 +191,6 @@ class InvoiceCreateView extends Component
         $this->reset(['date']);
     }
 
-
     public function updatedBuscar()
     {
         $this->picked = false;
@@ -232,6 +236,38 @@ class InvoiceCreateView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         return redirect()->to('ventas');
+    }
+
+    public function close2()
+    {
+        $this->reset(['name', 'identification', 'email', 'phone', 'city', 'address']);
+        $this->updating = false;
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
+
+    public function createClient()
+    {
+        $this->updating = true;
+    }
+
+    public function saveClient()
+    {
+        $this->validate();
+        clients::create([
+            'name' => $this->name,
+            'identification' => $this->identification,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'city' => $this->city,
+            'address' => $this->address,
+            'status' => $this->status,
+        ]);
+        $this->emit('Store');
+        $this->close2();
+        $this->updating = false;
+        $this->mount();
+        $this->emit('alert', 'Registro creada sastifactoriamente');
     }
 
     public function save()
