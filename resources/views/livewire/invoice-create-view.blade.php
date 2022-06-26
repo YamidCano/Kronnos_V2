@@ -67,7 +67,7 @@
                                             <i class="icofont icofont-ui-delete text-danger" style="font-size: 20px;">
                                             </i>
                                         </button>
-                                        <div class="h6">Rut: <strong>{{ $userIdentification }}</strong></div>
+                                        <div class="h6">Número de Identificación: <strong>{{ $userIdentification }}</strong></div>
                                         <div class="h6">Telefono: <strong>{{ $userPhone }}</strong>
                                         </div>
                                         <div class="h6">Email: <strong>{{ $userEmail }}</strong></div>

@@ -239,4 +239,9 @@ class UserView extends Component
             $this->puser->revokePermissionTo($permission);
         }
     }
+
+    public function clean()
+    {
+        $this->reset(['search']);
+    }
 }

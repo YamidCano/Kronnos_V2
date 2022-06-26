@@ -85,9 +85,9 @@ BRANDS
 php artisan make:livewire brandsView
 php artisan make:model brands -m
 
-Customers
-php artisan make:livewire customersView
-php artisan make:model customers -m
+clients
+php artisan make:livewire clientsView
+php artisan make:model clients -m
 
 shopping
 php artisan make:livewire shoppingView

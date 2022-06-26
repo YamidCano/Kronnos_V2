@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\User;
+use App\Models\clients;
 use App\Models\products;
 use App\Models\taxes;
 use App\Models\invoice;
@@ -149,7 +149,7 @@ class InvoiceCreateView extends Component
 
     public function mount()
     {
-        $this->users = User::orderBy('name')->get();
+        $this->users = clients::orderBy('name')->get();
         $this->taxesall = taxes::orderBy('tax_rate')->get();
 
         $this->buscar = "";
@@ -161,7 +161,7 @@ class InvoiceCreateView extends Component
 
     public function updatedselectClients($clientId)
     {
-        $user = User::find($clientId);
+        $user = clients::find($clientId);
         $this->userName = $user->name;
         $this->userPhone = $user->phone;
         $this->userEmail = $user->email;

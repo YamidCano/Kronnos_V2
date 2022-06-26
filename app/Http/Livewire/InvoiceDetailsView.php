@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\invoice;
 use App\Models\invoice_details;
 use App\Models\taxes;
-use App\Models\User;
+use App\Models\clients;
 use App\Models\paymentEntry;
 
 class InvoiceDetailsView extends Component
@@ -36,9 +36,9 @@ class InvoiceDetailsView extends Component
         $this->nameTaxe = $taxe->name;
         $this->taxRate = $taxe->tax_rate;
 
-        $client = User::find($invoice->id_client);
+        $client = clients::find($invoice->id_client);
         $this->clientName = $client->name;
-        $this->clientRut = $client->nit;
+        $this->clientRut = $client->identification;
         $this->clientPhone = $client->phone;
         $this->clientEmail = $client->email;
 

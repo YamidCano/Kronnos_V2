@@ -1,5 +1,6 @@
 <?php return array (
   'brands-view' => 'App\\Http\\Livewire\\BrandsView',
+  'clients-view' => 'App\\Http\\Livewire\\ClientsView',
   'components.header' => 'App\\Http\\Livewire\\Components\\Header',
   'components.sidebar' => 'App\\Http\\Livewire\\Components\\Sidebar',
   'credit-histories-view' => 'App\\Http\\Livewire\\CreditHistoriesView',

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\brands;
+use App\Models\clients;
 use App\Models\invoice;
 use App\Models\invoice_details;
 use App\Models\paymentMode;
@@ -116,6 +117,7 @@ class DatabaseSeeder extends Seeder
             'city' => 'Bogota DC',
             'password' => Hash::make('VUyOvScy'),
         ]);
+
         $Usuario = User::factory()->create([
             'name' => 'Pepito',
             'last_name' => 'Perez',
@@ -126,16 +128,26 @@ class DatabaseSeeder extends Seeder
             'city' => 'Bogota DC',
             'password' => Hash::make('VUyOvScy'),
         ]);
-        $Usuario = User::factory()->create([
-            'name' => 'Juna',
-            'last_name' => 'Cardona',
-            'identification' => '90052133546',
-            'email' => 'Cardona@kronnos.com',
-            'phone' => '3215555555',
-            'address' => 'Bogota',
-            'city' => 'Bogota DC',
-            'password' => Hash::make('VUyOvScy'),
-        ]);
+
+        $provider = new clients();
+        $provider->name = "Juan Carlos";
+        $provider->city = "Bogota";
+        $provider->address = "Calle";
+        $provider->email = "jcarlos@cliente.com";
+        $provider->phone = "3214567585";
+        $provider->identification = "5632147";
+        $provider->status = "0";
+        $provider->save();
+
+        $provider = new clients();
+        $provider->name = "Maria Camila";
+        $provider->city = "Bogota";
+        $provider->address = "Calle";
+        $provider->email = "mcamila@cliente.com";
+        $provider->phone = "3214545879";
+        $provider->identification = "35448568";
+        $provider->status = "0";
+        $provider->save();
 
         $admin = Role::create(['name' => 'Administrador']);
         $usuarios = Role::create(['name' => 'Usuario']);
@@ -150,6 +162,7 @@ class DatabaseSeeder extends Seeder
         $PaymentMode = Role::create(['name' => 'Payment-Mode']);
         $OutPayment  = Role::create(['name' => 'OutPayment']);
         $Invoice  = Role::create(['name' => 'Invoice']);
+        $clients  = Role::create(['name' => 'clients']);
 
         //crud de usuarios
         $permission = [
@@ -182,6 +195,7 @@ class DatabaseSeeder extends Seeder
         $PaymentMode->syncPermissions(Permission::where('name', 'like', "%Payment-Mode%")->get());
         $OutPayment->syncPermissions(Permission::where('name', 'like', "%OutPayment%")->get());
         $Invoice->syncPermissions(Permission::where('name', 'like', "%Invoice%")->get());
+        $clients->syncPermissions(Permission::where('name', 'like', "%clients%")->get());
 
         $Administrador->assignRole('Administrador');
         $Vendedor->assignRole('Invoice');
@@ -275,7 +289,7 @@ class DatabaseSeeder extends Seeder
         $provider->invoice_number = "FV-001";
         $provider->slug = "FV-001";
         $provider->id_seller = "1";
-        $provider->id_client = "3";
+        $provider->id_client = "2";
         $provider->date = "2022-06-23";
         $provider->order_status = "0";
         $provider->id_taxe = "2";
@@ -296,7 +310,7 @@ class DatabaseSeeder extends Seeder
         $provider->invoice_number = "FV-002";
         $provider->slug = "FV-002";
         $provider->id_seller = "2";
-        $provider->id_client = "4";
+        $provider->id_client = "1";
         $provider->date = "2022-06-23";
         $provider->order_status = "0";
         $provider->id_taxe = "2";

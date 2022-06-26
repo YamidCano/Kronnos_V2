@@ -23,6 +23,7 @@ use App\Http\Livewire\ShoppingDetailsView;
 use App\Http\Livewire\InvoiceCreateView;
 use App\Http\Livewire\InvoiceDetailsView;
 use App\Http\Livewire\InvoiceView;
+use App\Http\Livewire\ClientsView;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -97,4 +98,7 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
 
     Route::get('/VentasDetalle/{slug}', InvoiceDetailsView::class)->name('VentasDetalle')
         ->middleware('can_view:Invoice - Tabla');
+
+    Route::get('/clients', ClientsView::class)->name('clients')
+        ->middleware('can_view:clients - Tabla');
 });

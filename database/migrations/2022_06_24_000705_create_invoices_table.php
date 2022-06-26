@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_seller')->nullable();
             $table->foreign('id_seller')->references('id')->on('users');
             $table->unsignedBigInteger('id_client')->nullable();
-            $table->foreign('id_client')->references('id')->on('users');
+            $table->foreign('id_client')->references('id')->on('clients');
             $table->date('date')->nullable();
             $table->bigInteger('order_status')->nullable();
             $table->unsignedBigInteger('id_taxe')->nullable();

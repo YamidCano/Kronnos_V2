@@ -61,7 +61,7 @@
                                     <div class="h6 mt-4">Nombre del Proveedor:
                                         <strong>{{ $clientName }}</strong>
                                     </div>
-                                    <div class="h6">Rut: <strong>{{ $clientRut }}</strong></div>
+                                    <div class="h6">Número de Identificación: <strong>{{ $clientRut }}</strong></div>
                                     <div class="h6">Telefono: <strong>{{ $clientPhone }}</strong>
                                     </div>
                                     <div class="h6">Email: <strong>{{ $clientEmail }}</strong></div>

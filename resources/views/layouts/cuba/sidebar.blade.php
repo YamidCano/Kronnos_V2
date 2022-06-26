@@ -37,7 +37,7 @@
                     @if (canView('Usuario - Tabla') or canView('Role y Permisos - Tabla'))
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title @if (Route::currentRouteName() == 'usuarios' or Route::currentRouteName() == 'rolesPermisos') active @endif"
-                                href="#"><i data-feather="users"></i><span class="lan-6">Usuarios</span>
+                                href="#"><i data-feather="user"></i><span class="lan-6">Usuarios</span>
                                 <div class="according-menu"><i
                                         class="@if (Route::currentRouteName() == 'usuarios' or Route::currentRouteName() == 'rolesPermisos') fa fa-angle-down @else  fa fa-angle-right @endif"></i>
                                 </div>
@@ -61,6 +61,14 @@
                                     </li>
                                 @endif
                             </ul>
+                        </li>
+                    @endif
+                    @if (canView('clients - Tabla'))
+                        <li class="sidebar-list">
+                            {{-- <label class="badge badge-success">2</label> --}}
+                            <a class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'clients' ? 'active' : '' }}"
+                                href="{{ url('clients') }}">
+                                <i data-feather="users"></i><span class="lan-6">Clientes</span></a>
                         </li>
                     @endif
                     @if (canView('Proveedor - Tabla'))
