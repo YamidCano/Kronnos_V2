@@ -1,40 +1,8 @@
 <div>
 
     <style>
-        /******************** General ********************/
-        body {
-            line-height: 0.8;
-        }
-
-        h3 {
-            margin-top: 5%;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        a {
-            transition: transform 0.3s;
-            text-decoration: none;
-            color: black;
-        }
 
         /******************** Dashboards ********************/
-
-        #container {
-            background: white;
-        }
-
-        #container h5 {
-            margin: 2% 0 0 1%;
-        }
-
-        #row {
-            background: white;
-            border: grey 3px solid;
-            border-radius: 35px 35px 35px 35px;
-            margin: 1%;
-        }
-
         #caja1 {
             font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
             color: #000000;
@@ -46,8 +14,8 @@
             border-radius: 35px 0px 35px 0px;
             min-width: 290px;
             max-width: 350px;
-            border-bottom: 2px solid;
-            border-top: 2px solid;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
         }
 
         #caja1 h1 {
@@ -73,8 +41,8 @@
             border-radius: 35px 0px 35px 0px;
             min-width: 290px;
             max-width: 350px;
-            border-bottom: 2px solid;
-            border-top: 2px solid;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
         }
 
         #caja3 {
@@ -88,8 +56,8 @@
             border-radius: 35px 0px 35px 0px;
             min-width: 290px;
             max-width: 350px;
-            border-bottom: 2px solid;
-            border-top: 2px solid;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
         }
 
         #caja4 {
@@ -102,8 +70,8 @@
             min-width: 300px;
             max-width: 450px;
             border-radius: 35px 0px 35px 0px;
-            border-bottom: 2px solid;
-            border-top: 2px solid;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
         }
 
         #caja5 {
@@ -117,8 +85,8 @@
             max-width: 450px;
             height: 230px;
             border-radius: 35px 0px 35px 0px;
-            border-bottom: 2px solid;
-            border-top: 2px solid;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
         }
 
         #scroll {
@@ -146,29 +114,6 @@
             font-weight: bold;
         }
 
-        /******************** Perfil Usuario ********************/
-
-        #fonfoto {
-
-            margin: 1% 1% 1% 4%;
-            border-radius: 35px 35px 35px 35px;
-            text-align: center;
-            max-width: 100%;
-        }
-
-        /* #fonfoto:hover {
-  filter: blur(6px);
-} */
-
-        .img-fluid {
-            max-height: 200px;
-        }
-
-        #btnright {
-            margin-right: 1%;
-        }
-
-        /******************** Perfil Usuario ********************/
     </style>
     <div class="container-fluid">
         <div class="page-title">
