@@ -66,16 +66,23 @@
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="{{ url('perfil') }}"><i
-                                    data-feather="user"></i><span>{{ trans('lang.Profile') }}</span></a></li>
+                        <li>
+                            <a href="{{ url('perfil') }}"><i
+                                    data-feather="user"></i><span>{{ trans('lang.Profile') }}</span>
+                            </a>
+                        </li>
                         {{-- <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
                         <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li> --}}
-                        <li><a href="#"><i data-feather="settings"></i><span>{{ trans('lang.Settings') }}</span></a>
-                        </li>
-                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                        {{-- <li>
+                            <a href="#"><i data-feather="settings"></i><span>{{ trans('lang.Settings') }}</span></a>
+                        </li> --}}
+                        <li>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                 <i data-feather="log-in">
-                                </i><span>{{ trans('lang.Logout') }}</span></a></li>
+                                </i><span>{{ trans('lang.Logout') }}</span>
+                            </a>
+                        </li>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf

@@ -24,6 +24,10 @@ use App\Http\Livewire\InvoiceCreateView;
 use App\Http\Livewire\InvoiceDetailsView;
 use App\Http\Livewire\InvoiceView;
 use App\Http\Livewire\ClientsView;
+use App\Http\Livewire\RegisterView;
+use App\Http\Livewire\PrintshoppingView;
+
+use App\Http\Controllers\PDFController;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -42,6 +46,13 @@ Auth::routes();
 Route::get('/', function () {
     return view('/auth/login');
 });
+
+Route::get('/register', RegisterView::class)->name('register');
+
+Route::get('/PDFShopping/{slug}', [PDFController::class, 'PDFShopping'])->name('PDFShopping');
+
+Route::get('/PDFInvoice/{slug}', [PDFController::class, 'PDFInvoice'])->name('PDFInvoice');
+
 
 
 //Rutas Protegidas
@@ -96,8 +107,7 @@ Route::group(['middleware' => ['auth:sanctum', 'AuthActive']], function () {
     Route::get('/ventasCrear', InvoiceCreateView::class)->name('ventasCrear')
         ->middleware('can_view:Invoice - Tabla');
 
-    Route::get('/VentasDetalle/{slug}', InvoiceDetailsView::class)->name('VentasDetalle')
-        ->middleware('can_view:Invoice - Tabla');
+    Route::get('/VentasDetalle/{slug}', InvoiceDetailsView::class)->name('VentasDetalle');
 
     Route::get('/clients', ClientsView::class)->name('clients')
         ->middleware('can_view:clients - Tabla');

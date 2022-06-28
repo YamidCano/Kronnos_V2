@@ -5,6 +5,7 @@ namespace App\Http\Livewire\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
+use App\Models\clients;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
@@ -18,9 +19,10 @@ class UserView extends Component
     //Declaramos variables publicas
     public $perPage = 25;
     public $search, $search1, $city, $identification, $password, $password_confirmation, $selecRole;
-    public $user, $user_id, $name, $last_name, $email, $phone, $address, $status = 0;
+    public $user, $user_id, $name, $last_name, $email, $phone, $address, $status = 0, $cliente = 0;
     public $Role, $Role_id, $role;
     public $permission_check = [];
+    public $updating = false;
 
     //Actualizamos la vista
     protected $listeners = ['statusActivate', 'statusDeactivate', 'addPermission'];
@@ -47,20 +49,36 @@ class UserView extends Component
     }
 
     //Decleramos campos sin validar
-    function rules()
+    public function rules(): array
     {
+        if ($this->updating) {
+            return [
+                'name' => 'required|min:3|max:256',
+                'last_name' => 'required|min:3|max:256',
+                'identification' => 'required|min:7|max:10|unique:App\Models\User,identification,' . optional($this->user)->id,
+                'email' => 'required|min:3|max:50|email|unique:App\Models\User,email,' . optional($this->user)->id,
+                'phone' => 'required|min:3|max:11',
+                'city' => 'required|min:3|max:256',
+                'address' => 'required',
+                'cliente' => 'required',
+                'selecRole' => 'required',
+                'password_confirmation' => 'same:password',
+            ];
+        }
+
         return [
-            'name' => '',
-            'last_name' => '',
-            'identification' => '',
-            'email' => '',
-            'phone' => '',
-            'city' => '',
-            'address' => '',
-            'status' => '',
-            'selecRole' => '',
-            'password' => '',
-            'password_confirmation' => '',
+            'name' => 'required|min:3|max:256|regex:/^[\pL\s\-]+$/u',
+            'last_name' => 'required|min:3|max:256|regex:/^[\pL\s\-]+$/u',
+            'identification' => 'required|min:7|max:10|unique:App\Models\User,identification',
+            'email' => 'required|min:3|max:50|email|unique:App\Models\User,email',
+            'phone' => 'required|min:3|max:11',
+            'city' => 'required|min:3|max:256',
+            'address' => 'required',
+            'status' => 'required',
+            'cliente' => 'required',
+            'selecRole' => 'required',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'same:password',
         ];
     }
 
@@ -79,19 +97,7 @@ class UserView extends Component
     public function save()
     {
         //Validamos los campos
-        $this->validate([
-            'name' => 'required|min:3|max:256|regex:/^[\pL\s\-]+$/u',
-            'last_name' => 'required|min:3|max:256|regex:/^[\pL\s\-]+$/u',
-            'identification' => 'required|min:7|max:10|unique:App\Models\User,identification',
-            'email' => 'required|min:3|max:50|email|unique:App\Models\User,email',
-            'phone' => 'required|min:3|max:11',
-            'city' => 'required|min:3|max:256',
-            'address' => 'required',
-            'status' => 'required',
-            'selecRole' => 'required',
-            'password' => 'required|min:6',
-            'password_confirmation' => 'same:password',
-        ]);
+        $this->validate();
 
         //Guardamos los registros
         $users = User::create([
@@ -103,6 +109,7 @@ class UserView extends Component
             'city' => $this->city,
             'address' => $this->address,
             'status' => $this->status,
+            'status' => $this->cliente,
             'password' => bcrypt($this->password),
             'id_roles' => $this->selecRole,
         ]);
@@ -112,10 +119,7 @@ class UserView extends Component
         //Cerramos la ventana modal
         $this->emit('Store');
         //Limpiamos validaciones
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'password_confirmation', 'selecRole']);
+        $this->close();
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro creada sastifactoriamente');
     }
@@ -123,6 +127,7 @@ class UserView extends Component
     //Tramos los datos al editar y lo volcamos en variables
     public function edit(User $user)
     {
+        $this->updating = true;
         $this->user = $user;
         $this->user_id = $user->id;
         $this->name = $user->name;
@@ -132,6 +137,7 @@ class UserView extends Component
         $this->phone = $user->phone;
         $this->address = $user->address;
         $this->status = $user->status;
+        $this->cliente = $user->client;
         $this->selecRole = $user->id_roles;
         $this->city = $user->city;
     }
@@ -140,17 +146,7 @@ class UserView extends Component
     public function update()
     {
         //Validamos los campos
-        $this->validate([
-            'name' => 'required|min:3|max:256',
-            'last_name' => 'required|min:3|max:256',
-            'identification' => 'required|min:7|max:10|unique:App\Models\User,identification,' . optional($this->user)->id,
-            'email' => 'required|min:3|max:50|email|unique:App\Models\User,email,' . optional($this->user)->id,
-            'phone' => 'required|min:3|max:11',
-            'city' => 'required|min:3|max:256',
-            'address' => 'required',
-            'selecRole' => 'required',
-            'password_confirmation' => 'same:password',
-        ]);
+        $this->validate();
 
         //Guardamos los registros
         if ($update = User::where('id', $this->user->id)->first()) {
@@ -161,6 +157,7 @@ class UserView extends Component
             $update->phone = $this->phone;
             $update->address = $this->address;
             $update->city = $this->city;
+            $update->client = $this->cliente;
             $update->id_roles = $this->selecRole;
 
             if (!is_null($this->password)) {
@@ -174,10 +171,7 @@ class UserView extends Component
         //Cerramos la ventana modal
         $this->emit('update');
         //Limpiamos validaciones
-        $this->resetErrorBag();
-        $this->resetValidation();
-        //Limpiamos Campos
-        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'password_confirmation', 'selecRole']);
+        $this->close();
         //Enviamos el mensaje de confirmacion
         $this->emit('alert', 'Registro Actualizada sastifactoriamente');
     }
@@ -189,16 +183,15 @@ class UserView extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         //Limpiamos Campos
-        $this->reset(['last_name', 'name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'password_confirmation', 'selecRole']);
+        $this->reset(['last_name', 'cliente', 'name', 'email', 'phone', 'city', 'address', 'identification', 'password', 'password_confirmation', 'selecRole']);
     }
 
     //Activar Usuario
     public function statusDeactivate(User $user)
     {
-        $this->user = $user;
-        $this->status = 1;
-        if ($update = User::where('id', $this->user->id)->first()) {
-            $update->status = $this->status;
+        $status = 1;
+        if ($update = User::where('id', $user->id)->first()) {
+            $update->status = $status;
             $update->save();
         }
     }
@@ -206,10 +199,9 @@ class UserView extends Component
     //Desativar Usuario
     public function statusActivate(User $user)
     {
-        $this->user = $user;
-        $this->status = 0;
-        if ($update = User::where('id', $this->user->id)->first()) {
-            $update->status = $this->status;
+        $status = 0;
+        if ($update = User::where('id', $user->id)->first()) {
+            $update->status = $status;
             $update->save();
         }
     }
@@ -221,10 +213,10 @@ class UserView extends Component
 
         $havePermission = $puser->getPermissionsViaRoles();
 
-        foreach($permissions as $p){
-            if($puser->hasPermissionTo($p)){
+        foreach ($permissions as $p) {
+            if ($puser->hasPermissionTo($p)) {
                 $this->permission_check[$p->name]['check'] = true;
-            }else {
+            } else {
                 $this->permission_check[$p->name]['check'] = false;
             }
             $this->permission_check[$p->name]['id'] = $p->id;
@@ -233,7 +225,7 @@ class UserView extends Component
 
     public function addPermissionKey($permission)
     {
-        if(!$this->puser->hasPermissionTo($permission)){
+        if (!$this->puser->hasPermissionTo($permission)) {
             $this->puser->givePermissionTo($permission);
         } else {
             $this->puser->revokePermissionTo($permission);

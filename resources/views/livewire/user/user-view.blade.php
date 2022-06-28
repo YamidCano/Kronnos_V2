@@ -308,6 +308,27 @@
                         <br>
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <label for="Name">Cliente?</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-toggle-off"> </i>
+                                    </span>
+                                    <select wire:model="cliente"
+                                        class="form-control @error('cliente') is-invalid @enderror">
+                                        <option value="0">NO</option>
+                                        <option value="1">SI</option>
+                                    </select>
+                                </div>
+                                @error('cliente')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="Name">Contraseña *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -496,6 +517,27 @@
                                 @error('city')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
+                                <label for="Name">Cliente?</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-toggle-off"> </i>
+                                    </span>
+                                    <select wire:model="cliente"
+                                        class="form-control @error('cliente') is-invalid @enderror">
+                                        <option value="0">NO</option>
+                                        <option value="1">SI</option>
+                                    </select>
+                                </div>
+                                @error('cliente')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
                             </div>
                         </div>
                         <br>

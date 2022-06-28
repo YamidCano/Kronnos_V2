@@ -23,6 +23,8 @@
     @livewireStyles
 
     @include('layouts.cuba.head')
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -40,12 +42,31 @@
 
     @livewireScripts
 
-    {{-- <script type="module">
-        import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
-    </script>
+    @stack('js')
 
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
-        data-turbolinks-eval="false" data-turbo-eval="false"></script> --}}
+
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+    <script>
+        Livewire.on('alert', function(message) {
+            Swal.fire(
+                'Felicidades',
+                message,
+                'success'
+            )
+        });
+
+        Livewire.on('alertError', function(message) {
+            Swal.fire(
+                '¡Algo no va bien!',
+                message,
+                'error'
+            )
+        });
+    </script>
 </body>
 
 </html>

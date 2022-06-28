@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\clients;
+use App\Models\User;
 use App\Models\products;
 use App\Models\taxes;
 use App\Models\invoice;
@@ -18,7 +18,7 @@ class InvoiceCreateView extends Component
     public $buscar, $product, $picked, $users_id, $idproduct, $stockproducto;
     public $totalCart, $cant = 0, $cartTotalQuantity, $quantityMas = 0, $taxesall;
     public $updating = false;
-    public $name, $email, $phone, $address, $identification, $city, $status = 0;
+    public $name, $last_name, $email, $phone, $address, $identification, $city, $status = 0, $cliente = 1;
 
     public $ordeproducts = [], $action = 1;
 
@@ -56,12 +56,14 @@ class InvoiceCreateView extends Component
         if ($this->updating) {
             return [
                 'name' => 'required|min:3|max:256|regex:/^[\pL\s\-]+$/u',
-                'identification' => 'required|min:7|max:10|unique:App\Models\clients,identification',
-                'email' => 'required|min:3|max:50|email|unique:App\Models\clients,email',
+                'last_name' => 'required|min:3|max:256|regex:/^[\pL\s\-]+$/u',
+                'identification' => 'required|min:7|max:10|unique:App\Models\User,identification',
+                'email' => 'required|min:3|max:50|email|unique:App\Models\User,email',
                 'phone' => 'required|min:3|max:11',
                 'city' => 'required|min:3|max:256',
                 'address' => 'required',
                 'status' => 'required',
+                'cliente' => 'required',
             ];
         }
 
@@ -154,7 +156,7 @@ class InvoiceCreateView extends Component
 
     public function mount()
     {
-        $this->users = clients::orderBy('name')->get();
+        $this->users = User::where('client', 1)->orderBy('name')->get();
         $this->taxesall = taxes::orderBy('tax_rate')->get();
 
         $this->buscar = "";
@@ -166,8 +168,9 @@ class InvoiceCreateView extends Component
 
     public function updatedselectClients($clientId)
     {
-        $user = clients::find($clientId);
+        $user = User::find($clientId);
         $this->userName = $user->name;
+        $this->last_name = $user->last_name;
         $this->userPhone = $user->phone;
         $this->userEmail = $user->email;
         $this->userIdentification = $user->identification;
@@ -240,7 +243,7 @@ class InvoiceCreateView extends Component
 
     public function close2()
     {
-        $this->reset(['name', 'identification', 'email', 'phone', 'city', 'address']);
+        $this->reset(['name', 'last_name', 'identification', 'email', 'phone', 'city', 'address']);
         $this->updating = false;
         $this->resetErrorBag();
         $this->resetValidation();
@@ -254,14 +257,16 @@ class InvoiceCreateView extends Component
     public function saveClient()
     {
         $this->validate();
-        clients::create([
+        User::create([
             'name' => $this->name,
+            'last_name' => $this->last_name,
             'identification' => $this->identification,
             'email' => $this->email,
             'phone' => $this->phone,
             'city' => $this->city,
             'address' => $this->address,
             'status' => $this->status,
+            'client' => $this->cliente,
         ]);
         $this->emit('Store');
         $this->close2();

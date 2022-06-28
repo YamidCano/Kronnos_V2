@@ -9,7 +9,7 @@ use App\Models\taxes;
 use App\Models\User;
 use App\Models\paymentEntry;
 
-class InvoiceDetailsView extends Component
+class PrintinvoiceView extends Component
 {
 
     public $clientName, $clientRut, $clientPhone, $clientEmail;
@@ -18,7 +18,7 @@ class InvoiceDetailsView extends Component
 
     public function render()
     {
-        return view('livewire.invoice-details-view');
+        return view('livewire.printinvoice-view');
     }
 
     public function mount($slug)
@@ -45,10 +45,5 @@ class InvoiceDetailsView extends Component
         $this->invoiceDetails = invoice_details::where('id_invoice', $invoice->id)->get();
 
         $this->paymentEntry = paymentEntry::where('id_invoice', $invoice->id)->sum('amount');
-    }
-
-    public function close()
-    {
-        return redirect()->to('ventas');
     }
 }

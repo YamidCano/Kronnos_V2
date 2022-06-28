@@ -122,10 +122,10 @@
                                                 @endif
                                             </td> --}}
                                             <td>
-                                                <?php echo number_format($item->sum, 0, ',', '.'); ?>
+                                               $ <?php echo number_format($item->sum, 0, ',', '.'); ?>
                                             </td>
                                             <td>
-                                                <?php echo number_format($item->total, 0, ',', '.'); ?>
+                                               $ <?php echo number_format($item->total, 0, ',', '.'); ?>
                                             </td>
                                             <td>
                                                 @if ($item->sum == 0)

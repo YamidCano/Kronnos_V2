@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\brands;
-use App\Models\clients;
 use App\Models\invoice;
 use App\Models\invoice_details;
 use App\Models\paymentMode;
@@ -97,58 +96,6 @@ class DatabaseSeeder extends Seeder
         $provider->status = "0";
         $provider->save();
 
-        $Administrador = User::factory()->create([
-            'name' => 'Administrador',
-            'last_name' => 'Kronnos',
-            'identification' => '9005213556',
-            'email' => 'admin@kronnos.com',
-            'phone' => '3215555555',
-            'address' => 'Bogota',
-            'city' => 'Bogota DC',
-            'password' => Hash::make('VUyOvScy'),
-        ]);
-        $Vendedor = User::factory()->create([
-            'name' => 'Vendedor',
-            'last_name' => 'Kronnos',
-            'identification' => '9005213557',
-            'email' => 'vendedor@kronnos.com',
-            'phone' => '3215555555',
-            'address' => 'Bogota',
-            'city' => 'Bogota DC',
-            'password' => Hash::make('VUyOvScy'),
-        ]);
-
-        $Usuario = User::factory()->create([
-            'name' => 'Pepito',
-            'last_name' => 'Perez',
-            'identification' => '9005213558',
-            'email' => 'Perez@kronnos.com',
-            'phone' => '3215555555',
-            'address' => 'Bogota',
-            'city' => 'Bogota DC',
-            'password' => Hash::make('VUyOvScy'),
-        ]);
-
-        $provider = new clients();
-        $provider->name = "Juan Carlos";
-        $provider->city = "Bogota";
-        $provider->address = "Calle";
-        $provider->email = "jcarlos@cliente.com";
-        $provider->phone = "3214567585";
-        $provider->identification = "5632147";
-        $provider->status = "0";
-        $provider->save();
-
-        $provider = new clients();
-        $provider->name = "Maria Camila";
-        $provider->city = "Bogota";
-        $provider->address = "Calle";
-        $provider->email = "mcamila@cliente.com";
-        $provider->phone = "3214545879";
-        $provider->identification = "35448568";
-        $provider->status = "0";
-        $provider->save();
-
         $admin = Role::create(['name' => 'Administrador']);
         $usuarios = Role::create(['name' => 'Usuario']);
         $RoleyPermisos = Role::create(['name' => 'Role y Permisos']);
@@ -197,9 +144,74 @@ class DatabaseSeeder extends Seeder
         $Invoice->syncPermissions(Permission::where('name', 'like', "%Invoice%")->get());
         $clients->syncPermissions(Permission::where('name', 'like', "%clients%")->get());
 
+        $Administrador = User::factory()->create([
+            'name' => 'Administrador',
+            'last_name' => 'Kronnos',
+            'identification' => '9005213556',
+            'email' => 'admin@kronnos.com',
+            'phone' => '3215555555',
+            'address' => 'Bogota',
+            'city' => 'Bogota DC',
+            'client' => 0,
+            'status' => 0,
+            'id_roles' => 1,
+            'password' => Hash::make('VUyOvScy'),
+        ]);
+
+        $Vendedor = User::factory()->create([
+            'name' => 'Vendedor',
+            'last_name' => 'Kronnos',
+            'identification' => '9005213557',
+            'email' => 'vendedor@kronnos.com',
+            'phone' => '3215555555',
+            'address' => 'Bogota',
+            'city' => 'Bogota DC',
+            'client' => 0,
+            'status' => 0,
+            'id_roles' => 13,
+            'password' => Hash::make('VUyOvScy'),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Pepito',
+            'last_name' => 'Perez',
+            'identification' => '9005213558',
+            'email' => 'cliente@kronnos.com',
+            'phone' => '3215555555',
+            'address' => 'Bogota',
+            'city' => 'Bogota DC',
+            'client' => 1,
+            'status' => 0,
+            'password' => Hash::make('VUyOvScy'),
+        ]);
+
+        $provider = new User();
+        $provider->name = "Juan Carlos";
+        $provider->last_name = "Avila";
+        $provider->city = "Bogota";
+        $provider->address = "Calle";
+        $provider->email = "jcarlos@cliente.com";
+        $provider->phone = "3214567585";
+        $provider->identification = "5632147";
+        $provider->client = 1;
+        $provider->status = 0;
+        $provider->save();
+
+        $provider = new User();
+        $provider->name = "Maria Camila";
+        $provider->last_name = "Gomez";
+        $provider->city = "Bogota";
+        $provider->address = "Calle";
+        $provider->email = "mcamila@cliente.com";
+        $provider->phone = "3214545879";
+        $provider->identification = "35448568";
+        $provider->client = 1;
+        $provider->status = 0;
+        $provider->save();
+
         $Administrador->assignRole('Administrador');
         $Vendedor->assignRole('Invoice');
-        $Usuario->assignRole('Usuario');
+        // $Usuario->assignRole('Usuario');
 
         $provider = new products();
         $provider->name = "Producto A";
@@ -273,7 +285,7 @@ class DatabaseSeeder extends Seeder
         $provider->order_status = "0";
         $provider->id_taxe = "2";
         $provider->note = "N/A";
-        $provider->Subtotal = "5000000";
+        $provider->Subtotal = "500000";
         $provider->total = "595000";
         $provider->save();
 
@@ -289,12 +301,12 @@ class DatabaseSeeder extends Seeder
         $provider->invoice_number = "FV-001";
         $provider->slug = "FV-001";
         $provider->id_seller = "1";
-        $provider->id_client = "2";
+        $provider->id_client = "3";
         $provider->date = "2022-06-23";
         $provider->order_status = "0";
         $provider->id_taxe = "2";
         $provider->note = "N/A";
-        $provider->Subtotal = "5000000";
+        $provider->Subtotal = "500000";
         $provider->total = "595000";
         $provider->save();
 
@@ -310,7 +322,7 @@ class DatabaseSeeder extends Seeder
         $provider->invoice_number = "FV-002";
         $provider->slug = "FV-002";
         $provider->id_seller = "2";
-        $provider->id_client = "1";
+        $provider->id_client = "4";
         $provider->date = "2022-06-23";
         $provider->order_status = "0";
         $provider->id_taxe = "2";
@@ -329,6 +341,35 @@ class DatabaseSeeder extends Seeder
 
         $provider = new invoice_details();
         $provider->id_invoice = "2";
+        $provider->id_product = "2";
+        $provider->quantity = "15";
+        $provider->price = "59000";
+        $provider->total = "1770000";
+        $provider->save();
+
+        $provider = new invoice();
+        $provider->invoice_number = "FV-003";
+        $provider->slug = "FV-003";
+        $provider->id_seller = "2";
+        $provider->id_client = "3";
+        $provider->date = "2022-06-23";
+        $provider->order_status = "0";
+        $provider->id_taxe = "2";
+        $provider->note = "N/A";
+        $provider->Subtotal = "2580000";
+        $provider->total = "3070200";
+        $provider->save();
+
+        $provider = new invoice_details();
+        $provider->id_invoice = "3";
+        $provider->id_product = "1";
+        $provider->quantity = "15";
+        $provider->price = "54000";
+        $provider->total = "810000";
+        $provider->save();
+
+        $provider = new invoice_details();
+        $provider->id_invoice = "3";
         $provider->id_product = "2";
         $provider->quantity = "15";
         $provider->price = "59000";

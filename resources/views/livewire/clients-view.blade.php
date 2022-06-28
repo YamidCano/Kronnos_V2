@@ -78,7 +78,7 @@
                                     @foreach ($clients as $item)
                                         <tr>
                                             <td>
-                                                {{ $item->name }}
+                                                {{ $item->name }} {{ $item->last_name }}
                                             </td>
                                             <td>
                                                 {{ $item->identification }}
@@ -174,6 +174,24 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Apellidos *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-user-alt-5"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Apellidos"
+                                        class="form-control @error('last_name') is-invalid @enderror"
+                                        wire:model="last_name" />
+                                </div>
+
+                                @error('last_name')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="Name">Identificacion *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -187,6 +205,9 @@
                                 @error('identification')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+
                             </div>
                         </div>
                         <br>
@@ -292,6 +313,24 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Apellidos *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-user-alt-5"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Apellidos"
+                                        class="form-control @error('last_name') is-invalid @enderror"
+                                        wire:model="last_name" />
+                                </div>
+
+                                @error('last_name')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="Name">Identificacion *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -305,6 +344,9 @@
                                 @error('identification')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+
                             </div>
                         </div>
                         <br>

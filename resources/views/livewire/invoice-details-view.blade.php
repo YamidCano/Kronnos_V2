@@ -3,13 +3,15 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Crear Venta</h3>
+                    <h3>Factura Venta</h3>
+                    <a href="{{ route('PDFInvoice', $isslug) }}" target="_blank"
+                        class="btn btn-sm btn-primary">Imprimir PDF</a>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ url('ventas') }}">Ventas</a></li>
-                        <li class="breadcrumb-item">Crear Ventas</li>
+                        <li class="breadcrumb-item">Factura de Ventas</li>
                         {{-- <li class="breadcrumb-item active">Sample Page</li> --}}
                     </ol>
                 </div>
@@ -50,9 +52,12 @@
 
                             </div>
                             <div class="col-9">
-                                <button type="button" class="btn btn-primary float-end" wire:click="close">
-                                    Volver
-                                </button>
+                                @can('Invoice - Crear')
+                                    <button type="button" class="btn btn-primary float-end" wire:click="close">
+                                        Volver
+                                    </button>
+                                @endcan
+
                             </div>
                         </div>
                         <div class="row">
@@ -61,7 +66,9 @@
                                     <div class="h6 mt-4">Nombre del Proveedor:
                                         <strong>{{ $clientName }}</strong>
                                     </div>
-                                    <div class="h6">Número de Identificación: <strong>{{ $clientRut }}</strong></div>
+                                    <div class="h6">Número de Identificación:
+                                        <strong>{{ $clientRut }}</strong>
+                                    </div>
                                     <div class="h6">Telefono: <strong>{{ $clientPhone }}</strong>
                                     </div>
                                     <div class="h6">Email: <strong>{{ $clientEmail }}</strong></div>
@@ -114,13 +121,13 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <?php echo number_format($item->price, 0, ',', '.'); ?>
+                                                    $ <?php echo number_format($item->price, 0, ',', '.'); ?>
                                                 </td>
                                                 <td>
                                                     {{ $item->quantity }}
                                                 </td>
                                                 <td colspan="2">
-                                                    <?php echo number_format($item->total, 0, ',', '.'); ?>
+                                                    $ <?php echo number_format($item->total, 0, ',', '.'); ?>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -143,7 +150,7 @@
                                             </td>
                                             <td>
                                                 <span>
-                                                    <?php echo number_format($Subtotal, 0, ',', '.'); ?>
+                                                    $ <?php echo number_format($Subtotal, 0, ',', '.'); ?>
                                                 </span>
                                             </td>
                                         </tr>
@@ -171,7 +178,7 @@
                                             </td>
                                             <td>
                                                 <span>
-                                                    <?php echo number_format($total, 0, ',', '.'); ?>
+                                                    $ <?php echo number_format($total, 0, ',', '.'); ?>
                                                 </span>
                                             </td>
                                         </tr>

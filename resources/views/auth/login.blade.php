@@ -7,7 +7,7 @@
                 <div class="login-card">
                     <div>
                         <div>
-                            <a class="logo" href="index.html">
+                            <a class="logo" href="{{ url('login') }}">
                                 <img class="img-fluid for-light" src="../assets/images/logo/login.png" alt="looginpage">
                                 <img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="looginpage">
                             </a>
@@ -64,16 +64,16 @@
                                     </div>
                                 </div>
 
-                                {{-- <p class="mt-4 mb-0 text-center">Don't have account?<a class="ms-2"
-                                        href="sign-up.html">Create Account</a></p> --}}
+                                <p class="mt-4 mb-0 text-center">¿No tienes cuenta?
+                                    <a class="ms-2" href="{{ url('register') }}">Crear una cuenta</a>
+                                </p>
                             </form>
                             <div>
                                 <div class="h6 mt-4">
                                     <strong>Administrador</strong>
                                 </div>
                                 <button type="button" onclick="Administrador()" data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Haga clic aquí para copiar las credenciales de admin"
+                                    data-bs-placement="top" title="Haga clic aquí para copiar las credenciales de admin"
                                     class="btn btn-outline-secundary btn-icon float-end">
                                     <i class="icofont icofont-ui-copy text-danger" style="font-size: 20px;">
                                     </i>
@@ -96,7 +96,7 @@
                             </div>
                             <div>
                                 <div class="h6 mt-4">
-                                    <strong>Usuario</strong>
+                                    <strong>Cliente</strong>
                                 </div>
                                 <button type="button" onclick="usuario()" data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="Haga clic aquí para copiar las credenciales de usuario"
@@ -104,7 +104,7 @@
                                     <i class="icofont icofont-ui-copy text-danger" style="font-size: 20px;">
                                     </i>
                                 </button>
-                                <div class="">Email: <strong>usuario@kronnos.com</strong></div>
+                                <div class="">Email: <strong>cliente@kronnos.com</strong></div>
                                 <div class="">Contraseña: <strong>VUyOvScy</strong></div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
 
         function usuario() {
             let email = document.getElementById("email");
-            email.value = "usuario@kronnos.com";
+            email.value = "cliente@kronnos.com";
             let password = document.getElementById("password");
             password.value = "VUyOvScy";
         }

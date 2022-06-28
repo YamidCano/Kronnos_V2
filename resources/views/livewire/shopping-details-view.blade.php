@@ -3,13 +3,14 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Crear Compra</h3>
+                    <h3>Factura de Compra</h3>
+                    <a href="{{ route('PDFShopping', $isslug) }}" target="_blank" class="btn btn-sm btn-primary">Imprimir PDF</a>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ url('compras') }}">Compras</a></li>
-                        <li class="breadcrumb-item">Crear Compra</li>
+                        <li class="breadcrumb-item">Factura de Compra</li>
                         {{-- <li class="breadcrumb-item active">Sample Page</li> --}}
                     </ol>
                 </div>
@@ -20,7 +21,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="factura">
                         <div class="row">
                             <div class="col-3">
                                 <div class="mt-2">
@@ -114,13 +115,13 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <?php echo number_format($item->price, 0, ',', '.'); ?>
+                                                   $ <?php echo number_format($item->price, 0, ',', '.'); ?>
                                                 </td>
                                                 <td>
                                                     {{ $item->quantity }}
                                                 </td>
                                                 <td colspan="2">
-                                                    <?php echo number_format($item->total, 0, ',', '.'); ?>
+                                                   $ <?php echo number_format($item->total, 0, ',', '.'); ?>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -143,7 +144,7 @@
                                             </td>
                                             <td>
                                                 <span>
-                                                    <?php echo number_format($Subtotal, 0, ',', '.'); ?>
+                                                   $ <?php echo number_format($Subtotal, 0, ',', '.'); ?>
                                                 </span>
                                             </td>
                                         </tr>
@@ -171,7 +172,7 @@
                                             </td>
                                             <td>
                                                 <span>
-                                                    <?php echo number_format($total, 0, ',', '.'); ?>
+                                                   $ <?php echo number_format($total, 0, ',', '.'); ?>
                                                 </span>
                                             </td>
                                         </tr>

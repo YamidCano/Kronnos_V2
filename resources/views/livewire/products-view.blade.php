@@ -99,9 +99,9 @@
                                             <td>
                                                 {{ $item->stock }}
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 {{ $item->count_products }}
-                                            </td>
+                                            </td> --}}
                                             <td style="cursor:pointer;" wire:click="modalPhoto({{ $item->id }})"
                                                 data-bs-toggle="modal" wire:target="edit"
                                                 data-bs-target="#PhotoCharacter">

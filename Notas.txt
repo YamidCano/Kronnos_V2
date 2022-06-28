@@ -126,3 +126,12 @@ php artisan make:model paymentMode -m
 payment entry
 php artisan make:livewire paymentEntryView
 php artisan make:model paymentEntry -m
+
+register
+php artisan make:livewire registerView
+
+Imprimir Factura compra
+php artisan make:livewire printshoppingView
+
+Imprimir Factura venta
+php artisan make:livewire printinvoiceView

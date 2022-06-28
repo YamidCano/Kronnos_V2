@@ -3,13 +3,13 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Crear Compra</h3>
+                    <h3>Crear una venta</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ url('compras') }}">Compras</a></li>
-                        <li class="breadcrumb-item">Crear Compra</li>
+                        <li class="breadcrumb-item">Crear una venta</li>
                         {{-- <li class="breadcrumb-item active">Sample Page</li> --}}
                     </ol>
                 </div>
@@ -28,8 +28,6 @@
                                     Volver
                                 </button>
                             </div>
-
-                            {{ $stockproducto }}
                         </div>
                         @if ($selectClients == null)
                             <div class="row ">
@@ -44,7 +42,7 @@
                                                 Selecione Un Cliente *
                                             </option>
                                             @foreach ($users as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}">{{ $item->name }} {{ $item->last_name }}</option>
                                             @endforeach
                                         </select>
                                         @error('selectClients')
@@ -68,7 +66,7 @@
                                 <div class="col-6 mt-4">
                                     <div class="m-2">
                                         <div class="h6 mt-4">Nombre del Cliente:
-                                            <strong>{{ $userName }}</strong>
+                                            <strong>{{ $userName }} {{ $last_name }}</strong>
                                         </div>
                                         <button type="button" wire:click="clean2"
                                             class="btn btn-outline-secundary btn-icon float-end">
@@ -376,6 +374,24 @@
                                 @enderror
                             </div>
                             <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <label for="Name">Apellidos *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="icofont icofont-user-alt-5"> </i>
+                                    </span>
+                                    <input type="text" placeholder="Apellidos"
+                                        class="form-control @error('last_name') is-invalid @enderror"
+                                        wire:model="last_name" />
+                                </div>
+
+                                @error('last_name')
+                                    <span class="text-danger error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row row-sm">
+                            <div class="col-lg">
                                 <label for="Name">Identificacion *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -389,6 +405,9 @@
                                 @error('identification')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+
                             </div>
                         </div>
                         <br>
